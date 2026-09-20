@@ -14,10 +14,46 @@ const path = Astro.url.pathname;
     <a href="/" class="flex items-center gap-2 text-cream font-bold text-sm md:text-base tracking-wide shrink-0">
       <span>Savor &amp; Stories</span>
     </a>
-    <nav class="flex gap-2.5 sm:gap-3 md:gap-6 flex-wrap justify-end">
+
+    <nav class="hidden md:flex items-center gap-6">
       {links.map((link) => {
         const active = path === link.href || (link.href !== '/' && path.startsWith(link.href));
-        const cls = `text-[10px] sm:text-[11px] md:text-xs font-bold tracking-wide uppercase whitespace-nowrap ${active ? 'text-cream' : 'text-teal-soft'}`;
+        const cls = `text-xs font-bold tracking-wide uppercase whitespace-nowrap ${active ? 'text-cream' : 'text-teal-soft'}`;
+        return (
+          <a href={link.href} class={cls}>
+            <span data-lang="en">{link.en}</span>
+            <span data-lang="fr" hidden>{link.fr}</span>
+            <span data-lang="es" hidden>{link.es}</span>
+          </a>
+        );
+      })}
+    </nav>
+
+    <button
+      type="button"
+      id="menu-toggle"
+      class="md:hidden text-cream p-1 -mr-1"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="menu-icon-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <svg id="menu-icon-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" hidden>
+        <line x1="5" y1="5" x2="19" y2="19"></line>
+        <line x1="19" y1="5" x2="5" y2="19"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="md:hidden">
+    <nav id="mobile-menu" class="hidden flex-col border-t border-white/10 px-4 pt-2 pb-3">
+      {links.map((link) => {
+        const active = path === link.href || (link.href !== '/' && path.startsWith(link.href));
+        const cls = `block py-2.5 text-xs font-bold tracking-wide uppercase ${active ? 'text-cream' : 'text-teal-soft'}`;
         return (
           <a href={link.href} class={cls}>
             <span data-lang="en">{link.en}</span>
@@ -28,6 +64,7 @@ const path = Astro.url.pathname;
       })}
     </nav>
   </div>
+
   <div class="border-t border-white/10">
     <div class="max-w-[480px] md:max-w-3xl lg:max-w-5xl mx-auto flex justify-center gap-2 px-4 md:px-6 py-2">
       <button class="lbtn active" data-set-lang="en" type="button">EN</button>
@@ -36,3 +73,33 @@ const path = Astro.url.pathname;
     </div>
   </div>
 </header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  function closeMenu() {
+    menu?.classList.add('hidden');
+    toggle?.setAttribute('aria-expanded', 'false');
+    iconOpen?.removeAttribute('hidden');
+    iconClose?.setAttribute('hidden', '');
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isHidden = menu?.classList.contains('hidden');
+    if (isHidden) {
+      menu?.classList.remove('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+      iconOpen?.setAttribute('hidden', '');
+      iconClose?.removeAttribute('hidden');
+    } else {
+      closeMenu();
+    }
+  });
+
+  menu?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', closeMenu);
+  });
+</script>
