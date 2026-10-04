@@ -5,7 +5,7 @@ interface Props {
 const { tone = 'light' } = Astro.props;
 const dark = tone === 'dark';
 ---
-<section id="contact" class="max-w-[1240px] mx-auto px-4 md:px-8 py-12 md:py-24">
+<section id="contact" class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-12 md:py-24">
   <div class={`rounded-[28px] p-7 md:p-14 flex flex-wrap items-center gap-8 md:gap-10 ${dark ? 'bg-charcoal text-linen' : 'bg-card text-ink shadow-[0_16px_48px_rgba(42,37,34,0.08)]'}`}>
     <div class="flex-[1_1_360px] min-w-0 flex flex-col gap-3.5">
       <span class={`eyebrow ${dark ? 'text-gold' : ''}`}>
