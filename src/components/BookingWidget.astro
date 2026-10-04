@@ -27,8 +27,8 @@ const waMessages = {
   es: encodeURIComponent(`¡Hola Antoine! Me gustaría reservar el tour ${title.es}.`),
 };
 ---
-<div class="bg-white rounded-2xl border border-border p-5 mt-5" data-booking-widget data-webhook={N8N_WEBHOOK_URL} data-tour-en={title.en} data-tour-fr={title.fr} data-tour-es={title.es} data-price={price ?? ''}>
-  <p class="text-[10px] tracking-[0.15em] text-label uppercase font-bold mb-3">
+<div class="bg-card rounded-3xl shadow-card p-5 mt-5" data-booking-widget data-webhook={N8N_WEBHOOK_URL} data-tour-en={title.en} data-tour-fr={title.fr} data-tour-es={title.es} data-price={price ?? ''}>
+  <p class="eyebrow mb-3">
     <span data-lang="en">Book this tour</span>
     <span data-lang="fr" hidden>Réserver cette visite</span>
     <span data-lang="es" hidden>Reservar este tour</span>
@@ -52,54 +52,54 @@ const waMessages = {
 
   <form data-booking-form class="space-y-2.5">
     <div>
-      <label class="block text-[11px] font-bold text-label mb-1" for="bw-name">
+      <label class="block text-sm font-bold text-label mb-1" for="bw-name">
         <span data-lang="en">Name</span>
         <span data-lang="fr" hidden>Nom</span>
         <span data-lang="es" hidden>Nombre</span>
       </label>
-      <input id="bw-name" name="name" type="text" required class="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+      <input id="bw-name" name="name" type="text" required class="w-full rounded-lg border border-border px-3.5 py-2.5 text-base" />
     </div>
     <div>
-      <label class="block text-[11px] font-bold text-label mb-1" for="bw-email">
+      <label class="block text-sm font-bold text-label mb-1" for="bw-email">
         <span data-lang="en">Email</span>
         <span data-lang="fr" hidden>E-mail</span>
         <span data-lang="es" hidden>Correo</span>
       </label>
-      <input id="bw-email" name="email" type="email" required class="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+      <input id="bw-email" name="email" type="email" required class="w-full rounded-lg border border-border px-3.5 py-2.5 text-base" />
     </div>
     <div>
-      <label class="block text-[11px] font-bold text-label mb-1" for="bw-phone">
+      <label class="block text-sm font-bold text-label mb-1" for="bw-phone">
         <span data-lang="en">Phone (optional, WhatsApp is fine)</span>
         <span data-lang="fr" hidden>Téléphone (facultatif, WhatsApp convient)</span>
         <span data-lang="es" hidden>Teléfono (opcional, WhatsApp también sirve)</span>
       </label>
-      <input id="bw-phone" name="phone" type="tel" class="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+      <input id="bw-phone" name="phone" type="tel" class="w-full rounded-lg border border-border px-3.5 py-2.5 text-base" />
     </div>
     <div class="flex gap-2.5">
       <div class="flex-1">
-        <label class="block text-[11px] font-bold text-label mb-1" for="bw-date">
+        <label class="block text-sm font-bold text-label mb-1" for="bw-date">
           <span data-lang="en">Preferred date</span>
           <span data-lang="fr" hidden>Date souhaitée</span>
           <span data-lang="es" hidden>Fecha preferida</span>
         </label>
-        <input id="bw-date" name="date" type="date" required class="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+        <input id="bw-date" name="date" type="date" required class="w-full rounded-lg border border-border px-3.5 py-2.5 text-base" />
       </div>
       <div class="w-20">
-        <label class="block text-[11px] font-bold text-label mb-1" for="bw-people">
+        <label class="block text-sm font-bold text-label mb-1" for="bw-people">
           <span data-lang="en">People</span>
           <span data-lang="fr" hidden>Personnes</span>
           <span data-lang="es" hidden>Personas</span>
         </label>
-        <input id="bw-people" name="people" type="number" min="1" value="2" required class="w-full rounded-lg border border-border px-3 py-2 text-sm" />
+        <input id="bw-people" name="people" type="number" min="1" value="2" required class="w-full rounded-lg border border-border px-3.5 py-2.5 text-base" />
       </div>
     </div>
     <div>
-      <label class="block text-[11px] font-bold text-label mb-1" for="bw-message">
+      <label class="block text-sm font-bold text-label mb-1" for="bw-message">
         <span data-lang="en">Anything Antoine should know? (optional)</span>
         <span data-lang="fr" hidden>Une précision pour Antoine ? (facultatif)</span>
         <span data-lang="es" hidden>¿Algo que Antoine deba saber? (opcional)</span>
       </label>
-      <textarea id="bw-message" name="message" rows="2" class="w-full rounded-lg border border-border px-3 py-2 text-sm"></textarea>
+      <textarea id="bw-message" name="message" rows="2" class="w-full rounded-lg border border-border px-3.5 py-2.5 text-base"></textarea>
     </div>
 
     <button
