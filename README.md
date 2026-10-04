@@ -10,7 +10,7 @@ Private tour guide website for Antoine, running tours in Bordeaux and Dieppe, Fr
 - **[Tailwind CSS v4](https://tailwindcss.com)** — via the official Vite plugin (`@tailwindcss/vite`), styled to match the site's original warm cream, Bordeaux green, teal and wine red palette.
 - **[Astro content collections](https://docs.astro.build/en/guides/content-collections/)** — each tour is a markdown file under `src/content/tours/`, so prices and details can be edited without touching page code.
 - **[@astrojs/sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/)** — sitemap is generated automatically at build time.
-- **Cloudflare Pages** for hosting.
+- **Cloudflare Workers** (static assets, worker name `tours`) for hosting. Deploy with `npx wrangler deploy`; config in `wrangler.jsonc`.
 
 ## Project structure
 
@@ -68,11 +68,13 @@ npm run build      # outputs static site to dist/
 npm run preview     # preview the production build locally
 ```
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare Workers
 
 - **Build command:** `npm run build`
 - **Build output directory:** `dist`
+- Deploy command: `npx wrangler deploy` (never `npx wrangler versions upload`, which stages a version that is not live).
 - No adapter or Functions setup needed since the whole site is static.
+- Handover notes: `docs/HANDOVER.md` and the Systems tab of `docs/playbook/Savor-and-Stories-Treasure-Hunt-Playbook.html`.
 
 ## Content still pending
 
