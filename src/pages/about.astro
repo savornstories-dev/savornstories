@@ -1,21 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 <Layout
   title="About Antoine | Savor & Stories"
   description="Meet Antoine, the guide behind Savor & Stories in Bordeaux and Dieppe."
 >
-  <div class="bg-green px-5 pt-8 pb-8 md:pt-14 md:pb-14 text-center">
-    <h1 class="text-cream text-2xl md:text-4xl font-bold">
-      <span data-lang="en">About Antoine</span>
-      <span data-lang="fr" hidden>À propos d'Antoine</span>
-      <span data-lang="es" hidden>Sobre Antoine</span>
-    </h1>
-    <div class="w-10 h-0.5 bg-gold mx-auto my-3"></div>
-  </div>
+  <PageHero
+    eyebrow={{ en: 'The guide', fr: 'Le guide', es: 'El guía' }}
+    title={{ en: 'About Antoine', fr: "À propos d'Antoine", es: 'Sobre Antoine' }}
+  />
 
   <div class="max-w-[480px] md:max-w-2xl mx-auto">
-    <div class="flex justify-center -mt-12 md:-mt-16">
+    <div class="flex justify-center">
       <img
         src="/assets/photos/antoine-avatar.jpg"
         alt="Antoine"

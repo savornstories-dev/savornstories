@@ -15,46 +15,65 @@ interface Props {
   priceLabel?: Localized;
   accent: 'bordeaux' | 'dieppe';
   heroImage?: string;
+  showCity?: boolean;
 }
 
-const { slug, icon, title, summary, duration, price, priceLabel, accent, heroImage } = Astro.props;
-const goColor = accent === 'bordeaux' ? 'text-wine' : 'text-teal';
+const { slug, icon, title, summary, duration, price, priceLabel, accent, heroImage, showCity = false } = Astro.props;
+const goColor = accent === 'bordeaux' ? 'text-wine' : 'text-slate';
+const labelColor = accent === 'bordeaux' ? 'text-terracotta' : 'text-slate';
+const tint = accent === 'bordeaux' ? 'bg-green' : 'bg-slate';
 ---
 <a
   href={`/tours/${slug}`}
-  class="block bg-white rounded-2xl border border-border mb-4 overflow-hidden no-underline text-inherit transition-transform active:scale-[0.98]"
+  class="lift flex flex-col h-full bg-card rounded-[20px] overflow-hidden no-underline text-inherit shadow-card"
 >
   {heroImage ? (
-    <img src={heroImage} alt={title.en} class="w-full h-[110px] object-cover" />
+    <div class="zoom h-48 md:h-52">
+      <img src={heroImage} alt={title.en} loading="lazy" class="w-full h-full object-cover" />
+    </div>
   ) : (
-    <div class="h-[70px] flex items-center justify-center text-3xl bg-green-soft">
-      <span>{icon}</span>
+    <div class={`h-48 md:h-52 flex items-end p-6 ${tint}`}>
+      <span class="text-5xl" aria-hidden="true">{icon}</span>
     </div>
   )}
-  <div class="p-4">
-    <div class="text-[9px] tracking-[0.2em] text-label uppercase font-bold mb-1">
+  <div class="p-5 md:p-6 flex flex-col gap-2.5 flex-1">
+    <div class={`text-[11px] tracking-[0.16em] uppercase font-bold ${labelColor}`}>
+      {showCity && (
+        <>
+          {accent === 'bordeaux' ? (
+            <>
+              <span data-lang="en">Bordeaux</span>
+              <span data-lang="fr" hidden>Bordeaux</span>
+              <span data-lang="es" hidden>Burdeos</span>
+            </>
+          ) : (
+            <span>Dieppe</span>
+          )}
+          <span aria-hidden="true"> · </span>
+        </>
+      )}
       <span data-lang="en">{duration.en}</span>
       <span data-lang="fr" hidden>{duration.fr}</span>
       <span data-lang="es" hidden>{duration.es}</span>
     </div>
-    <div class="text-lg font-bold leading-tight">
+    <div class="font-display font-semibold text-[26px] leading-[1.1] text-ink">
       <span data-lang="en">{title.en}</span>
       <span data-lang="fr" hidden>{title.fr}</span>
       <span data-lang="es" hidden>{title.es}</span>
     </div>
-    <p class="text-xs text-ink-soft leading-relaxed mt-2">
+    <p class="text-sm text-ink-soft leading-relaxed">
       <span data-lang="en">{summary.en}</span>
       <span data-lang="fr" hidden>{summary.fr}</span>
       <span data-lang="es" hidden>{summary.es}</span>
     </p>
-    <div class="flex items-center justify-between mt-3 pt-3 border-t border-[#eee4d4]">
-      <div class="text-[11px] text-label">
+    <div class="flex items-baseline justify-between gap-3 mt-auto pt-3.5 border-t border-ink/10">
+      <div class="text-[13px] text-ink-soft">
         {price ? (
           <>
-            <strong class="text-base text-ink">{price}</strong>
-            <span data-lang="en"> / person</span>
-            <span data-lang="fr" hidden> / personne</span>
-            <span data-lang="es" hidden> / persona</span>
+            <strong class="text-xl text-ink font-bold">{price}</strong>
+            <span data-lang="en"> per person</span>
+            <span data-lang="fr" hidden> par personne</span>
+            <span data-lang="es" hidden> por persona</span>
           </>
         ) : priceLabel ? (
           <>
@@ -70,7 +89,7 @@ const goColor = accent === 'bordeaux' ? 'text-wine' : 'text-teal';
           </>
         )}
       </div>
-      <div class={`text-xs font-bold flex items-center gap-1 ${goColor}`}>
+      <div class={`text-[13px] font-semibold whitespace-nowrap ${goColor}`}>
         <span data-lang="en">Details &rarr;</span>
         <span data-lang="fr" hidden>Détails &rarr;</span>
         <span data-lang="es" hidden>Detalles &rarr;</span>

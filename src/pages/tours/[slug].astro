@@ -51,9 +51,9 @@ const jsonLd = {
 };
 ---
 <Layout title={`${title.en} | Savor & Stories`} description={summary.en} jsonLd={jsonLd}>
-  <div class="max-w-[480px] md:max-w-3xl lg:max-w-5xl mx-auto">
-    <div class="px-4 md:px-6 pt-5">
-      <a href={`/${city}`} class={`text-xs font-bold ${accent} no-underline`}>
+  <div class="max-w-[1240px] mx-auto">
+    <div class="px-4 md:px-8 pt-6">
+      <a href={`/${city}`} class={`text-sm font-semibold ${accent} no-underline`}>
         <span data-lang="en">&larr; Back to {cityLabel} tours</span>
         <span data-lang="fr" hidden>&larr; Retour aux visites de {cityLabel}</span>
         <span data-lang="es" hidden>&larr; Volver a los tours de {cityLabel === 'Bordeaux' ? 'Burdeos' : cityLabel}</span>
@@ -61,18 +61,17 @@ const jsonLd = {
     </div>
 
     {heroImage && (
-      <div class="px-4 md:px-6 pt-4">
+      <div class="px-4 md:px-8 pt-5">
         <img
           src={heroImage}
           alt={title.en}
-          class="w-full h-56 md:h-80 object-cover rounded-2xl border border-border"
+          class="w-full h-64 md:h-[460px] object-cover rounded-3xl shadow-card"
         />
       </div>
     )}
 
-    <div class="px-4 md:px-6 pt-4 pb-2 text-center lg:text-left">
-      <span class="text-4xl">{icon}</span>
-      <div class="text-[10px] tracking-[0.2em] text-label uppercase font-bold mt-2">
+    <div class="px-4 md:px-8 pt-8 pb-4 flex flex-col gap-3 max-w-[820px]">
+      <div class={`text-xs tracking-[0.16em] uppercase font-bold ${cityLabel === 'Bordeaux' ? 'text-terracotta' : 'text-slate'}`}>
         {cityLabel === 'Bordeaux' ? (
           <>
             <span data-lang="en">Bordeaux</span>
@@ -87,16 +86,21 @@ const jsonLd = {
         <span data-lang="fr" hidden>{duration.fr}</span>
         <span data-lang="es" hidden>{duration.es}</span>
       </div>
-      <h1 class="text-2xl md:text-3xl font-bold leading-tight mt-1">
+      <h1 class="font-display font-medium text-[38px] md:text-[60px] leading-[1.02] text-ink">
         <span data-lang="en">{title.en}</span>
         <span data-lang="fr" hidden>{title.fr}</span>
         <span data-lang="es" hidden>{title.es}</span>
       </h1>
+      <p class="font-display italic text-xl text-ink-soft">
+        <span data-lang="en">{summary.en}</span>
+        <span data-lang="fr" hidden>{summary.fr}</span>
+        <span data-lang="es" hidden>{summary.es}</span>
+      </p>
     </div>
 
-    <div class="px-4 md:px-6 pb-8 lg:grid lg:grid-cols-[1fr_320px] lg:gap-8 lg:items-start">
+    <div class="px-4 md:px-8 pb-8 lg:grid lg:grid-cols-[1fr_360px] lg:gap-10 lg:items-start">
       <div>
-        <div class="bg-white rounded-2xl border border-border p-5 md:p-7 prose-tour">
+        <div class="bg-card rounded-3xl shadow-card p-6 md:p-9 prose-tour">
           <div data-lang="en">
             {description.en.map((para: string) => <p>{para}</p>)}
           </div>
@@ -109,20 +113,23 @@ const jsonLd = {
         </div>
 
         {gallery.length > 0 && (
-          <div class="grid grid-cols-3 gap-3 mt-4">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-5">
             {gallery.map((photo: { src: string; alt: string }) => (
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                class="w-full h-24 md:h-32 object-cover rounded-xl border border-border"
-              />
+              <div class="zoom rounded-2xl">
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  class="w-full h-32 md:h-40 object-cover"
+                />
+              </div>
             ))}
           </div>
         )}
 
         {included.en.length > 0 && (
-          <div class="bg-white rounded-2xl border border-border p-5 md:p-7 mt-4">
-            <p class="text-[10px] tracking-[0.15em] text-label uppercase font-bold mb-3">
+          <div class="bg-card rounded-3xl shadow-card p-6 md:p-9 mt-5">
+            <p class="eyebrow mb-4">
               <span data-lang="en">What's included</span>
               <span data-lang="fr" hidden>Ce qui est inclus</span>
               <span data-lang="es" hidden>Qué incluye</span>
@@ -135,8 +142,8 @@ const jsonLd = {
           </div>
         )}
 
-        <div class="bg-white rounded-2xl border border-border p-5 md:p-7 mt-4">
-          <p class="text-[10px] tracking-[0.15em] text-label uppercase font-bold mb-3">
+        <div class="bg-card rounded-3xl shadow-card p-6 md:p-9 mt-5">
+          <p class="eyebrow mb-4">
             <span data-lang="en">Good to know</span>
             <span data-lang="fr" hidden>Bon à savoir</span>
             <span data-lang="es" hidden>Es bueno saberlo</span>
@@ -205,7 +212,7 @@ const jsonLd = {
         </div>
       </div>
 
-      <div class="hidden lg:block lg:sticky lg:top-6">
+      <div class="hidden lg:block lg:sticky lg:top-24">
         <BookingWidget title={title} price={price} priceLabel={priceLabel} />
       </div>
     </div>

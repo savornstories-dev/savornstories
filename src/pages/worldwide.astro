@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 
 const travelPhotos = [
   { src: '/assets/photos/antoine-travel-lombok-storm.jpg', rot: -3 },
@@ -36,20 +37,11 @@ const jsonLd = {
   description="Antoine personally guides in Bordeaux and Dieppe. Outside France, he introduces you to local guides he actually trusts."
   jsonLd={jsonLd}
 >
-  <div class="bg-green px-5 pt-8 pb-8 md:pt-14 md:pb-14 text-center">
-    <div class="text-[10px] tracking-[0.2em] text-teal-soft uppercase mb-1">Savor &amp; Stories</div>
-    <h1 class="text-cream text-2xl md:text-4xl font-bold">
-      <span data-lang="en">Beyond Bordeaux and Dieppe</span>
-      <span data-lang="fr" hidden>Plus loin que Bordeaux et Dieppe</span>
-      <span data-lang="es" hidden>Más allá de Burdeos y Dieppe</span>
-    </h1>
-    <div class="w-10 h-0.5 bg-gold mx-auto my-3"></div>
-    <p class="text-[13px] md:text-base text-[#e8e2d4] italic">
-      <span data-lang="en">A personal network of guides I trust, wherever that turns out to be.</span>
-      <span data-lang="fr" hidden>Un réseau personnel de guides en qui j'ai confiance, où que cela se trouve.</span>
-      <span data-lang="es" hidden>Una red personal de guías en los que confío, donde sea que eso resulte estar.</span>
-    </p>
-  </div>
+  <PageHero
+    eyebrow={{ en: 'Worldwide', fr: 'International', es: 'Internacional' }}
+    title={{ en: 'Beyond Bordeaux and Dieppe', fr: 'Plus loin que Bordeaux et Dieppe', es: 'Más allá de Burdeos y Dieppe' }}
+    line={{ en: 'A personal network of guides I trust, wherever that turns out to be.', fr: "Un réseau personnel de guides en qui j'ai confiance, où que cela se trouve.", es: 'Una red personal de guías en los que confío, donde sea que eso resulte estar.' }}
+  />
 
   <div class="max-w-[480px] md:max-w-3xl lg:max-w-4xl mx-auto">
     <div class="px-4 md:px-6 pt-6 md:pt-10 pb-2 text-sm md:text-base leading-relaxed text-ink-soft space-y-4 md:max-w-2xl md:mx-auto">

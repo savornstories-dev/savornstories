@@ -1,14 +1,23 @@
 @import "tailwindcss";
 
-/* Same palette as the original site: warm cream ground, Bordeaux green,
-   deep teal, wine red, gold accent. Kept as CSS variables so components
-   can reuse them without re-typing hex values. */
+/* Linen ground, charcoal type, wine for actions, terracotta for labels.
+   Sage and slate stay as the Bordeaux and Dieppe tints. The old token
+   names (cream, ink, green, teal) are kept as aliases so every page
+   picks up the new values without a rename. */
 @theme {
-  --color-cream: #f4f0e8;
-  --color-ink: #2c2020;
-  --color-ink-soft: #5a4a4a;
-  --color-label: #7a6a6a;
-  --color-border: #e0d8c8;
+  --color-linen: #f3ede3;
+  --color-parchment: #eae2d4;
+  --color-card: #fbf8f2;
+  --color-charcoal: #2a2522;
+  --color-soft: #5a4a44;
+  --color-terracotta: #b5553b;
+  --color-slate: #2c4a5e;
+
+  --color-cream: #f3ede3;
+  --color-ink: #2a2522;
+  --color-ink-soft: #5a4a44;
+  --color-label: #7a6a62;
+  --color-border: #e3dacb;
   --color-green: #3d5c3a;
   --color-green-soft: #e8f0e5;
   --color-teal: #2c4a5e;
@@ -16,17 +25,34 @@
   --color-wine: #6b1a2e;
   --color-wine-dieppe: #7a2c3a;
   --color-gold: #e8c07a;
-  --color-whatsapp: #25d366;
+  --color-whatsapp: #1e7f47;
 
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  --shadow-card: 0 8px 24px rgba(42, 37, 34, 0.08);
+  --shadow-lift: 0 24px 48px rgba(42, 37, 34, 0.14);
 }
 
 html {
-  background: var(--color-cream);
+  background: var(--color-linen);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-linen);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
 }
 
 .prose-tour {
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--color-ink-soft);
 }
@@ -35,29 +61,59 @@ html {
   margin-top: 1em;
 }
 
-body {
-  font-family: var(--font-sans);
-  color: var(--color-ink);
-  background: var(--color-cream);
+/* Section labels */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-terracotta);
+}
+
+/* Cards that lift and photos that zoom on hover */
+.lift {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lift);
+}
+.zoom {
+  overflow: hidden;
+}
+.zoom img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.zoom:hover img {
+  transform: scale(1.06);
 }
 
 /* Language switcher buttons (EN / FR / ES), shared across every page */
 .lbtn {
-  padding: 5px 14px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  font-size: 10px;
-  font-weight: bold;
-  letter-spacing: 0.08em;
+  padding: 7px 11px;
+  min-width: 38px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   cursor: pointer;
   background: transparent;
-  color: var(--color-cream);
+  color: var(--color-ink);
   font-family: var(--font-sans);
-  transition: all 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .lbtn.active {
-  background: var(--color-cream);
-  color: var(--color-green);
-  border-color: var(--color-cream);
+  background: var(--color-ink);
+  color: var(--color-linen);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lift, .zoom img {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

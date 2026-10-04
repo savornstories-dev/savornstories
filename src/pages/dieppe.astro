@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import TourCard from '../components/TourCard.astro';
+import ContactPanel from '../components/ContactPanel.astro';
 
 const tours = (await getCollection('tours', ({ data }) => data.city === 'dieppe'))
   .sort((a, b) => a.data.order - b.data.order);
@@ -14,97 +15,149 @@ const jsonLd = {
   email: 'contact@savornstories.com',
   address: { '@type': 'PostalAddress', addressLocality: 'Dieppe', addressCountry: 'FR' },
 };
+
+const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase px-3 py-2 rounded-full';
 ---
 <Layout
   title="Dieppe Tours with Antoine | Savor & Stories"
   description="Private scallop tastings, castle history and coastal walks in Dieppe, led personally by Antoine."
   jsonLd={jsonLd}
 >
-  <div class="bg-teal px-5 pt-8 pb-8 md:pt-14 md:pb-14 text-center">
-    <div class="text-[10px] tracking-[0.2em] text-teal-soft uppercase mb-1">Savor &amp; Stories</div>
-    <h1 class="text-cream text-2xl md:text-4xl font-bold">
-      <span data-lang="en">Dieppe Tours</span>
-      <span data-lang="fr" hidden>Visites de Dieppe</span>
-      <span data-lang="es" hidden>Tours de Dieppe</span>
-    </h1>
-    <div class="w-10 h-0.5 bg-gold mx-auto my-3"></div>
-    <p class="text-[13px] md:text-base text-[#e8e2d4] italic">
-      <span data-lang="en">A working scallop port, a castle, chalk cliffs and a story from 1942.</span>
-      <span data-lang="fr" hidden>Un port coquillier en activité, un château, des falaises de craie et une histoire de 1942.</span>
-      <span data-lang="es" hidden>Un puerto pesquero de vieiras en activo, un castillo, acantilados de creta y una historia de 1942.</span>
-    </p>
-  </div>
-
-  <div class="max-w-[480px] md:max-w-3xl lg:max-w-5xl mx-auto">
-    <div class="px-4 md:px-6 pt-6 md:pt-10 pb-2 md:grid md:grid-cols-2 lg:grid-cols-6 md:gap-5">
-      {tours.map((tour, i) => {
-        // Five tours don't divide evenly into three columns, which used to
-        // leave an orphaned pair on their own row. On a six column track,
-        // the first three cards each take two columns (three per row) and
-        // the last two each take three (two per row, filling it exactly).
-        const lgSpan = tours.length === 5 ? (i < 3 ? 'lg:col-span-2' : 'lg:col-span-3') : 'lg:col-span-2';
-        return (
-          <div class={lgSpan}>
-            <TourCard
-              slug={tour.id}
-              icon={tour.data.icon}
-              title={tour.data.title}
-              summary={tour.data.summary}
-              duration={tour.data.duration}
-              price={tour.data.price}
-              priceLabel={tour.data.priceLabel}
-              heroImage={tour.data.heroImage}
-              accent="dieppe"
-            />
-          </div>
-        );
-      })}
+  <section class="relative min-h-[420px] md:min-h-[540px] flex items-end text-linen overflow-hidden">
+    <img src="/assets/photos/dieppe-castle.jpg" alt="The castle of Dieppe above the pebble beach" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-[#1e3443]/35 via-[#1e3443]/40 to-[#1e3443]/85" aria-hidden="true"></div>
+    <div class="relative max-w-[1240px] mx-auto w-full px-4 md:px-8 pt-28 pb-10 md:pb-14 flex flex-col gap-4">
+      <nav aria-label="Breadcrumb" class="text-[13px] text-linen/80 flex gap-2">
+        <a href="/" class="text-linen/80 no-underline"><span data-lang="en">Home</span><span data-lang="fr" hidden>Accueil</span><span data-lang="es" hidden>Inicio</span></a>
+        <span aria-hidden="true">/</span>
+        <span>Dieppe</span>
+      </nav>
+      <span class="eyebrow text-gold">
+        <span data-lang="en">Normandy</span>
+        <span data-lang="fr" hidden>Normandie</span>
+        <span data-lang="es" hidden>Normandía</span>
+      </span>
+      <h1 class="font-display font-medium text-[48px] md:text-[88px] leading-[0.98] text-linen">
+        <span data-lang="en">Dieppe Tours</span>
+        <span data-lang="fr" hidden>Visites de Dieppe</span>
+        <span data-lang="es" hidden>Tours de Dieppe</span>
+      </h1>
+      <p class="font-display italic text-xl md:text-[28px] max-w-[48ch] text-linen/90">
+        <span data-lang="en">A working scallop port, a castle, chalk cliffs and a story from 1942.</span>
+        <span data-lang="fr" hidden>Un port coquillier en activité, un château, des falaises de craie et une histoire de 1942.</span>
+        <span data-lang="es" hidden>Un puerto pesquero de vieiras en activo, un castillo, acantilados de creta y una historia de 1942.</span>
+      </p>
+      <div class="flex flex-wrap gap-2 mt-1.5">
+        <span class={tag}><span data-lang="en">Scallops</span><span data-lang="fr" hidden>Coquilles</span><span data-lang="es" hidden>Vieiras</span></span>
+        <span class={tag}><span data-lang="en">Cliffs</span><span data-lang="fr" hidden>Falaises</span><span data-lang="es" hidden>Acantilados</span></span>
+        <span class={tag}>1942</span>
+        <span class={tag}><span data-lang="en">Castle</span><span data-lang="fr" hidden>Château</span><span data-lang="es" hidden>Castillo</span></span>
+      </div>
     </div>
+  </section>
 
-    <div class="px-4 md:px-6 pb-4">
-      <a
-        href="/dieppe-game"
-        class="flex items-center gap-3 bg-white rounded-2xl border border-border p-4 no-underline text-inherit md:max-w-md"
-      >
-        <span class="text-2xl">🎮</span>
-        <span>
-          <span class="block font-bold text-sm">
-            <span data-lang="en">Play Crack the Raid</span>
-            <span data-lang="fr" hidden>Jouer à Crack the Raid</span>
-            <span data-lang="es" hidden>Jugar a Crack the Raid</span>
-          </span>
-          <span class="block text-xs text-ink-soft">
-            <span data-lang="en">A free 7 question game before you book</span>
-            <span data-lang="fr" hidden>Un jeu gratuit de 7 questions avant de réserver</span>
-            <span data-lang="es" hidden>Un juego gratuito de 7 preguntas antes de reservar</span>
-          </span>
+  <section class="max-w-[1240px] mx-auto px-4 md:px-8 pt-10 md:pt-16 pb-2 flex flex-wrap items-end justify-between gap-8">
+    <div class="flex flex-col gap-2.5 flex-[1_1_420px] min-w-0">
+      <span class="eyebrow text-slate">
+        <span data-lang="en">Five ways to see the coast</span>
+        <span data-lang="fr" hidden>Cinq façons de voir la côte</span>
+        <span data-lang="es" hidden>Cinco formas de ver la costa</span>
+      </span>
+      <h2 class="font-display font-medium text-[34px] md:text-[52px] leading-[1.05] text-ink">
+        <span data-lang="en">Pick the tour that fits your day</span>
+        <span data-lang="fr" hidden>Choisissez la visite qui va avec votre journée</span>
+        <span data-lang="es" hidden>Elige el tour que encaja con tu día</span>
+      </h2>
+    </div>
+    <div class="flex flex-wrap gap-x-7 gap-y-2 text-sm text-ink-soft">
+      <span><strong class="text-ink">{tours.length}</strong> <span data-lang="en">tours</span><span data-lang="fr" hidden>visites</span><span data-lang="es" hidden>tours</span></span>
+      <span><strong class="text-ink">EN · FR · ES</strong></span>
+      <span>
+        <span data-lang="en">Small groups only</span>
+        <span data-lang="fr" hidden>Petits groupes uniquement</span>
+        <span data-lang="es" hidden>Solo grupos pequeños</span>
+      </span>
+    </div>
+  </section>
+
+  <section class="max-w-[1240px] mx-auto px-4 md:px-8 pt-8 pb-10 md:pb-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {tours.map((tour) => (
+        <TourCard
+          slug={tour.id}
+          icon={tour.data.icon}
+          title={tour.data.title}
+          summary={tour.data.summary}
+          duration={tour.data.duration}
+          price={tour.data.price}
+          priceLabel={tour.data.priceLabel}
+          heroImage={tour.data.heroImage}
+          accent="dieppe"
+        />
+      ))}
+      <a href="/dieppe-game" class="lift flex flex-col justify-end gap-3 bg-slate text-linen rounded-[20px] shadow-card p-6 md:p-7 min-h-[260px] no-underline">
+        <span class="text-3xl" aria-hidden="true">🎮</span>
+        <span class="font-display font-semibold text-2xl leading-tight">
+          <span data-lang="en">Play Crack the Raid</span>
+          <span data-lang="fr" hidden>Jouer à Crack the Raid</span>
+          <span data-lang="es" hidden>Jugar a Crack the Raid</span>
+        </span>
+        <span class="text-sm text-linen/80">
+          <span data-lang="en">A free 7 question game before you book</span>
+          <span data-lang="fr" hidden>Un jeu gratuit de 7 questions avant de réserver</span>
+          <span data-lang="es" hidden>Un juego gratuito de 7 preguntas antes de reservar</span>
         </span>
       </a>
     </div>
 
-    <div class="px-4 md:px-6 pb-8 md:pb-14">
-      <div class="bg-white rounded-2xl border border-border p-5 md:p-7 text-center md:max-w-md md:mx-auto">
-        <p class="text-sm font-bold mb-1">
-          <span data-lang="en">Want something different?</span>
-          <span data-lang="fr" hidden>Envie de quelque chose de différent&nbsp;?</span>
-          <span data-lang="es" hidden>¿Buscas algo diferente?</span>
+    <div class="bg-card rounded-[20px] shadow-card p-5 md:p-6 mt-6 flex flex-col gap-2 md:max-w-xl">
+      <p class="font-display font-semibold text-xl text-ink">
+        <span data-lang="en">Want something different?</span>
+        <span data-lang="fr" hidden>Envie de quelque chose de différent&nbsp;?</span>
+        <span data-lang="es" hidden>¿Buscas algo diferente?</span>
+      </p>
+      <p class="text-sm text-ink-soft leading-relaxed">
+        <span data-lang="en">I also design personalized tours of Dieppe and the Normandy coast for individuals, families or groups. Message me and we will work out the details together.</span>
+        <span data-lang="fr" hidden>Je conçois aussi des visites personnalisées de Dieppe et de la côte normande pour des individuels, des familles ou des groupes. Envoyez moi un message et nous réglerons les détails ensemble.</span>
+        <span data-lang="es" hidden>También diseño tours personalizados de Dieppe y la costa normanda para individuos, familias o grupos. Escríbeme y resolveremos los detalles juntos.</span>
+      </p>
+      <a
+        href="https://wa.me/33626391783?text=Hi%20Antoine!%20I'd%20like%20a%20custom%20Dieppe%20tour."
+        target="_blank"
+        rel="noopener"
+        class="inline-block text-sm font-semibold text-slate no-underline mt-1"
+      >
+        <span data-lang="en">Message Antoine &rarr;</span>
+        <span data-lang="fr" hidden>Envoyer un message à Antoine &rarr;</span>
+        <span data-lang="es" hidden>Enviar mensaje a Antoine &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="bg-teal-soft">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8 py-12 md:py-16 flex flex-wrap items-center gap-10">
+      <div class="zoom flex-[1_1_360px] min-w-0 rounded-[22px] aspect-[4/3] max-w-full">
+        <img src="/assets/photos/dieppe-cliffs-walk.jpg" alt="The chalk cliffs between Dieppe and Pourville" loading="lazy" class="w-full h-full object-cover" />
+      </div>
+      <div class="flex-[1_1_380px] min-w-0 flex flex-col gap-3.5">
+        <span class="eyebrow text-slate">
+          <span data-lang="en">Why Dieppe</span>
+          <span data-lang="fr" hidden>Pourquoi Dieppe</span>
+          <span data-lang="es" hidden>Por qué Dieppe</span>
+        </span>
+        <h2 class="font-display font-medium text-[30px] md:text-[46px] leading-[1.08] text-ink">
+          <span data-lang="en">The quieter of my two towns</span>
+          <span data-lang="fr" hidden>La plus tranquille de mes deux villes</span>
+          <span data-lang="es" hidden>La más tranquila de mis dos ciudades</span>
+        </h2>
+        <p class="text-base leading-relaxed text-ink-soft max-w-[52ch]">
+          <span data-lang="en">Dieppe gave me something quieter: a working scallop port, a clifftop castle, and a piece of 1942 history that still moves people when it is told properly. The ferry from Newhaven lands you ten minutes from where every tour starts.</span>
+          <span data-lang="fr" hidden>Dieppe m'a donné quelque chose de plus tranquille&nbsp;: un port de pêche à la coquille Saint-Jacques en activité, un château sur la falaise, et un pan de l'histoire de 1942 qui touche encore les gens quand on la raconte bien. Le ferry de Newhaven vous dépose à dix minutes du départ de chaque visite.</span>
+          <span data-lang="es" hidden>Dieppe me dio algo más tranquilo: un puerto pesquero de vieiras en activo, un castillo sobre el acantilado, y un fragmento de la historia de 1942 que todavía emociona cuando se cuenta bien. El ferry desde Newhaven te deja a diez minutos de donde empieza cada tour.</span>
         </p>
-        <p class="text-xs text-ink-soft leading-relaxed mb-3">
-          <span data-lang="en">I also design personalized tours of Dieppe and the Normandy coast for individuals, families or groups. Message me and we will work out the details together.</span>
-          <span data-lang="fr" hidden>Je conçois aussi des visites personnalisées de Dieppe et de la côte normande pour des individuels, des familles ou des groupes. Envoyez-moi un message et nous réglerons les détails ensemble.</span>
-          <span data-lang="es" hidden>También diseño tours personalizados de Dieppe y la costa normanda para individuos, familias o grupos. Escríbeme y resolveremos los detalles juntos.</span>
-        </p>
-        <a
-          href="https://wa.me/33626391783?text=Hi%20Antoine!%20I'd%20like%20a%20custom%20Dieppe%20tour."
-          target="_blank"
-          rel="noopener"
-          class="inline-block text-xs font-bold text-teal"
-        >
-          <span data-lang="en">Message Antoine &rarr;</span>
-          <span data-lang="fr" hidden>Envoyer un message à Antoine &rarr;</span>
-          <span data-lang="es" hidden>Enviar mensaje a Antoine &rarr;</span>
-        </a>
       </div>
     </div>
-  </div>
+  </section>
+
+  <ContactPanel tone="dark" />
 </Layout>

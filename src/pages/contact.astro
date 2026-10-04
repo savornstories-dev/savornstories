@@ -1,23 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 <Layout
   title="Contact Antoine | Savor & Stories"
   description="Message Antoine directly on WhatsApp to book a tour in Bordeaux or Dieppe, or ask a question first."
 >
-  <div class="bg-green px-5 pt-8 pb-8 md:pt-14 md:pb-14 text-center">
-    <h1 class="text-cream text-2xl md:text-4xl font-bold">
-      <span data-lang="en">Contact &amp; Booking Help</span>
-      <span data-lang="fr" hidden>Contact &amp; Aide à la réservation</span>
-      <span data-lang="es" hidden>Contacto y ayuda para reservar</span>
-    </h1>
-    <div class="w-10 h-0.5 bg-gold mx-auto my-3"></div>
-    <p class="text-[13px] md:text-base text-[#e8e2d4] italic">
-      <span data-lang="en">Every booking goes straight through to me, personally.</span>
-      <span data-lang="fr" hidden>Chaque réservation arrive directement jusqu'à moi, personnellement.</span>
-      <span data-lang="es" hidden>Cada reserva llega directamente a mí, en persona.</span>
-    </p>
-  </div>
+  <PageHero
+    eyebrow={{ en: 'Contact', fr: 'Contact', es: 'Contacto' }}
+    title={{ en: 'Contact & Booking Help', fr: 'Contact & Aide à la réservation', es: 'Contacto y ayuda para reservar' }}
+    line={{ en: 'Every booking goes straight through to me, personally.', fr: "Chaque réservation arrive directement jusqu'à moi, personnellement.", es: 'Cada reserva llega directamente a mí, en persona.' }}
+  />
 
   <div class="max-w-[480px] md:max-w-xl mx-auto">
     <div class="px-4 md:px-6 pt-6 md:pt-10 pb-4">

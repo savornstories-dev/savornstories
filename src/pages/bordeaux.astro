@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import TourCard from '../components/TourCard.astro';
+import ContactPanel from '../components/ContactPanel.astro';
 
 const tours = (await getCollection('tours', ({ data }) => data.city === 'bordeaux'))
   .sort((a, b) => a.data.order - b.data.order);
@@ -34,32 +35,73 @@ const jsonLd = {
     },
   ],
 };
+
+const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase px-3 py-2 rounded-full';
 ---
 <Layout
   title="Bordeaux Tours with Antoine | Savor & Stories"
   description="Private wine, food, history and bike tours in Bordeaux, led personally by Antoine."
   jsonLd={jsonLd}
 >
-  <div
-    class="bg-cover bg-center px-5 pt-10 pb-8 md:pt-20 md:pb-16 text-center"
-    style="background-image: linear-gradient(to bottom right, rgba(61,92,58,.88), rgba(44,74,94,.88)), url('/assets/photos/bordeaux-miroir-deau.jpg')"
-  >
-    <div class="text-[10px] tracking-[0.2em] text-teal-soft uppercase mb-1">Savor &amp; Stories</div>
-    <h1 class="text-cream text-2xl md:text-4xl font-bold">
-      <span data-lang="en">Bordeaux Tours</span>
-      <span data-lang="fr" hidden>Visites de Bordeaux</span>
-      <span data-lang="es" hidden>Tours de Burdeos</span>
-    </h1>
-    <div class="w-10 h-0.5 bg-gold mx-auto my-3"></div>
-    <p class="text-[13px] md:text-base text-[#e8e2d4] italic">
-      <span data-lang="en">Wine, history and a river that built the city's fortune.</span>
-      <span data-lang="fr" hidden>Vin, histoire et un fleuve qui a fait la fortune de la ville.</span>
-      <span data-lang="es" hidden>Vino, historia y un río que hizo la fortuna de la ciudad.</span>
-    </p>
-  </div>
+  <section class="relative min-h-[420px] md:min-h-[540px] flex items-end text-linen overflow-hidden">
+    <img src="/assets/photos/bordeaux-miroir-deau.jpg" alt="Place de la Bourse reflected in the Miroir d'eau" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-b from-charcoal/35 via-charcoal/40 to-charcoal/85" aria-hidden="true"></div>
+    <div class="relative max-w-[1240px] mx-auto w-full px-4 md:px-8 pt-28 pb-10 md:pb-14 flex flex-col gap-4">
+      <nav aria-label="Breadcrumb" class="text-[13px] text-linen/80 flex gap-2">
+        <a href="/" class="text-linen/80 no-underline"><span data-lang="en">Home</span><span data-lang="fr" hidden>Accueil</span><span data-lang="es" hidden>Inicio</span></a>
+        <span aria-hidden="true">/</span>
+        <span>Bordeaux</span>
+      </nav>
+      <span class="eyebrow text-gold">
+        <span data-lang="en">South West France</span>
+        <span data-lang="fr" hidden>Sud Ouest de la France</span>
+        <span data-lang="es" hidden>Suroeste de Francia</span>
+      </span>
+      <h1 class="font-display font-medium text-[48px] md:text-[88px] leading-[0.98] text-linen">
+        <span data-lang="en">Bordeaux Tours</span>
+        <span data-lang="fr" hidden>Visites de Bordeaux</span>
+        <span data-lang="es" hidden>Tours de Burdeos</span>
+      </h1>
+      <p class="font-display italic text-xl md:text-[28px] max-w-[48ch] text-linen/90">
+        <span data-lang="en">Wine, history and a river that built the city's fortune.</span>
+        <span data-lang="fr" hidden>Vin, histoire et un fleuve qui a fait la fortune de la ville.</span>
+        <span data-lang="es" hidden>Vino, historia y un río que hizo la fortuna de la ciudad.</span>
+      </p>
+      <div class="flex flex-wrap gap-2 mt-1.5">
+        <span class={tag}><span data-lang="en">Wine</span><span data-lang="fr" hidden>Vin</span><span data-lang="es" hidden>Vino</span></span>
+        <span class={tag}><span data-lang="en">History</span><span data-lang="fr" hidden>Histoire</span><span data-lang="es" hidden>Historia</span></span>
+        <span class={tag}><span data-lang="en">Food</span><span data-lang="fr" hidden>Gastronomie</span><span data-lang="es" hidden>Gastronomía</span></span>
+        <span class={tag}><span data-lang="en">Bike</span><span data-lang="fr" hidden>Vélo</span><span data-lang="es" hidden>Bici</span></span>
+      </div>
+    </div>
+  </section>
 
-  <div class="max-w-[480px] md:max-w-3xl lg:max-w-5xl mx-auto">
-    <div class="px-4 md:px-6 pt-6 md:pt-10 pb-2 md:grid md:grid-cols-2 md:gap-5">
+  <section class="max-w-[1240px] mx-auto px-4 md:px-8 pt-10 md:pt-16 pb-2 flex flex-wrap items-end justify-between gap-8">
+    <div class="flex flex-col gap-2.5 flex-[1_1_420px] min-w-0">
+      <span class="eyebrow">
+        <span data-lang="en">Nine ways to see the city</span>
+        <span data-lang="fr" hidden>Neuf façons de voir la ville</span>
+        <span data-lang="es" hidden>Nueve formas de ver la ciudad</span>
+      </span>
+      <h2 class="font-display font-medium text-[34px] md:text-[52px] leading-[1.05] text-ink">
+        <span data-lang="en">Pick the tour that fits your day</span>
+        <span data-lang="fr" hidden>Choisissez la visite qui va avec votre journée</span>
+        <span data-lang="es" hidden>Elige el tour que encaja con tu día</span>
+      </h2>
+    </div>
+    <div class="flex flex-wrap gap-x-7 gap-y-2 text-sm text-ink-soft">
+      <span><strong class="text-ink">{tours.length}</strong> <span data-lang="en">tours</span><span data-lang="fr" hidden>visites</span><span data-lang="es" hidden>tours</span></span>
+      <span><strong class="text-ink">EN · FR · ES</strong></span>
+      <span>
+        <span data-lang="en">Small groups only</span>
+        <span data-lang="fr" hidden>Petits groupes uniquement</span>
+        <span data-lang="es" hidden>Solo grupos pequeños</span>
+      </span>
+    </div>
+  </section>
+
+  <section class="max-w-[1240px] mx-auto px-4 md:px-8 pt-8 pb-10 md:pb-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {tours.map((tour) => (
         <TourCard
           slug={tour.id}
@@ -75,44 +117,38 @@ const jsonLd = {
       ))}
     </div>
 
-    <div class="px-4 md:px-6 pb-4">
-      <a
-        href="/bordeaux-game"
-        class="flex items-center gap-3 bg-white rounded-2xl border border-border p-4 no-underline text-inherit md:max-w-md"
-      >
-        <span class="text-2xl">🎮</span>
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+      <a href="/bordeaux-game" class="lift flex items-center gap-4 bg-card rounded-[20px] shadow-card p-5 md:p-6 no-underline text-inherit">
+        <span class="text-3xl" aria-hidden="true">🎮</span>
         <span>
-          <span class="block font-bold text-sm">
+          <span class="block font-display font-semibold text-xl text-ink">
             <span data-lang="en">Play Blind Taste, Bordeaux</span>
             <span data-lang="fr" hidden>Jouer à Blind Taste, Bordeaux</span>
             <span data-lang="es" hidden>Jugar a Blind Taste, Bordeaux</span>
           </span>
-          <span class="block text-xs text-ink-soft">
+          <span class="block text-sm text-ink-soft">
             <span data-lang="en">A free 7 question game before you book</span>
             <span data-lang="fr" hidden>Un jeu gratuit de 7 questions avant de réserver</span>
             <span data-lang="es" hidden>Un juego gratuito de 7 preguntas antes de reservar</span>
           </span>
         </span>
       </a>
-    </div>
-
-    <div class="px-4 md:px-6 pb-8 md:pb-14">
-      <div class="bg-white rounded-2xl border border-border p-5 md:p-7 text-center md:max-w-md md:mx-auto">
-        <p class="text-sm font-bold mb-1">
+      <div class="bg-card rounded-[20px] shadow-card p-5 md:p-6 flex flex-col gap-2">
+        <p class="font-display font-semibold text-xl text-ink">
           <span data-lang="en">Want something different?</span>
           <span data-lang="fr" hidden>Envie de quelque chose de différent&nbsp;?</span>
           <span data-lang="es" hidden>¿Buscas algo diferente?</span>
         </p>
-        <p class="text-xs text-ink-soft leading-relaxed mb-3">
+        <p class="text-sm text-ink-soft leading-relaxed">
           <span data-lang="en">I also design personalized tours of Bordeaux for individuals, families or groups. Message me and we will work out the details together.</span>
-          <span data-lang="fr" hidden>Je conçois aussi des visites personnalisées de Bordeaux pour des individuels, des familles ou des groupes. Envoyez-moi un message et nous réglerons les détails ensemble.</span>
+          <span data-lang="fr" hidden>Je conçois aussi des visites personnalisées de Bordeaux pour des individuels, des familles ou des groupes. Envoyez moi un message et nous réglerons les détails ensemble.</span>
           <span data-lang="es" hidden>También diseño tours personalizados de Burdeos para individuos, familias o grupos. Escríbeme y resolveremos los detalles juntos.</span>
         </p>
         <a
           href="https://wa.me/33626391783?text=Hi%20Antoine!%20I'd%20like%20a%20custom%20Bordeaux%20tour."
           target="_blank"
           rel="noopener"
-          class="inline-block text-xs font-bold text-wine"
+          class="inline-block text-sm font-semibold text-wine no-underline mt-1"
         >
           <span data-lang="en">Message Antoine &rarr;</span>
           <span data-lang="fr" hidden>Envoyer un message à Antoine &rarr;</span>
@@ -120,5 +156,51 @@ const jsonLd = {
         </a>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="bg-parchment">
+    <div class="max-w-[1240px] mx-auto px-4 md:px-8 py-12 md:py-16 grid sm:grid-cols-3 gap-8">
+      <div class="flex flex-col gap-2">
+        <span class="font-display text-3xl text-wine leading-none">01</span>
+        <span class="font-bold text-ink">
+          <span data-lang="en">Small groups, always</span>
+          <span data-lang="fr" hidden>Petits groupes, toujours</span>
+          <span data-lang="es" hidden>Grupos pequeños, siempre</span>
+        </span>
+        <span class="text-sm leading-relaxed text-ink-soft">
+          <span data-lang="en">Every departure is led by me. No headsets, no flags, real conversation.</span>
+          <span data-lang="fr" hidden>Chaque départ est mené par moi. Pas de casques, pas de drapeau, une vraie conversation.</span>
+          <span data-lang="es" hidden>Cada salida la guío yo. Sin auriculares, sin banderín, conversación de verdad.</span>
+        </span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="font-display text-3xl text-wine leading-none">02</span>
+        <span class="font-bold text-ink">
+          <span data-lang="en">Book straight with me</span>
+          <span data-lang="fr" hidden>Réservez directement avec moi</span>
+          <span data-lang="es" hidden>Reserva directamente conmigo</span>
+        </span>
+        <span class="text-sm leading-relaxed text-ink-soft">
+          <span data-lang="en">WhatsApp or email, answered personally.</span>
+          <span data-lang="fr" hidden>WhatsApp ou email, réponse personnelle.</span>
+          <span data-lang="es" hidden>WhatsApp o email, respuesta personal.</span>
+        </span>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="font-display text-3xl text-wine leading-none">03</span>
+        <span class="font-bold text-ink">
+          <span data-lang="en">Sundays too</span>
+          <span data-lang="fr" hidden>Le dimanche aussi</span>
+          <span data-lang="es" hidden>También los domingos</span>
+        </span>
+        <span class="text-sm leading-relaxed text-ink-soft">
+          <span data-lang="en">Several tours run seven days a week. Tours that end in a restaurant skip Sunday, when most Bordeaux kitchens close.</span>
+          <span data-lang="fr" hidden>Plusieurs visites tournent sept jours sur sept. Celles qui finissent au restaurant sautent le dimanche, quand la plupart des cuisines bordelaises ferment.</span>
+          <span data-lang="es" hidden>Varios tours salen los siete días de la semana. Los que terminan en un restaurante no salen el domingo, cuando cierran la mayoría de cocinas de Burdeos.</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <ContactPanel tone="dark" />
 </Layout>
