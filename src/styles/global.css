@@ -39,6 +39,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (min-width: 768px) {
+  html {
+    font-size: 17px;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-ink);
@@ -52,8 +58,8 @@ h1, h2, h3 {
 }
 
 .prose-tour {
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 1.125rem;
+  line-height: 1.75;
   color: var(--color-ink-soft);
 }
 
