@@ -48,6 +48,6 @@ description:
     - "Una vez allí, recorremos el pueblo en sí, sus calles empinadas y sus casas de piedra, y bajamos a la iglesia monolítica subterránea, excavada directamente en la roca, considerada la más grande de su tipo en Europa. Más tarde visitamos una finca vinícola familiar cercana para una cata de verdad, del tipo en el que alguien realmente explica lo que estás bebiendo en lugar de simplemente servir y seguir adelante."
     - "Es un día completo en lugar de un añadido rápido, y lo mantengo así a propósito, porque apresurar Saint-Émilion en un par de horas no le hace justicia."
 icon: "🍇"
-order: 7
+order: 8
 heroImage: "/assets/photos/bordeaux-saint-emilion-village.jpg"
 ---

@@ -48,6 +48,6 @@ description:
     - "La mayoría de estos días terminan construidos alrededor de una competencia amistosa de algún tipo, una cata de vino a ciegas donde los equipos adivinan la variedad y la región, o un torneo de petanca con un cuadro y un pequeño premio, terminando con un aperitivo o una comida compartida. Primero hago algunas preguntas, el tamaño del grupo, cuánto quieren moverse, si el alcohol forma parte de ello, y construyo el formato a partir de las respuestas en lugar de ofrecer un paquete fijo."
     - "No hay un precio fijo para esta opción, ya que un grupo de ocho y un grupo de cuarenta necesitan una planificación completamente distinta. Escríbeme con el tamaño de tu grupo y una idea de lo que buscas, y prepararé una propuesta."
 icon: "🏆"
-order: 4
+order: 5
 heroImage: "/assets/photos/bordeaux-porte-dijeaux-group.jpg"
 ---

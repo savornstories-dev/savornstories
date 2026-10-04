@@ -45,6 +45,6 @@ description:
     - "El camino es llano todo el trayecto, así que cualquiera que sepa montar en bicicleta cómodamente puede hacer este tour, sin experiencia necesaria. Paramos varias veces en el camino, incluida una parada para tomar café, así que el paseo nunca se siente apresurado."
     - "Normalmente se tarda unas tres horas en recorrer unos doce kilómetros, y les da a los visitantes que solo tienen un día en Burdeos una idea real de toda la ciudad en lugar de un solo barrio. Se proporcionan bicicletas y cascos."
 icon: "🚴"
-order: 3
+order: 4
 heroImage: "/assets/photos/bordeaux-bike-riverside.jpg"
 ---

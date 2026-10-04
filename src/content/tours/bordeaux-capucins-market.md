@@ -48,5 +48,5 @@ description:
     - "Recorremos los puestos mientras están realmente activos, y después paramos en una de las barras para tomar ostras y una copa de vino blanco frío, de pie, una costumbre genuinamente local. En el camino probamos queso local y algunas lonchas de embutido hechas por quienes realmente los elaboran."
     - "Tiene que ser por la mañana, ya que el mercado se vacía rápido después del almuerzo y algunos puestos cierran pronto. Si solo tienes tiempo para una experiencia gastronómica en Burdeos, esta es la que yo elegiría."
 icon: "🧺"
-order: 6
+order: 7
 ---
