@@ -1191,12 +1191,7 @@ en:{
   ["Password manager","Holds all of the above","Bitwarden or 1Password, Antoine as owner, emergency access granted to one trusted person","Free or a few € a month",""]
  ],
  howH:"How a change reaches the live site", howP:"Five commands, always the same. Anyone who has used a terminal once can do this in twenty minutes the first time and five minutes after.",
- how:"# once, on a new computer\ngit clone https://github.com/savornstories-dev/savornstories.git\ncd savornstories\ngit checkout claude/astro-rebuild\nnpm install\nnpx wrangler login        # opens the browser, log in to Antoine's Cloudflare account\n\n# every change\n# 1. edit the file (see the table below)\nnpm run build             # fails loudly if a translation is missing: fix and run again\ngit add -A && git commit -m \"Describe the change\"\ngit push\nnpx wrangler deploy       # the site is live within a minute\n\n# never use: npx wrangler versions upload  (stages a version that is not live)
-
-# If Cloudflare Workers Builds is connected to the GitHub repository
-# (dash.cloudflare.com, Workers & Pages, tours, Settings, Builds), a git push
-# to the live branch builds and deploys by itself and the last command is not needed.
-# Build command there must be: npm run build   Deploy command: npx wrangler deploy",
+ how:"# once, on a new computer\ngit clone https://github.com/savornstories-dev/savornstories.git\ncd savornstories\ngit checkout claude/astro-rebuild\nnpm install\nnpx wrangler login        # opens the browser, log in to Antoine's Cloudflare account\n\n# every change\n# 1. edit the file (see the table below)\nnpm run build             # fails loudly if a translation is missing: fix and run again\ngit add -A && git commit -m \"Describe the change\"\ngit push\nnpx wrangler deploy       # the site is live within a minute\n\n# never use: npx wrangler versions upload  (stages a version that is not live)\n\n# If Cloudflare Workers Builds is connected to the GitHub repository\n# (dash.cloudflare.com, Workers & Pages, tours, Settings, Builds), a git push\n# to the live branch builds and deploys by itself and the last command is not needed.\n# Build command there must be: npm run build   Deploy command: npx wrangler deploy",
  filesH:"What lives where", filesC:["To change","Edit this","Notes"],
  files:[
   ["A price, a schedule, a meeting point, what is included","src/content/tours/<tour>.md, the block between the dashes at the top","Every text field has en, fr and es. Change all three or the build stops"],
