@@ -125,3 +125,15 @@ h1, h2, h3 {
     min-width: 44px;
   }
 }
+
+/* Laptops and desktops get the whole page scaled up; phones and tablets
+   are untouched. Breakpoints are measured on the real viewport. */
+@media (min-width: 1280px) {
+  body { zoom: 1.1; }
+}
+@media (min-width: 1536px) {
+  body { zoom: 1.2; }
+}
+@media (min-width: 1900px) {
+  body { zoom: 1.25; }
+}
