@@ -1176,8 +1176,8 @@ en:{
  acc:[
   ["Domain savorstories.com","The address of the site","Registrar: to confirm (Cloudflare Registrar or the original registrar). Check at the registrar, not at Cloudflare DNS","About 10 to 15 € a year, auto renew on. Expiry is the one thing that can make the site vanish overnight",""],
   ["Domain savornstories.com","The address of the contact email, with the n","Same check as above","Same",""],
-  ["Cloudflare","DNS for both domains, hosting of the site as a Worker named tours, email routing if used","dash.cloudflare.com","Free plan is enough",""],
-  ["GitHub · savornstories-dev/savornstories","The source of the site, every version ever made","github.com/savornstories-dev/savornstories, live branch claude/astro-rebuild","Free. Antoine should be an owner of the organisation, not a collaborator",""],
+  ["Cloudflare","DNS for both domains, hosting of the site as a Worker named tours, email routing if used","dash.cloudflare.com","Free plan is enough","Antoine · his own account"],
+  ["GitHub · savornstories-dev/savornstories","The source of the site, every version ever made","github.com/savornstories-dev/savornstories, live branch claude/astro-rebuild","Free","Antoine · his own account. Keep it the owner; give helpers collaborator access only"],
   ["Email contact@savornstories.com","Guest email","Provider to confirm: Cloudflare Email Routing forwarding to a Gmail, or Google Workspace","Free if routing, about 6 € a month if Workspace",""],
   ["WhatsApp Business +33 6 26 39 17 83","Bookings, groups, the whole guest relationship","On Antoine's phone. Back up chats to the cloud monthly","Free. The number is the business; never let the SIM lapse",""],
   ["Google Business Profile","The map listing and its reviews","business.google.com","Free",""],
@@ -1191,7 +1191,12 @@ en:{
   ["Password manager","Holds all of the above","Bitwarden or 1Password, Antoine as owner, emergency access granted to one trusted person","Free or a few € a month",""]
  ],
  howH:"How a change reaches the live site", howP:"Five commands, always the same. Anyone who has used a terminal once can do this in twenty minutes the first time and five minutes after.",
- how:"# once, on a new computer\ngit clone https://github.com/savornstories-dev/savornstories.git\ncd savornstories\ngit checkout claude/astro-rebuild\nnpm install\nnpx wrangler login        # opens the browser, log in to the Cloudflare account that owns the site\n\n# every change\n# 1. edit the file (see the table below)\nnpm run build             # fails loudly if a translation is missing: fix and run again\ngit add -A && git commit -m \"Describe the change\"\ngit push\nnpx wrangler deploy       # the site is live within a minute\n\n# never use: npx wrangler versions upload  (stages a version that is not live)",
+ how:"# once, on a new computer\ngit clone https://github.com/savornstories-dev/savornstories.git\ncd savornstories\ngit checkout claude/astro-rebuild\nnpm install\nnpx wrangler login        # opens the browser, log in to Antoine's Cloudflare account\n\n# every change\n# 1. edit the file (see the table below)\nnpm run build             # fails loudly if a translation is missing: fix and run again\ngit add -A && git commit -m \"Describe the change\"\ngit push\nnpx wrangler deploy       # the site is live within a minute\n\n# never use: npx wrangler versions upload  (stages a version that is not live)
+
+# If Cloudflare Workers Builds is connected to the GitHub repository
+# (dash.cloudflare.com, Workers & Pages, tours, Settings, Builds), a git push
+# to the live branch builds and deploys by itself and the last command is not needed.
+# Build command there must be: npm run build   Deploy command: npx wrangler deploy",
  filesH:"What lives where", filesC:["To change","Edit this","Notes"],
  files:[
   ["A price, a schedule, a meeting point, what is included","src/content/tours/<tour>.md, the block between the dashes at the top","Every text field has en, fr and es. Change all three or the build stops"],
@@ -1218,7 +1223,7 @@ en:{
  handH:"Handover: what to give a freelancer", handP:"Any web developer who knows Astro, or any competent developer with an afternoon, can run this. Find one on Malt, on the Astro Discord, or through a Bordeaux agency. A routine change is one to two hours of work; a new page half a day.",
  hand:["Read access to the GitHub repository, upgraded to write access only after the first change is reviewed","A Cloudflare account invitation with the Workers role, never the owner password","This page, CLAUDE.md and the README, before any call","The list of what not to do: no rebuild from scratch, no move to another host or framework, no plugin or CMS, no change to the domain, no stock images","A fixed price per change agreed in writing, paid after the change is live and checked on a phone"],
  busH:"The yearly continuity check", busP:"Once a year, on the same date, tick these. Thirty minutes that keep the business alive if any one person disappears.",
- bus:["Both domains renew automatically and the registrar email is Antoine's","Antoine is owner of the Cloudflare account and the GitHub organisation","The password manager has every row of the table and emergency access is set","Recovery codes for Google, Cloudflare, GitHub and WhatsApp are printed and in the kit box","A fresh copy of the repository and of this manual sits on a USB stick in the same box","WhatsApp chats are backed up and the SIM is on auto pay","One other person has done the five commands once, on their own computer, with a harmless change"],
+ bus:["Both domains renew automatically and the registrar email is Antoine's","Antoine is still the owner of the Cloudflare account and the GitHub organisation, and both logins have his phone for recovery","The password manager has every row of the table and emergency access is set","Recovery codes for Google, Cloudflare, GitHub and WhatsApp are printed and in the kit box","A fresh copy of the repository and of this manual sits on a USB stick in the same box","WhatsApp chats are backed up and the SIM is on auto pay","One other person has done the five commands once, on their own computer, with a harmless change"],
  noteTag:"Fill in by hand", note:"The last column of the accounts table and the registrar and email provider rows are blank on purpose: they hold information only the account holders have. Fill them in, print the page, and put it in the kit box with the recovery codes."
 },
 fr:{
@@ -1241,8 +1246,8 @@ fr:{
  acc:[
   ["Domaine savorstories.com","L'adresse du site","Registrar : à confirmer (Cloudflare Registrar ou le registrar d'origine). Vérifier chez le registrar, pas dans le DNS Cloudflare","Environ 10 à 15 € par an, renouvellement automatique activé. L'expiration est la seule chose qui peut faire disparaître le site du jour au lendemain",""],
   ["Domaine savornstories.com","L'adresse du courriel de contact, avec le n","Même vérification","Idem",""],
-  ["Cloudflare","DNS des deux domaines, hébergement du site sous forme de Worker nommé tours, routage des courriels si utilisé","dash.cloudflare.com","L'offre gratuite suffit",""],
-  ["GitHub · savornstories-dev/savornstories","La source du site, chaque version jamais faite","github.com/savornstories-dev/savornstories, branche en ligne claude/astro-rebuild","Gratuit. Antoine doit être propriétaire de l'organisation, pas collaborateur",""],
+  ["Cloudflare","DNS des deux domaines, hébergement du site sous forme de Worker nommé tours, routage des courriels si utilisé","dash.cloudflare.com","L'offre gratuite suffit","Antoine · son propre compte"],
+  ["GitHub · savornstories-dev/savornstories","La source du site, chaque version jamais faite","github.com/savornstories-dev/savornstories, branche en ligne claude/astro-rebuild","Gratuit","Antoine · son propre compte. Il reste propriétaire ; les aides n'ont qu'un accès collaborateur"],
   ["Courriel contact@savornstories.com","Courriel des clients","Fournisseur à confirmer : Cloudflare Email Routing vers un Gmail, ou Google Workspace","Gratuit en routage, environ 6 € par mois en Workspace",""],
   ["WhatsApp Business +33 6 26 39 17 83","Réservations, groupes, toute la relation client","Sur le téléphone d'Antoine. Sauvegarder les discussions dans le cloud chaque mois","Gratuit. Le numéro, c'est l'activité ; ne jamais laisser la carte SIM expirer",""],
   ["Fiche Google Business","La fiche sur la carte et ses avis","business.google.com","Gratuit",""],
@@ -1283,7 +1288,7 @@ fr:{
  handH:"Passation : quoi remettre à un indépendant", handP:"Tout développeur web qui connaît Astro, ou tout développeur compétent avec un après midi, peut faire tourner ça. Trouve le sur Malt, sur le Discord d'Astro, ou via une agence bordelaise. Une modification courante prend une à deux heures ; une nouvelle page une demi journée.",
  hand:["Accès en lecture au dépôt GitHub, passé en écriture seulement après relecture de la première modification","Une invitation Cloudflare avec le rôle Workers, jamais le mot de passe du propriétaire","Cette page, CLAUDE.md et le README, avant tout appel","La liste de ce qu'il ne faut pas faire : pas de reconstruction à zéro, pas de changement d'hébergeur ni de framework, pas d'extension ni de CMS, pas de changement de domaine, pas d'images de banque","Un prix fixe par modification convenu par écrit, payé une fois la modification en ligne et vérifiée sur un téléphone"],
  busH:"La vérification annuelle de continuité", busP:"Une fois par an, à la même date, coche ceci. Trente minutes qui gardent l'activité en vie si une seule personne disparaît.",
- bus:["Les deux domaines se renouvellent automatiquement et le courriel du registrar est celui d'Antoine","Antoine est propriétaire du compte Cloudflare et de l'organisation GitHub","Le gestionnaire de mots de passe contient chaque ligne du tableau et l'accès d'urgence est réglé","Les codes de récupération Google, Cloudflare, GitHub et WhatsApp sont imprimés et dans la boîte du matériel","Une copie fraîche du dépôt et de ce manuel est sur une clé USB dans la même boîte","Les discussions WhatsApp sont sauvegardées et la carte SIM est en prélèvement automatique","Une autre personne a fait les cinq commandes une fois, sur son propre ordinateur, avec une modification sans risque"],
+ bus:["Les deux domaines se renouvellent automatiquement et le courriel du registrar est celui d'Antoine","Antoine est toujours propriétaire du compte Cloudflare et de l'organisation GitHub, et les deux connexions ont son téléphone pour la récupération","Le gestionnaire de mots de passe contient chaque ligne du tableau et l'accès d'urgence est réglé","Les codes de récupération Google, Cloudflare, GitHub et WhatsApp sont imprimés et dans la boîte du matériel","Une copie fraîche du dépôt et de ce manuel est sur une clé USB dans la même boîte","Les discussions WhatsApp sont sauvegardées et la carte SIM est en prélèvement automatique","Une autre personne a fait les cinq commandes une fois, sur son propre ordinateur, avec une modification sans risque"],
  noteTag:"À remplir à la main", note:"La dernière colonne du tableau des comptes et les lignes registrar et fournisseur de courriel sont vides exprès : elles contiennent des informations que seuls les titulaires des comptes ont. Remplis les, imprime la page, et range la dans la boîte du matériel avec les codes de récupération."
 }
 };
@@ -1305,7 +1310,7 @@ function renderSys(){
   $("#sy-map").innerHTML=g.map.map(([h,p],i)=>`<div class="node"><span class="k">${i+1}</span><div><b>${esc(h)}</b><p class="muted small">${esc(p)}</p></div></div>`).join("");
   $("#sy-acc-h").textContent=g.accH; $("#sy-acc-p").textContent=g.accP;
   $("#sy-acc-head").innerHTML=`<tr>${g.accC.map(c=>`<th>${esc(c)}</th>`).join("")}</tr>`;
-  $("#sy-acc").innerHTML=g.acc.map(r=>`<tr><td style="font-weight:600">${esc(r[0])}</td><td>${esc(r[1])}</td><td class="muted">${esc(r[2])}</td><td class="muted">${esc(r[3])}</td><td class="fill"></td></tr>`).join("");
+  $("#sy-acc").innerHTML=g.acc.map(r=>`<tr><td style="font-weight:600">${esc(r[0])}</td><td>${esc(r[1])}</td><td class="muted">${esc(r[2])}</td><td class="muted">${esc(r[3])}</td><td class="fill">${esc(r[4]||"")}</td></tr>`).join("");
   $("#sy-how-h").textContent=g.howH; $("#sy-how-p").textContent=g.howP; $("#sy-how").textContent=g.how;
   $("#sy-files-h").textContent=g.filesH;
   $("#sy-files-head").innerHTML=`<tr>${g.filesC.map(c=>`<th>${esc(c)}</th>`).join("")}</tr>`;
