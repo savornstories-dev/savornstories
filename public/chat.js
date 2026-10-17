@@ -12,7 +12,7 @@
 
   var UI = {
     en: {
-      btnLabel: 'Ask a question',
+      btnLabel: 'FAQ',
       sub: 'Quick answers · EN / FR / ES',
       placeholder: 'Type your question…',
       greeting: 'Hi! Ask me anything about our tours — prices, durations, languages, booking.',
@@ -20,7 +20,7 @@
       quick: ['Prices', 'How to book', 'Languages', 'What’s included', 'Group size', 'Contact']
     },
     fr: {
-      btnLabel: 'Une question ?',
+      btnLabel: 'FAQ',
       sub: 'Réponses rapides · EN / FR / ES',
       placeholder: 'Votre question…',
       greeting: 'Bonjour ! Posez-moi vos questions sur nos visites — tarifs, durées, langues, réservation.',
@@ -28,7 +28,7 @@
       quick: ['Tarifs', 'Comment réserver', 'Langues', 'Ce qui est inclus', 'Taille du groupe', 'Contact']
     },
     es: {
-      btnLabel: '¿Preguntas?',
+      btnLabel: 'FAQ',
       sub: 'Respuestas rápidas · EN / FR / ES',
       placeholder: 'Su pregunta…',
       greeting: '¡Hola! Pregúnteme sobre nuestras visitas — precios, duraciones, idiomas, reservas.',
@@ -322,45 +322,46 @@
 
   var style = document.createElement('style');
   style.textContent = [
-    '#ss-btn{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom));right:18px;z-index:9000;background:#3d5c3a;color:#f4f0e8;border:none;border-radius:28px;padding:11px 16px 11px 12px;font-size:12px;font-weight:bold;cursor:pointer;font-family:Arial,sans-serif;display:flex;align-items:center;gap:7px;box-shadow:0 4px 18px rgba(0,0,0,.22);transition:transform .14s}',
+    '#ss-btn{position:fixed;bottom:calc(22px + env(safe-area-inset-bottom));right:22px;z-index:9000;background:#3d5c3a;color:#f4f0e8;border:none;border-radius:32px;padding:14px 22px 14px 18px;font-size:15px;font-weight:bold;cursor:pointer;font-family:Arial,sans-serif;display:flex;align-items:center;gap:9px;box-shadow:0 4px 20px rgba(0,0,0,.26);transition:transform .14s}',
     '#ss-btn:active{transform:scale(.95)}',
-    '#ss-panel{position:fixed;bottom:calc(72px + env(safe-area-inset-bottom));right:12px;left:12px;max-width:420px;margin-left:auto;margin-right:auto;z-index:9000;background:#fff;border-radius:16px;border:.5px solid #c8d5c4;box-shadow:0 8px 32px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;font-family:Arial,sans-serif}',
+    '#ss-panel{position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));right:12px;left:12px;max-width:440px;margin-left:auto;margin-right:auto;z-index:9000;background:#fff;border-radius:16px;border:.5px solid #c8d5c4;box-shadow:0 8px 32px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;font-family:Arial,sans-serif}',
     '#ss-panel.ss-open{display:flex}',
-    '.ss-head{background:#3d5c3a;padding:11px 13px;display:flex;align-items:center;justify-content:space-between}',
-    '.ss-head-l{display:flex;align-items:center;gap:8px}',
-    '.ss-av{width:30px;height:30px;border-radius:50%;background:#e8f0e5;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}',
-    '.ss-hn{font-size:12px;font-weight:bold;color:#f4f0e8;line-height:1.2}',
-    '.ss-hs{font-size:10px;color:#c8d5c4}',
-    '.ss-x{background:none;border:none;color:#f4f0e8;font-size:18px;cursor:pointer;padding:0;line-height:1;opacity:.75}',
+    '.ss-head{background:#3d5c3a;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}',
+    '.ss-head-l{display:flex;align-items:center;gap:9px}',
+    '.ss-av{width:32px;height:32px;border-radius:50%;background:#e8f0e5;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}',
+    '.ss-hn{font-size:13px;font-weight:bold;color:#f4f0e8;line-height:1.2}',
+    '.ss-hs{font-size:11px;color:#c8d5c4}',
+    '.ss-x{background:none;border:none;color:#f4f0e8;font-size:20px;cursor:pointer;padding:0;line-height:1;opacity:.75}',
     '.ss-x:hover{opacity:1}',
-    '#ss-msgs{overflow-y:auto;padding:12px 11px;display:flex;flex-direction:column;gap:7px;max-height:240px;min-height:80px}',
-    '.ss-m{max-width:87%;padding:8px 11px;border-radius:12px;font-size:12px;line-height:1.55;white-space:pre-wrap;word-break:break-word}',
+    '#ss-msgs{overflow-y:auto;padding:13px 12px;display:flex;flex-direction:column;gap:8px;max-height:260px;min-height:80px}',
+    '.ss-m{max-width:87%;padding:9px 13px;border-radius:13px;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}',
     '.ss-bot{background:#f0f4ef;color:#2c2020;border-bottom-left-radius:3px;align-self:flex-start}',
     '.ss-usr{background:#3d5c3a;color:#f4f0e8;border-bottom-right-radius:3px;align-self:flex-end}',
-    '#ss-quick{padding:0 10px 8px;display:flex;flex-wrap:wrap;gap:5px}',
-    '.ss-q{background:#e8f0e5;color:#3d5c3a;border:none;border-radius:12px;padding:5px 9px;font-size:10px;font-family:Arial,sans-serif;cursor:pointer;font-weight:bold}',
+    '#ss-quick{padding:0 11px 9px;display:flex;flex-wrap:wrap;gap:6px}',
+    '.ss-q{background:#e8f0e5;color:#3d5c3a;border:none;border-radius:13px;padding:6px 11px;font-size:11px;font-family:Arial,sans-serif;cursor:pointer;font-weight:bold}',
     '.ss-q:hover{background:#c8d5c4}',
-    '.ss-foot{padding:8px 9px;border-top:.5px solid #e8e2d4;display:flex;gap:6px;align-items:flex-end}',
-    '#ss-inp{flex:1;border:.5px solid #c8d5c4;border-radius:18px;padding:7px 11px;font-size:12px;font-family:Arial,sans-serif;outline:none;resize:none;line-height:1.4;max-height:64px;overflow-y:auto}',
+    '.ss-foot{padding:9px 10px;border-top:.5px solid #e8e2d4;display:flex;gap:7px;align-items:flex-end}',
+    '#ss-inp{flex:1;border:.5px solid #c8d5c4;border-radius:18px;padding:8px 12px;font-size:13px;font-family:Arial,sans-serif;outline:none;resize:none;line-height:1.4;max-height:68px;overflow-y:auto}',
     '#ss-inp:focus{border-color:#3d5c3a}',
-    '#ss-send{background:#3d5c3a;border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}'
+    '#ss-send{background:#3d5c3a;border:none;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}'
   ].join('');
   document.head.appendChild(style);
 
   var btn = document.createElement('button');
   btn.id = 'ss-btn';
-  btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f4f0e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span id="ss-btn-lbl">Ask a question</span>';
+  btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f4f0e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="ss-btn-lbl">FAQ</span>';
   document.body.appendChild(btn);
 
   var panel = document.createElement('div');
   panel.id = 'ss-panel';
-  panel.innerHTML = '<div class="ss-head"><div class="ss-head-l"><div class="ss-av">🗺️</div><div><div class="ss-hn">Savor &amp; Stories</div><div class="ss-hs" id="ss-sub">Quick answers · EN / FR / ES</div></div></div><button class="ss-x" id="ss-x">✕</button></div><div id="ss-msgs"></div><div id="ss-quick"></div><div class="ss-foot"><textarea id="ss-inp" rows="1" placeholder="Type your question…"></textarea><button id="ss-send"><svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button></div>';
+  panel.innerHTML = '<div class="ss-head"><div class="ss-head-l"><div class="ss-av">🗺️</div><div><div class="ss-hn">Savor &amp; Stories</div><div class="ss-hs" id="ss-sub">Quick answers · EN / FR / ES</div></div></div><button class="ss-x" id="ss-x">✕</button></div><div id="ss-msgs"></div><div id="ss-quick"></div><div class="ss-foot"><textarea id="ss-inp" rows="1" placeholder="Type your question…"></textarea><button id="ss-send"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button></div>';
   document.body.appendChild(panel);
 
   var msgsEl = document.getElementById('ss-msgs');
   var inp = document.getElementById('ss-inp');
   var quickEl = document.getElementById('ss-quick');
   var greeted = false;
+  var greetingEl = null;
 
   function addMsg(text, who) {
     var d = document.createElement('div');
@@ -368,6 +369,7 @@
     d.textContent = text;
     msgsEl.appendChild(d);
     msgsEl.scrollTop = msgsEl.scrollHeight;
+    return d;
   }
 
   function renderQuick(l) {
@@ -387,13 +389,16 @@
     var ui = UI[l] || UI.en;
     document.getElementById('ss-btn-lbl').textContent = ui.btnLabel;
     inp.placeholder = ui.placeholder;
+    if (greetingEl) {
+      greetingEl.textContent = ui.greeting;
+    }
   }
 
   function openPanel() {
     panel.classList.add('ss-open');
     var l = L();
     if (!greeted) {
-      addMsg((UI[l] || UI.en).greeting, 'bot');
+      greetingEl = addMsg((UI[l] || UI.en).greeting, 'bot');
       greeted = true;
     }
     renderQuick(l);
