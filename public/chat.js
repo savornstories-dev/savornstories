@@ -384,7 +384,7 @@
     });
   }
 
-  function updateLabels() {
+  function onLangChange() {
     var l = L();
     var ui = UI[l] || UI.en;
     document.getElementById('ss-btn-lbl').textContent = ui.btnLabel;
@@ -392,6 +392,14 @@
     if (greetingEl) {
       greetingEl.textContent = ui.greeting;
     }
+    if (panel.classList.contains('ss-open')) renderQuick(l);
+  }
+
+  function updateLabels() {
+    var l = L();
+    var ui = UI[l] || UI.en;
+    document.getElementById('ss-btn-lbl').textContent = ui.btnLabel;
+    inp.placeholder = ui.placeholder;
   }
 
   function openPanel() {
@@ -430,22 +438,19 @@
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
   });
 
-  function observeLangButtons() {
+  function attachLangListeners() {
     var buttons = document.querySelectorAll('[data-set-lang]');
-    if (!buttons.length) return;
-    var obs = new MutationObserver(function () {
-      updateLabels();
-      if (panel.classList.contains('ss-open')) renderQuick(L());
-    });
     buttons.forEach(function (b) {
-      obs.observe(b, { attributes: true, attributeFilter: ['class'] });
+      b.addEventListener('click', function () {
+        setTimeout(onLangChange, 50);
+      });
     });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { observeLangButtons(); updateLabels(); });
+    document.addEventListener('DOMContentLoaded', function () { attachLangListeners(); updateLabels(); });
   } else {
-    observeLangButtons();
+    attachLangListeners();
     updateLabels();
   }
 })();
