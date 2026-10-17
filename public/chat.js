@@ -8,6 +8,7 @@
   }
 
   var isBdx = /bordeaux/.test(location.pathname);
+  var isDpp = /dieppe/.test(location.pathname);
 
   var UI = {
     en: {
@@ -242,7 +243,66 @@
     }
   ];
 
-  var FAQ = isBdx ? FAQ_BDX : FAQ_DPP;
+  var FAQ_HOME = [
+    {
+      kw: { en: ['bordeaux', 'wine', 'garonne', 'south', 'southwest', 'gironde'], fr: ['bordeaux', 'vin', 'garonne', 'sud', 'gironde'], es: ['burdeos', 'vino', 'garona', 'sur', 'gironda'] },
+      ans: {
+        en: 'In Bordeaux I offer:\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 90€ (3h)\n• River Cruise & Bespoke — on request\n\nAll private, all led personally by me.',
+        fr: 'À Bordeaux je propose :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 90€ (3h)\n• Croisère & Sur Mesure — sur devis\n\nToutes privées, toutes menées personnellement par moi.',
+        es: 'En Burdeos ofrezco:\n• Tour Gastronómico — 90€ (3h30)\n• Tour en Bicicleta — 39€ (3h)\n• Tour Histórico — 60€ (2h)\n• Apéro & Petanca — 90€ (3h)\n• Crucero & A Medida — a consultar\n\nTodas privadas, todas guiadas personalmente por mí.'
+      }
+    },
+    {
+      kw: { en: ['dieppe', 'normandy', 'scallop', 'cliff', 'castle', '1942', 'north', 'channel', 'newhaven'], fr: ['dieppe', 'normandie', 'coquille', 'falaise', 'château', '1942', 'nord', 'manche', 'newhaven'], es: ['dieppe', 'normandía', 'vieira', 'acantilado', 'castillo', '1942', 'norte', 'canal'] },
+      ans: {
+        en: 'In Dieppe I offer:\n• Market Tour — 55€\n• Seafood & Harbour Tour — 75€\n• Castle & History Tour — 60€\n• Cliffs Walk — 45€\n• Norman Apéro — 65€\n• Bespoke — on request\n\nAll private, all led personally by me.',
+        fr: 'À Dieppe je propose :\n• Tour du Marché — 55€\n• Tour Fruits de Mer & Port — 75€\n• Tour Château & Histoire — 60€\n• Balade des Falaises — 45€\n• Apéro Normand — 65€\n• Sur Mesure — sur devis\n\nToutes privées, toutes menées personnellement par moi.',
+        es: 'En Dieppe ofrezco:\n• Tour del Mercado — 55€\n• Tour Mariscos & Puerto — 75€\n• Tour Castillo & Historia — 60€\n• Paseo por los Acantilados — 45€\n• Aperitivo Normando — 65€\n• A Medida — a consultar\n\nTodas privadas, todas guiadas personalmente por mí.'
+      }
+    },
+    {
+      kw: { en: ['price', 'cost', 'how much', 'rate', 'fee', 'euro', 'cheap', 'expensive'], fr: ['prix', 'coût', 'combien', 'tarif', 'euro', 'cher'], es: ['precio', 'coste', 'cuánto', 'cuanto', 'tarifa', 'euro', 'caro'] },
+      ans: {
+        en: 'Bordeaux tours: from 39€ (Bike Tour) to 90€ (Food Tour or Apéro & Pétanque).\nDieppe tours: from 45€ (Cliffs Walk) to 75€ (Seafood & Harbour).\n\nAll tours are private.',
+        fr: 'Visites Bordeaux : de 39€ (Tour à Vélo) à 90€ (Tour Gastronomique ou Apéro & Pétanque).\nVisites Dieppe : de 45€ (Balade des Falaises) à 75€ (Tour Fruits de Mer & Port).\n\nToutes les visites sont privées.',
+        es: 'Tours Burdeos: de 39€ (Tour en Bicicleta) a 90€ (Tour Gastronómico o Apéro & Petanca).\nTours Dieppe: de 45€ (Paseo por los Acantilados) a 75€ (Tour Mariscos & Puerto).\n\nTodas las visitas son privadas.'
+      }
+    },
+    {
+      kw: { en: ['book', 'booking', 'reserve', 'reservation', 'sign up', 'how to'], fr: ['réserver', 'réservation', 'comment', 'inscription'], es: ['reservar', 'reserva', 'cómo', 'inscribir'] },
+      ans: {
+        en: 'Choose a city, pick a tour, and fill in the booking form — or message Antoine directly on WhatsApp: +33 6 26 39 17 83\n\nHe usually replies within a few hours.',
+        fr: 'Choisissez une ville, une visite, et remplissez le formulaire — ou écrivez directement à Antoine sur WhatsApp : +33 6 26 39 17 83\n\nIl répond généralement en quelques heures.',
+        es: 'Elija una ciudad, un tour, y rellene el formulario — o escriba directamente a Antoine por WhatsApp: +33 6 26 39 17 83\n\nSuele responder en pocas horas.'
+      }
+    },
+    {
+      kw: { en: ['language', 'english', 'french', 'spanish', 'speak', 'tongue'], fr: ['langue', 'anglais', 'français', 'espagnol', 'parle'], es: ['idioma', 'inglés', 'francés', 'español', 'habla'] },
+      ans: {
+        en: 'All tours are available in English, French and Spanish.',
+        fr: 'Toutes les visites sont disponibles en français, anglais et espagnol.',
+        es: 'Todas las visitas están disponibles en inglés, francés y español.'
+      }
+    },
+    {
+      kw: { en: ['group', 'people', 'how many', 'size', 'family', 'solo', 'couple', 'private'], fr: ['groupe', 'personnes', 'famille', 'seul', 'couple', 'privé'], es: ['grupo', 'personas', 'familia', 'solo', 'pareja', 'privado'] },
+      ans: {
+        en: 'Every tour is private — just your group and Antoine. Whether solo, a couple or a family.',
+        fr: 'Chaque visite est privée — juste votre groupe et Antoine.',
+        es: 'Cada visita es privada — solo su grupo y Antoine.'
+      }
+    },
+    {
+      kw: { en: ['contact', 'whatsapp', 'phone', 'email', 'call', 'antoine', 'reach', 'message'], fr: ['contacter', 'whatsapp', 'téléphone', 'email', 'appeler', 'antoine'], es: ['contactar', 'whatsapp', 'teléfono', 'email', 'llamar', 'antoine'] },
+      ans: {
+        en: 'Contact Antoine:\n• WhatsApp / phone: +33 6 26 39 17 83\n• Email: contact@savornstories.com\n\nWhatsApp is the fastest way.',
+        fr: 'Contacter Antoine :\n• WhatsApp / téléphone : +33 6 26 39 17 83\n• Email : contact@savornstories.com',
+        es: 'Contactar a Antoine:\n• WhatsApp / teléfono: +33 6 26 39 17 83\n• Email: contact@savornstories.com'
+      }
+    }
+  ];
+
+  var FAQ = isBdx ? FAQ_BDX : isDpp ? FAQ_DPP : FAQ_HOME;
 
   function match(q, l) {
     var ql = q.toLowerCase();
