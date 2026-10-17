@@ -12,7 +12,7 @@
 
   var UI = {
     en: {
-      btnLabel: 'FAQ',
+      btnLabel: 'Ask me',
       sub: 'Quick answers · EN / FR / ES',
       placeholder: 'Type your question…',
       greeting: 'Hi! Ask me anything about our tours — prices, durations, languages, booking.',
@@ -20,7 +20,7 @@
       quick: ['Prices', 'How to book', 'Languages', 'What’s included', 'Group size', 'Contact']
     },
     fr: {
-      btnLabel: 'FAQ',
+      btnLabel: 'Posez-moi',
       sub: 'Réponses rapides · EN / FR / ES',
       placeholder: 'Votre question…',
       greeting: 'Bonjour ! Posez-moi vos questions sur nos visites — tarifs, durées, langues, réservation.',
@@ -28,7 +28,7 @@
       quick: ['Tarifs', 'Comment réserver', 'Langues', 'Ce qui est inclus', 'Taille du groupe', 'Contact']
     },
     es: {
-      btnLabel: 'FAQ',
+      btnLabel: 'Pregúntame',
       sub: 'Respuestas rápidas · EN / FR / ES',
       placeholder: 'Su pregunta…',
       greeting: '¡Hola! Pregúnteme sobre nuestras visitas — precios, duraciones, idiomas, reservas.',
@@ -349,7 +349,7 @@
 
   var btn = document.createElement('button');
   btn.id = 'ss-btn';
-  btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f4f0e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="ss-btn-lbl">FAQ</span>';
+  btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f4f0e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span id="ss-btn-lbl">Ask me</span>';
   document.body.appendChild(btn);
 
   var panel = document.createElement('div');
