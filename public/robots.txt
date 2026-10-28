@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://savorstories.com/sitemap-index.xml
+Sitemap: https://savornstories.com/sitemap-index.xml
