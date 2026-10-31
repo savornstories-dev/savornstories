@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import TourCard from '../components/TourCard.astro';
 import ContactPanel from '../components/ContactPanel.astro';
+import TourFinder from '../components/TourFinder.astro';
 
 const featuredIds = [
   'bordeaux-wine-food-history-walk',
@@ -21,7 +22,7 @@ const jsonLd = {
   name: 'Savor & Stories',
   telephone: '+33626391783',
   email: 'contact@savornstories.com',
-  url: 'https://savorstories.com',
+  url: 'https://savornstories.com',
   areaServed: ['Bordeaux', 'Dieppe'],
 };
 
@@ -102,6 +103,8 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
       </div>
     </div>
   </section>
+
+  <TourFinder tours={all} />
 
   <!-- Destinations -->
   <section class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-8 md:py-16 flex flex-col gap-9">

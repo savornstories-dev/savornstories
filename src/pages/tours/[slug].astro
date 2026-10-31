@@ -25,7 +25,7 @@ const jsonLd = {
       name: title.en,
       description: summary.en,
       touristType: 'Leisure',
-      ...(heroImage ? { image: `https://savorstories.com${heroImage}` } : {}),
+      ...(heroImage ? { image: `https://savornstories.com${heroImage}` } : {}),
       provider: {
         '@type': 'LocalBusiness',
         name: 'Savor & Stories',
@@ -42,9 +42,9 @@ const jsonLd = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://savorstories.com/' },
-        { '@type': 'ListItem', position: 2, name: cityLabel, item: `https://savorstories.com/${city}` },
-        { '@type': 'ListItem', position: 3, name: title.en, item: `https://savorstories.com/tours/${tour.id}` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://savornstories.com/' },
+        { '@type': 'ListItem', position: 2, name: cityLabel, item: `https://savornstories.com/${city}` },
+        { '@type': 'ListItem', position: 3, name: title.en, item: `https://savornstories.com/tours/${tour.id}` },
       ],
     },
   ],

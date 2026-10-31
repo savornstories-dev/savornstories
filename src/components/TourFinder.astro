@@ -1,0 +1,432 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  tours: CollectionEntry<'tours'>[];
+}
+
+interface Pick {
+  id: string;
+  alt: string;
+  mood: { en: string; fr: string; es: string };
+  why: { en: string; fr: string; es: string };
+}
+
+const { tours } = Astro.props;
+const byId = new Map(tours.map((t) => [t.id, t]));
+
+const picks: Record<'bordeaux' | 'dieppe', Pick[]> = {
+  bordeaux: [
+    {
+      id: 'bordeaux-wine-food-history-walk',
+      alt: 'bordeaux-capucins-market',
+      mood: { en: 'Taste the city', fr: 'Goûter la ville', es: 'Probar la ciudad' },
+      why: {
+        en: 'For the table: canelés, a proper wine stop and a shared meal.',
+        fr: 'Pour la table : des canelés, une vraie dégustation de vin et un repas partagé.',
+        es: 'Para la mesa: canelés, una parada de vino de verdad y una comida compartida.',
+      },
+    },
+    {
+      id: 'bordeaux-treasure-hunt-1453',
+      alt: 'bordeaux-team-building',
+      mood: { en: 'Play together', fr: 'Jouer ensemble', es: 'Jugar en grupo' },
+      why: {
+        en: 'For a group that wants a game: a treasure hunt through the old town, no alcohol, children from 7 welcome. Best from 4 people.',
+        fr: 'Pour un groupe qui veut jouer : une chasse au trésor dans le vieux Bordeaux, sans alcool, enfants dès 7 ans bienvenus. À partir de 4 personnes.',
+        es: 'Para un grupo que quiere jugar: una búsqueda del tesoro por el casco antiguo, sin alcohol, niños desde 7 años bienvenidos. Desde 4 personas.',
+      },
+    },
+    {
+      id: 'bordeaux-petanque-aperitif',
+      alt: 'bordeaux-sunset-right-bank',
+      mood: { en: 'An easy evening', fr: 'Une soirée tranquille', es: 'Una noche tranquila' },
+      why: {
+        en: 'For an easy evening: pétanque and an apéritif on a real local court.',
+        fr: 'Pour une soirée tranquille : pétanque et apéritif sur un vrai terrain de quartier.',
+        es: 'Para una noche tranquila: petanca y aperitivo en una pista local de verdad.',
+      },
+    },
+    {
+      id: 'bordeaux-riverside-bike-tour',
+      alt: 'bordeaux-right-bank-street-art',
+      mood: { en: 'Move and explore', fr: 'Bouger et explorer', es: 'Moverse y explorar' },
+      why: {
+        en: 'For a morning on the move: a flat three hour ride along the Garonne, suitable for beginners.',
+        fr: 'Pour une matinée en mouvement : trois heures à vélo, à plat, le long de la Garonne, accessibles aux débutants.',
+        es: 'Para una mañana en movimiento: tres horas en bici, en llano, junto al Garona, aptas para principiantes.',
+      },
+    },
+    {
+      id: 'bordeaux-saint-emilion-day-trip',
+      alt: 'bordeaux-wine-food-history-walk',
+      mood: { en: 'Go beyond the city', fr: 'Sortir de la ville', es: 'Salir de la ciudad' },
+      why: {
+        en: 'For a full day away: a medieval wine village, its underground church and one family estate.',
+        fr: 'Pour une journée entière ailleurs : un village viticole médiéval, son église souterraine et un domaine familial.',
+        es: 'Para un día entero fuera: un pueblo vinícola medieval, su iglesia subterránea y una finca familiar.',
+      },
+    },
+  ],
+  dieppe: [
+    {
+      id: 'dieppe-scallops-seafood',
+      alt: 'dieppe-norman-apero',
+      mood: { en: 'Seafood and the harbour', fr: 'Fruits de mer et port', es: 'Marisco y puerto' },
+      why: {
+        en: 'For seafood lovers: a morning at the working fishing port and a fresh tasting by the harbour.',
+        fr: 'Pour les amateurs de fruits de mer : une matinée au port de pêche en activité et une dégustation fraîche face au port.',
+        es: 'Para los amantes del marisco: una mañana en el puerto pesquero en activo y una degustación fresca junto al puerto.',
+      },
+    },
+    {
+      id: 'dieppe-castle-1942-history',
+      alt: 'dieppe-cliffs-coastal-walk',
+      mood: { en: 'History and the 1942 story', fr: 'Histoire et 1942', es: 'Historia y 1942' },
+      why: {
+        en: 'For the story: a clifftop château, Channel views and the 1942 Dieppe Raid.',
+        fr: 'Pour l\'histoire : un château sur la falaise, la vue sur la Manche et le raid de Dieppe de 1942.',
+        es: 'Para la historia: un castillo en el acantilado, vistas al Canal y la incursión de Dieppe de 1942.',
+      },
+    },
+    {
+      id: 'dieppe-cliffs-coastal-walk',
+      alt: 'dieppe-castle-1942-history',
+      mood: { en: 'Fresh air and views', fr: 'Grand air et panoramas', es: 'Aire fresco y vistas' },
+      why: {
+        en: 'For fresh air: an easy walk along the white chalk cliffs to Pourville-sur-Mer.',
+        fr: 'Pour le grand air : une balade facile le long des falaises de craie blanche jusqu\'à Pourville-sur-Mer.',
+        es: 'Para el aire fresco: un paseo fácil por los acantilados de creta blanca hasta Pourville-sur-Mer.',
+      },
+    },
+    {
+      id: 'dieppe-market-cheese-trail',
+      alt: 'dieppe-norman-apero',
+      mood: { en: 'Norman flavours', fr: 'Saveurs normandes', es: 'Sabores normandos' },
+      why: {
+        en: 'For local flavours: a Saturday morning at the historic market, then Norman cheese and cider.',
+        fr: 'Pour les saveurs d\'ici : un samedi matin au marché historique, puis fromages normands et cidre.',
+        es: 'Para los sabores locales: un sábado por la mañana en el mercado histórico, y luego quesos normandos y sidra.',
+      },
+    },
+  ],
+};
+
+const cityLabel = {
+  bordeaux: { en: 'Bordeaux', fr: 'Bordeaux', es: 'Burdeos' },
+  dieppe: { en: 'Dieppe', fr: 'Dieppe', es: 'Dieppe' },
+};
+
+const chip =
+  'finder-opt cursor-pointer text-left flex items-center gap-3.5 bg-card hover:bg-white border border-ink/10 hover:border-wine text-ink rounded-2xl px-5 py-4 min-h-[64px] font-semibold text-base shadow-card transition-colors';
+---
+<section id="finder" class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 pb-6 md:pb-10">
+  <div class="bg-parchment rounded-[28px] p-6 md:p-12 flex flex-col gap-7 md:gap-9" data-finder>
+    <div class="flex flex-col gap-2.5 max-w-[62ch]">
+      <span class="eyebrow">
+        <span data-lang="en">Tour finder</span>
+        <span data-lang="fr" hidden>Trouver ma visite</span>
+        <span data-lang="es" hidden>Encuentra tu tour</span>
+      </span>
+      <h2 class="font-display font-medium text-[32px] md:text-[48px] leading-[1.06] text-ink">
+        <span data-lang="en">Not sure which tour is yours? Two taps and I'll point you to it</span>
+        <span data-lang="fr" hidden>Vous hésitez entre plusieurs visites ? Deux touches et je vous oriente</span>
+        <span data-lang="es" hidden>¿No sabes qué tour elegir? Dos toques y te oriento</span>
+      </h2>
+      <p class="text-ink-soft leading-relaxed">
+        <span data-lang="en">Pick a city, pick a mood, and you get the tour I would send a friend on.</span>
+        <span data-lang="fr" hidden>Choisissez une ville, choisissez une envie, et voici la visite que je conseillerais à un ami.</span>
+        <span data-lang="es" hidden>Elige una ciudad, elige un plan, y verás el tour que le recomendaría a un amigo.</span>
+      </p>
+    </div>
+
+    <!-- Step 1: city -->
+    <div data-step="city" class="finder-step flex flex-col gap-4">
+      <span class="text-sm font-bold text-ink">
+        <span data-lang="en">1. Where?</span>
+        <span data-lang="fr" hidden>1. Où ?</span>
+        <span data-lang="es" hidden>1. ¿Dónde?</span>
+      </span>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <button type="button" data-city="bordeaux" class="finder-opt cursor-pointer text-left rounded-2xl px-6 py-6 bg-wine hover:bg-[#4f1222] text-linen transition-colors flex flex-col gap-1.5 min-h-[104px]">
+          <span class="font-display font-medium text-[36px] leading-none">
+            <span data-lang="en">Bordeaux</span><span data-lang="fr" hidden>Bordeaux</span><span data-lang="es" hidden>Burdeos</span>
+          </span>
+          <span class="text-sm text-linen/85">
+            <span data-lang="en">Wine, food, history, bikes</span>
+            <span data-lang="fr" hidden>Vin, gastronomie, histoire, vélo</span>
+            <span data-lang="es" hidden>Vino, gastronomía, historia, bicicleta</span>
+          </span>
+        </button>
+        <button type="button" data-city="dieppe" class="finder-opt cursor-pointer text-left rounded-2xl px-6 py-6 bg-slate hover:bg-[#213a4a] text-linen transition-colors flex flex-col gap-1.5 min-h-[104px]">
+          <span class="font-display font-medium text-[36px] leading-none">Dieppe</span>
+          <span class="text-sm text-linen/85">
+            <span data-lang="en">Scallops, cliffs and 1942</span>
+            <span data-lang="fr" hidden>Coquilles, falaises et 1942</span>
+            <span data-lang="es" hidden>Vieiras, acantilados y 1942</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: mood -->
+    <div data-step="mood" class="finder-step flex flex-col gap-4" hidden>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <span class="text-sm font-bold text-ink">
+          <span data-lang="en">2. What are you in the mood for?</span>
+          <span data-lang="fr" hidden>2. Quelle envie ?</span>
+          <span data-lang="es" hidden>2. ¿Qué te apetece?</span>
+        </span>
+        <button type="button" data-back="city" class="cursor-pointer text-sm font-semibold text-wine bg-transparent border-0 p-0 underline underline-offset-4">
+          <span data-lang="en">Change city</span>
+          <span data-lang="fr" hidden>Changer de ville</span>
+          <span data-lang="es" hidden>Cambiar de ciudad</span>
+        </button>
+      </div>
+      {(Object.keys(picks) as Array<'bordeaux' | 'dieppe'>).map((city) => (
+        <div data-moods={city} class="grid sm:grid-cols-2 gap-3.5" hidden>
+          {picks[city].map((p) => {
+            const t = byId.get(p.id);
+            return (
+              <button type="button" data-pick={p.id} class={chip}>
+                <span class="text-3xl leading-none" aria-hidden="true">{t?.data.icon}</span>
+                <span>
+                  <span data-lang="en">{p.mood.en}</span>
+                  <span data-lang="fr" hidden>{p.mood.fr}</span>
+                  <span data-lang="es" hidden>{p.mood.es}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+
+    <!-- Step 3: result -->
+    <div data-step="result" class="finder-step flex flex-col gap-5" hidden aria-live="polite">
+      {(Object.keys(picks) as Array<'bordeaux' | 'dieppe'>).flatMap((city) =>
+        picks[city].map((p) => {
+          const t = byId.get(p.id);
+          const a = byId.get(p.alt);
+          if (!t) return null;
+          const d = t.data;
+          return (
+            <article
+              data-card={p.id}
+              data-title-en={d.title.en}
+              data-title-fr={d.title.fr}
+              data-title-es={d.title.es}
+              class="bg-card rounded-[22px] overflow-hidden shadow-card grid md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]"
+              hidden
+            >
+              {d.heroImage ? (
+                <div class="zoom min-h-[220px] md:min-h-full">
+                  <img src={d.heroImage} alt={d.title.en} loading="lazy" class="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div class={`min-h-[220px] md:min-h-full flex items-end p-6 ${city === 'bordeaux' ? 'bg-green' : 'bg-slate'}`}>
+                  <span class="text-6xl" aria-hidden="true">{d.icon}</span>
+                </div>
+              )}
+              <div class="p-6 md:p-9 flex flex-col gap-4">
+                <span class="eyebrow">
+                  <span data-lang="en">My pick for you</span>
+                  <span data-lang="fr" hidden>Ma suggestion pour vous</span>
+                  <span data-lang="es" hidden>Mi propuesta para ti</span>
+                </span>
+                <h3 tabindex="-1" class="font-display font-semibold text-[30px] md:text-[38px] leading-[1.05] text-ink outline-none">
+                  <span data-lang="en">{d.title.en}</span>
+                  <span data-lang="fr" hidden>{d.title.fr}</span>
+                  <span data-lang="es" hidden>{d.title.es}</span>
+                </h3>
+                <p class="text-ink-soft leading-relaxed">
+                  <span data-lang="en">{p.why.en}</span>
+                  <span data-lang="fr" hidden>{p.why.fr}</span>
+                  <span data-lang="es" hidden>{p.why.es}</span>
+                </p>
+                <ul class="m-0 p-0 list-none flex flex-col gap-1.5 text-[15px] text-ink">
+                  <li>
+                    <span data-lang="en">{d.duration.en}</span>
+                    <span data-lang="fr" hidden>{d.duration.fr}</span>
+                    <span data-lang="es" hidden>{d.duration.es}</span>
+                  </li>
+                  {d.schedule && (
+                    <li>
+                      <span data-lang="en">{d.schedule.en}</span>
+                      <span data-lang="fr" hidden>{d.schedule.fr}</span>
+                      <span data-lang="es" hidden>{d.schedule.es}</span>
+                    </li>
+                  )}
+                  <li>
+                    {d.price ? (
+                      <>
+                        <strong class="text-xl font-bold">{d.price}</strong>
+                        <span data-lang="en"> per person</span>
+                        <span data-lang="fr" hidden> par personne</span>
+                        <span data-lang="es" hidden> por persona</span>
+                      </>
+                    ) : d.priceLabel ? (
+                      <>
+                        <span data-lang="en">{d.priceLabel.en}</span>
+                        <span data-lang="fr" hidden>{d.priceLabel.fr}</span>
+                        <span data-lang="es" hidden>{d.priceLabel.es}</span>
+                      </>
+                    ) : null}
+                  </li>
+                </ul>
+                <div class="flex flex-wrap gap-3 mt-1">
+                  <a href={`/tours/${p.id}`} class="inline-flex items-center gap-2 bg-wine hover:bg-[#4f1222] text-linen px-6 py-3.5 rounded-full font-semibold text-[15px] no-underline transition-colors">
+                    <span data-lang="en">See the tour</span>
+                    <span data-lang="fr" hidden>Voir la visite</span>
+                    <span data-lang="es" hidden>Ver el tour</span>
+                    <span aria-hidden="true">&rarr;</span>
+                  </a>
+                  <a data-wa href="https://wa.me/33626391783" target="_blank" rel="noopener" class="inline-flex items-center gap-2 bg-whatsapp hover:bg-[#1ebe5d] text-white px-6 py-3.5 rounded-full font-semibold text-[15px] no-underline transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"></path></svg>
+                    <span data-lang="en">Ask Antoine on WhatsApp</span>
+                    <span data-lang="fr" hidden>Demander à Antoine sur WhatsApp</span>
+                    <span data-lang="es" hidden>Preguntar a Antoine por WhatsApp</span>
+                  </a>
+                </div>
+                {a && (
+                  <a href={`/tours/${p.alt}`} class="text-sm text-ink-soft no-underline hover:text-wine">
+                    <span data-lang="en">Also worth a look: <strong class="text-ink">{a.data.title.en}</strong> &rarr;</span>
+                    <span data-lang="fr" hidden>À regarder aussi : <strong class="text-ink">{a.data.title.fr}</strong> &rarr;</span>
+                    <span data-lang="es" hidden>También puede interesarte: <strong class="text-ink">{a.data.title.es}</strong> &rarr;</span>
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })
+      )}
+      <div>
+        <button type="button" data-back="mood" class="cursor-pointer text-sm font-semibold text-wine bg-transparent border-0 p-0 underline underline-offset-4 mr-5">
+          <span data-lang="en">Back</span>
+          <span data-lang="fr" hidden>Retour</span>
+          <span data-lang="es" hidden>Atrás</span>
+        </button>
+        <button type="button" data-back="city" class="cursor-pointer text-sm font-semibold text-wine bg-transparent border-0 p-0 underline underline-offset-4">
+          <span data-lang="en">Start over</span>
+          <span data-lang="fr" hidden>Recommencer</span>
+          <span data-lang="es" hidden>Empezar de nuevo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .finder-step:not([hidden]) {
+    animation: finder-in 0.35s ease both;
+  }
+  @keyframes finder-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .finder-step:not([hidden]) { animation: none; }
+  }
+  .finder-opt:focus-visible,
+  [data-finder] button:focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-finder]');
+
+  if (root) {
+    const steps: Record<string, HTMLElement> = {
+      city: root.querySelector<HTMLElement>('[data-step="city"]')!,
+      mood: root.querySelector<HTMLElement>('[data-step="mood"]')!,
+      result: root.querySelector<HTMLElement>('[data-step="result"]')!,
+    };
+    const moodGroups = root.querySelectorAll<HTMLElement>('[data-moods]');
+    const cards = root.querySelectorAll<HTMLElement>('[data-card]');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let city = '';
+
+    const lang = () => {
+      try {
+        return localStorage.getItem('ss-lang') || 'en';
+      } catch {
+        return 'en';
+      }
+    };
+
+    const messages: Record<string, (t: string) => string> = {
+      en: (t) => `Hi Antoine, I'd like to book ${t}.`,
+      fr: (t) => `Bonjour Antoine, je souhaiterais réserver ${t}.`,
+      es: (t) => `Hola Antoine, me gustaría reservar ${t}.`,
+    };
+
+    const setWhatsApp = (card: HTMLElement) => {
+      const link = card.querySelector<HTMLAnchorElement>('[data-wa]');
+      if (!link) return;
+      const l = lang();
+      const title = card.getAttribute(`data-title-${l}`) || card.getAttribute('data-title-en') || '';
+      const text = (messages[l] || messages.en)(title);
+      link.href = `https://wa.me/33626391783?text=${encodeURIComponent(text)}`;
+    };
+
+    const show = (name: string) => {
+      Object.entries(steps).forEach(([key, el]) => {
+        el.hidden = key !== name;
+      });
+    };
+
+    const focusFirst = (el: HTMLElement) => {
+      const target = el.querySelector<HTMLElement>('button:not([hidden]), [tabindex="-1"]');
+      target?.focus({ preventScroll: true });
+    };
+
+    root.querySelectorAll<HTMLElement>('[data-city]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        city = btn.getAttribute('data-city') || '';
+        moodGroups.forEach((g) => {
+          g.hidden = g.getAttribute('data-moods') !== city;
+        });
+        show('mood');
+        const group = root.querySelector<HTMLElement>(`[data-moods="${city}"]`);
+        if (group) focusFirst(group);
+      });
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-pick]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-pick');
+        cards.forEach((c) => {
+          const match = c.getAttribute('data-card') === id;
+          c.hidden = !match;
+          if (match) setWhatsApp(c);
+        });
+        show('result');
+        const card = root.querySelector<HTMLElement>(`[data-card="${id}"]`);
+        card?.querySelector<HTMLElement>('h3')?.focus({ preventScroll: true });
+        steps.result.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
+      });
+    });
+
+    root.querySelectorAll<HTMLElement>('[data-back]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const to = btn.getAttribute('data-back') || 'city';
+        show(to);
+        focusFirst(steps[to]);
+      });
+    });
+
+    // The language switcher writes to localStorage, so refresh the prefilled
+    // message right as the link is used, whatever language is active then.
+    root.querySelectorAll<HTMLAnchorElement>('[data-wa]').forEach((link) => {
+      const refresh = () => {
+        const card = link.closest<HTMLElement>('[data-card]');
+        if (card) setWhatsApp(card);
+      };
+      link.addEventListener('click', refresh);
+      link.addEventListener('focus', refresh);
+      link.addEventListener('pointerenter', refresh);
+    });
+  }
+</script>
