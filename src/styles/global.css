@@ -1,31 +1,29 @@
 @import "tailwindcss";
 
-/* Linen ground, charcoal type, wine for actions, terracotta for labels.
-   Sage and slate stay as the Bordeaux and Dieppe tints. The old token
-   names (cream, ink, green, teal) are kept as aliases so every page
-   picks up the new values without a rename. */
+/* Ivory, deep navy, Bordeaux wine and champagne. Legacy aliases preserve
+   destination pages and existing interactive components. */
 @theme {
-  --color-linen: #f3ede3;
-  --color-parchment: #eae2d4;
-  --color-card: #fbf8f2;
-  --color-charcoal: #1d2227;
-  --color-soft: #5a4a44;
-  --color-terracotta: #b5553b;
+  --color-linen: #f8f7f2;
+  --color-parchment: #eeeee8;
+  --color-card: #ffffff;
+  --color-charcoal: #102637;
+  --color-soft: #50616c;
+  --color-terracotta: #7c2943;
   --color-slate: #2c4a5e;
 
-  --color-cream: #f3ede3;
-  --color-ink: #2a2522;
-  --color-ink-soft: #5a4a44;
-  --color-label: #7a6a62;
-  --color-border: #e3dacb;
+  --color-cream: #f8f7f2;
+  --color-ink: #102637;
+  --color-ink-soft: #50616c;
+  --color-label: #5d6d76;
+  --color-border: #dce1df;
   --color-green: #3d5c3a;
   --color-green-soft: #e8f0e5;
   --color-teal: #2c4a5e;
   --color-teal-soft: #dce8ec;
   --color-wine: #6b1a2e;
   --color-wine-dieppe: #7a2c3a;
-  --color-gold: #e8c07a;
-  --color-whatsapp: #25d366;
+  --color-gold: #d8c49b;
+  --color-whatsapp: #146b46;
 
   --font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
   --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
@@ -39,11 +37,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 17px;
-  }
-}
+html { font-size: 100%; scroll-padding-top: 7rem; }
 
 body {
   font-family: var(--font-sans);
@@ -132,14 +126,108 @@ h1, h2, h3 {
   }
 }
 
-/* Laptops and desktops get the whole page scaled up; phones and tablets
-   are untouched. Breakpoints are measured on the real viewport. */
-@media (min-width: 1280px) {
-  body { zoom: 1.1; }
+
+/* Accessible defaults shared by the existing pages. */
+[hidden] { display: none !important; }
+*, *::before, *::after { box-sizing: border-box; }
+img { max-width: 100%; }
+:focus-visible { outline: 3px solid #99702d; outline-offset: 5px; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+.skip-link { position: fixed; top: .5rem; left: 1rem; z-index: 100; padding: 1rem; background: white; color: var(--color-ink); transform: translateY(-200%); }
+.skip-link:focus { transform: none; }
+.lbtn { min-height: 44px; min-width: 44px; }
+.site-header { background: #f8f7f2f5; }
+.site-header nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: .4em; }
+#mobile-menu { max-height: calc(100dvh - 76px); overflow-y: auto; }
+#mobile-menu > a { border-bottom: 1px solid var(--color-border); padding-block: 1rem; }
+
+/* Homepage: an editorial rhythm, rather than scaling the entire viewport. */
+.home h2 { font-size: clamp(2.1rem, 4vw, 3.5rem); line-height: 1.08; }
+.home-hero { max-width: none; padding: clamp(1.5rem, 5vw, 5rem) max(1.25rem, calc((100vw - 1280px) / 2)); background: var(--color-charcoal); color: var(--color-linen); display: grid; grid-template-columns: minmax(0,1.12fr) minmax(0,1fr); gap: clamp(2rem, 5vw, 5rem); overflow: hidden; }
+.hero-copy { gap: 1.5rem; }
+.home-hero .eyebrow { color: var(--color-gold); font-size: .68rem; }
+.home-hero h1 { color: var(--color-linen); font-size: clamp(3rem, 5.8vw, 5.8rem); line-height: .97; letter-spacing: -.035em; max-width: 11ch; }
+.home-hero p:first-of-type { color: #d4dce0; font-size: 1rem; line-height: 1.8; max-width: 51ch; }
+.home-hero p:nth-of-type(2) { color: var(--color-gold); font-size: 1.5rem; }
+.hero-actions a { border-radius: 4px; padding: 1rem 1.5rem; min-height: 52px; }
+.hero-actions a:first-child { background: var(--color-wine); border: 1px solid #b3677c; }
+.hero-actions a:last-child { border-color: #b8c5ce; color: var(--color-linen); }
+.hero-actions a:last-child:hover { background: var(--color-linen); color: var(--color-ink); }
+.hero-trust { color: #d4dce0; font-size: .72rem; gap: .7rem 1.2rem; border-top: 1px solid #ffffff26; padding-top: 1.25rem; }
+.hero-trust .text-terracotta { color: var(--color-gold); }
+.hero-photos { aspect-ratio: 4/5; width: 100%; max-height: 680px; }
+.hero-portrait { grid-column: 1/13; grid-row: 1/12; border-radius: 2px; box-shadow: none; }
+.hero-portrait img { object-position: 50% 20%; }
+.hero-inset { grid-column: 8/13; grid-row: 8/13; border: 6px solid var(--color-charcoal); border-radius: 2px; }
+.hero-signature { grid-column: 1/9; grid-row: 12/13; background: transparent; border-radius: 0; box-shadow: none; padding: 1rem 0 0; gap: .5rem; }
+.guest-reviews { padding-inline: max(0px, calc((100vw - 1500px)/2)); border-bottom: 1px solid var(--color-border); }
+.guest-reviews > div { padding-block: clamp(3rem, 5vw, 5rem); }
+.guest-reviews figure { background: transparent; border-radius: 0; padding: 0 1.5rem; border-left: 1px solid #10263730; }
+.guest-reviews blockquote { font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.4; }
+.guest-reviews figcaption { margin-top: auto; padding-top: .5rem; }
+.destinations, .featured-tours { padding-block: clamp(3rem, 6vw, 6rem); }
+.destination-card { border-radius: 4px; min-height: 520px; box-shadow: none; }
+.destination-card > div:last-child { padding: clamp(1.5rem, 4vw, 3rem); }
+.destination-card > div:last-child > span:nth-child(2) { font-size: clamp(3.25rem, 5vw, 4.5rem); }
+.destination-card > img { transition: transform .7s ease; }
+.destination-card > div:nth-of-type(1) { background: linear-gradient(180deg, #10263715 10%, #10263755 45%, #102637f5 100%); }
+.featured-grid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2rem; }
+.tour-card { border-radius: 4px; border: 1px solid var(--color-border); box-shadow: none; }
+.tour-card .tour-image { height: auto; aspect-ratio: 16/10; position: relative; }
+.tour-card .tour-image img { width: 100%; height: 100%; }
+.tour-card .tour-title { font-size: clamp(1.65rem, 2.5vw, 2.15rem); }
+.tour-card .tour-details { padding: clamp(1.25rem, 2vw, 2rem); gap: 1rem; }
+.home #finder > div { border: 1px solid var(--color-border); border-radius: 4px; }
+.home #about { margin-top: 3rem; }
+.home #contact > div { border-radius: 4px; }
+.home #contact a { border-radius: 4px; }
+.home #contact a:first-child { flex-wrap: wrap; }
+.home #contact a:hover { background: #0d5436; color: white; }
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .site-header > div:first-child { gap: 1rem; }
+  .site-header nav { gap: 1rem; }
+  .site-header nav a { font-size: .9rem; }
+  .site-header > div:first-child > div:nth-of-type(1) { gap: .7rem; }
+  .site-header > div:first-child > div:nth-of-type(1) > a { padding-inline: .8rem; font-size: .8rem; }
 }
-@media (min-width: 1536px) {
-  body { zoom: 1.2; }
+@media (max-width: 767px) {
+  .home-hero { grid-template-columns: minmax(0,1fr); gap: 2rem; padding-block: 2.5rem; }
+  .home-hero h1 { font-size: clamp(3.2rem, 12vw, 4.8rem); max-width: 13ch; }
+  .hero-copy { gap: 1.25rem; }
+  .hero-photos { max-width: 540px; aspect-ratio: 1/1.05; margin-inline: auto; }
+  .hero-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+  .hero-actions a { padding: .9rem; font-size: .85rem; justify-content: center; }
+  .hero-signature { padding-top: .5rem; }
+  .destination-card { min-height: 440px; }
+  .featured-grid { gap: 1.25rem; }
+  .guest-reviews figure { padding: 0 0 1.5rem 1.25rem; }
+  .home #contact a { flex-wrap: wrap; overflow-wrap: anywhere; }
 }
-@media (min-width: 1900px) {
-  body { zoom: 1.25; }
+@media (max-width: 539px) { .featured-grid { grid-template-columns: minmax(0,1fr); } }
+@media (hover: none) { .lift:hover, .zoom:hover img { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .lift:hover, .zoom:hover img { transform: none; }
 }
+
+/* Retain the FAQ widget and improve its palette and touch targets. */
+#ss-btn, #ss-panel .ss-head, #ss-panel .ss-usr, #ss-panel #ss-send { background: var(--color-charcoal); }
+#ss-panel { max-height: calc(100dvh - 110px); }
+#ss-panel #ss-inp { font-size: 16px; min-width: 0; }
+#ss-panel .ss-x, #ss-panel #ss-send { min-width: 44px; min-height: 44px; }
+#ss-panel .ss-q { min-height: 44px; background: var(--color-parchment); color: var(--color-ink); }
+#ss-panel .ss-bot { background: var(--color-linen); color: var(--color-ink); }
+body #ss-btn { background: var(--color-charcoal); }
+@media (max-width: 767px) {
+  .hero-copy { display: contents; }
+  .home-hero .eyebrow { order: 0; }
+  .home-hero h1 { order: 1; }
+  .home-hero p:nth-of-type(2) { order: 2; }
+  .hero-actions { order: 3; }
+  .hero-photos { order: 4; }
+  .home-hero p:first-of-type { order: 5; }
+  .hero-trust { order: 6; }
+}
+.hero-photos > div { min-height: 0; }
+.hero-signature { z-index: 1; }

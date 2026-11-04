@@ -29,13 +29,16 @@ const jsonLd = {
 const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase px-3 py-2 rounded-full';
 ---
 <Layout
-  title="Savor & Stories | Private Tours in Bordeaux & Dieppe with Antoine"
-  description="Authentic French experiences, told by locals. Private wine, food and history tours in Bordeaux and Dieppe with Antoine."
+  title="Bordeaux & Dieppe Private Tours with Antoine | Savor & Stories"
+  description="Explore Bordeaux and Dieppe with Antoine: private food, wine, history and coastal tours in English, French or Spanish. Contact your guide directly to plan your visit."
+  socialImage="/assets/photos/antoine-portrait-explaining.jpg"
+  socialImageAlt="Antoine talking with guests in Bordeaux"
+  pageClass="home"
   jsonLd={jsonLd}
 >
   <!-- Hero -->
-  <section class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 pt-12 md:pt-24 pb-10 md:pb-20 flex flex-wrap items-center gap-10 md:gap-16">
-    <div class="flex-[1_1_440px] min-w-0 flex flex-col gap-6 md:gap-7">
+  <section class="home-hero max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 pt-12 md:pt-24 pb-10 md:pb-20 flex flex-wrap items-center gap-10 md:gap-16">
+    <div class="hero-copy flex-[1_1_440px] min-w-0 flex flex-col gap-6 md:gap-7">
       <div class="flex items-center gap-3.5 eyebrow">
         <span class="inline-block w-9 h-px bg-terracotta" aria-hidden="true"></span>
         <span data-lang="en">Private tours in Bordeaux and Dieppe</span>
@@ -43,9 +46,9 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
         <span data-lang="es" hidden>Tours privados en Burdeos y Dieppe</span>
       </div>
       <h1 class="font-display font-medium text-[44px] md:text-[68px] lg:text-[76px] 2xl:text-[92px] leading-[1.02] tracking-tight text-ink">
-        <span data-lang="en">Authentic French experiences, told by locals</span>
-        <span data-lang="fr" hidden>Des expériences françaises authentiques, racontées par des locaux</span>
-        <span data-lang="es" hidden>Experiencias francesas auténticas, contadas por locales</span>
+        <span data-lang="en">France, with a story to tell.</span>
+        <span data-lang="fr" hidden>La France a tant à vous raconter.</span>
+        <span data-lang="es" hidden>Francia tiene mucho que contarte.</span>
       </h1>
       <p class="text-lg 2xl:text-xl leading-relaxed text-ink-soft max-w-[56ch]">
         <span data-lang="en">I'm Antoine, and these are the two French towns I actually know inside out. Bordeaux gave the world its wine trade and two thousand years of history to go with it. Dieppe gave me something quieter: a working scallop port, chalk cliffs, and a castle above the beach.</span>
@@ -57,7 +60,7 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
         <span data-lang="fr" hidden>Choisissez une ville et je vous ferai visiter moi même.</span>
         <span data-lang="es" hidden>Elige una ciudad y te la mostraré yo mismo.</span>
       </p>
-      <div class="flex flex-wrap gap-3.5 mt-1">
+      <div class="hero-actions flex flex-wrap gap-3.5 mt-1">
         <a href="/bordeaux" class="inline-flex items-center gap-2.5 bg-wine hover:bg-[#4f1222] text-linen px-6 py-4 rounded-full font-semibold text-[15px] no-underline transition-colors">
           <span data-lang="en">Explore Bordeaux</span>
           <span data-lang="fr" hidden>Découvrir Bordeaux</span>
@@ -71,7 +74,7 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
           <span aria-hidden="true">&rarr;</span>
         </a>
       </div>
-      <div class="flex flex-wrap gap-x-7 gap-y-2 mt-2 text-[13px] text-ink-soft">
+      <div class="hero-trust flex flex-wrap gap-x-7 gap-y-2 mt-2 text-[13px] text-ink-soft">
         <span class="inline-flex items-center gap-2"><span class="text-terracotta tracking-[0.1em]">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           <span data-lang="en">Hundreds of five star reviews</span>
           <span data-lang="fr" hidden>Des centaines d'avis cinq étoiles</span>
@@ -86,14 +89,14 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
       </div>
     </div>
 
-    <div class="flex-[1_1_380px] min-w-0 grid grid-cols-12 grid-rows-12 aspect-[1/1.08] max-w-full relative">
-      <div class="zoom col-[1/11] row-[1/11] rounded-[24px_24px_24px_120px] overflow-hidden shadow-[0_30px_60px_rgba(42,37,34,0.18)]">
-        <img src="/assets/photos/antoine-portrait-explaining.jpg" alt="Antoine talking with guests in the streets of Bordeaux" class="w-full h-full object-cover object-[50%_20%]" />
+    <div class="hero-photos flex-[1_1_380px] min-w-0 grid grid-cols-12 grid-rows-12 aspect-[1/1.08] max-w-full relative">
+      <div class="hero-portrait zoom col-[1/11] row-[1/11] rounded-[24px_24px_24px_120px] overflow-hidden shadow-[0_30px_60px_rgba(42,37,34,0.18)]">
+        <img src="/assets/photos/antoine-portrait-explaining.jpg" alt="Antoine talking with guests in the streets of Bordeaux" width="810" height="1080" fetchpriority="high" class="w-full h-full object-cover object-[50%_20%]" />
       </div>
-      <div class="zoom col-[7/13] row-[7/13] rounded-[20px] overflow-hidden border-[6px] border-linen shadow-[0_20px_40px_rgba(42,37,34,0.18)]">
+      <div class="hero-inset zoom col-[7/13] row-[7/13] rounded-[20px] overflow-hidden border-[6px] border-linen shadow-[0_20px_40px_rgba(42,37,34,0.18)]">
         <img src="/assets/photos/antoine-walking-cobblestones.jpg" alt="Antoine walking on the cobblestones of old Bordeaux" loading="lazy" class="w-full h-full object-cover" />
       </div>
-      <div class="col-[1/6] row-[11/13] self-end bg-charcoal text-linen rounded-2xl px-4 py-3.5 flex flex-col gap-0.5 shadow-[0_16px_32px_rgba(42,37,34,0.2)]">
+      <div class="hero-signature col-[1/6] row-[11/13] self-end bg-charcoal text-linen rounded-2xl px-4 py-3.5 flex flex-col gap-0.5 shadow-[0_16px_32px_rgba(42,37,34,0.2)]">
         <span class="font-display italic text-[22px] leading-none">Antoine</span>
         <span class="text-[11px] tracking-[0.14em] uppercase text-gold">
           <span data-lang="en">Your guide, in person</span>
@@ -104,10 +107,55 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
     </div>
   </section>
 
-  <TourFinder tours={all} />
+
+  <!-- Reviews -->
+  <section class="guest-reviews bg-parchment">
+    <div class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-14 md:py-24 flex flex-col gap-8">
+      <div class="flex flex-col items-center text-center gap-2.5">
+        <span class="eyebrow">
+          <span data-lang="en">Guests</span>
+          <span data-lang="fr" hidden>Clients</span>
+          <span data-lang="es" hidden>Clientes</span>
+        </span>
+        <h2 class="font-display font-medium text-[34px] md:text-[52px] 2xl:text-[60px] leading-[1.05] text-ink">
+          <span data-lang="en">What guests have said</span>
+          <span data-lang="fr" hidden>Ce que les clients ont dit</span>
+          <span data-lang="es" hidden>Lo que han dicho los clientes</span>
+        </h2>
+        <p class="max-w-[56ch] text-ink-soft text-[15px] leading-relaxed">
+          <span data-lang="en">Real TripAdvisor reviews from Antoine's food tours before Savor &amp; Stories existed, kept exactly as guests wrote them.</span>
+          <span data-lang="fr" hidden>De vrais avis TripAdvisor des visites gourmandes d'Antoine avant que Savor &amp; Stories existe, conservés exactement tels que les clients les ont écrits.</span>
+          <span data-lang="es" hidden>Reseñas reales de TripAdvisor de los tours gastronómicos de Antoine antes de que existiera Savor &amp; Stories, conservadas exactamente como las escribieron los clientes.</span>
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <figure class="bg-card rounded-[20px] p-7 flex flex-col gap-4 m-0">
+          <span class="text-terracotta tracking-[0.12em] text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <blockquote class="font-display text-[21px] leading-snug text-ink">“He has a laid back demeanour and you can tell he enjoys working with the public. I go on a food tour on most holidays, and this was one of the best. Definitely book with Antoine as he is FABULOUS.”</blockquote>
+          <figcaption class="text-[13px] text-ink-soft"><strong class="text-ink">Mollie &amp; Jack</strong> · TripAdvisor, July 2026</figcaption>
+        </figure>
+        <figure class="bg-card rounded-[20px] p-7 flex flex-col gap-4 m-0">
+          <span class="text-terracotta tracking-[0.12em] text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <blockquote class="font-display text-[21px] leading-snug text-ink">“He was such a storyteller and we fell in Love with Bordeaux and with Alienor and her story. 10/10 would recommend!”</blockquote>
+          <figcaption class="text-[13px] text-ink-soft"><strong class="text-ink">Charлène D.</strong> · TripAdvisor, July 2026</figcaption>
+        </figure>
+        <figure class="bg-card rounded-[20px] p-7 flex flex-col gap-4 m-0">
+          <span class="text-terracotta tracking-[0.12em] text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <blockquote class="font-display text-[21px] leading-snug text-ink">“We experienced super food from a restaurant we would never have found on our own to world class chocolate and patisserie.”</blockquote>
+          <figcaption class="text-[13px] text-ink-soft"><strong class="text-ink">Neil U.</strong> · Belfast · TripAdvisor, August 2026</figcaption>
+        </figure>
+      </div>
+      <a href="/about" class="self-center text-sm font-semibold text-wine no-underline">
+        <span data-lang="en">Read more and meet Antoine &rarr;</span>
+        <span data-lang="fr" hidden>Lire la suite et rencontrer Antoine &rarr;</span>
+        <span data-lang="es" hidden>Leer más y conocer a Antoine &rarr;</span>
+      </a>
+    </div>
+  </section>
+
 
   <!-- Destinations -->
-  <section class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-8 md:py-16 flex flex-col gap-9">
+  <section id="destinations" class="destinations max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-8 md:py-16 flex flex-col gap-9">
     <div class="flex flex-wrap items-end justify-between gap-6">
       <div class="flex flex-col gap-2.5">
         <span class="eyebrow">
@@ -129,7 +177,7 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
     </div>
 
     <div class="grid md:grid-cols-2 gap-7">
-      <a href="/bordeaux" class="zoom lift relative block min-h-[440px] md:min-h-[560px] rounded-3xl overflow-hidden text-linen no-underline shadow-[0_16px_40px_rgba(42,37,34,0.12)]">
+      <a href="/bordeaux" class="destination-card zoom lift relative block min-h-[440px] md:min-h-[560px] rounded-3xl overflow-hidden text-linen no-underline shadow-[0_16px_40px_rgba(42,37,34,0.12)]">
         <img src="/assets/photos/bordeaux-miroir-deau.jpg" alt="Place de la Bourse reflected in the Miroir d'eau, Bordeaux" class="absolute inset-0 w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-b from-charcoal/0 via-charcoal/0 to-charcoal/85" aria-hidden="true"></div>
         <div class="absolute top-6 left-6 flex flex-wrap gap-2">
@@ -158,7 +206,7 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
         </div>
       </a>
 
-      <a href="/dieppe" class="zoom lift relative block min-h-[440px] md:min-h-[560px] rounded-3xl overflow-hidden text-linen no-underline shadow-[0_16px_40px_rgba(42,37,34,0.12)]">
+      <a href="/dieppe" class="destination-card zoom lift relative block min-h-[440px] md:min-h-[560px] rounded-3xl overflow-hidden text-linen no-underline shadow-[0_16px_40px_rgba(42,37,34,0.12)]">
         <img src="/assets/photos/dieppe-castle.jpg" alt="The castle of Dieppe above the beach" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-b from-charcoal/0 via-charcoal/0 to-charcoal/85" aria-hidden="true"></div>
         <div class="absolute top-6 left-6 flex flex-wrap gap-2">
@@ -188,6 +236,41 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
       </a>
     </div>
   </section>
+
+  <!-- Featured tours -->
+  <section id="tours" class="featured-tours max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col gap-8">
+    <div class="flex flex-col gap-2.5">
+      <span class="eyebrow">
+        <span data-lang="en">Most booked</span>
+        <span data-lang="fr" hidden>Les plus réservées</span>
+        <span data-lang="es" hidden>Los más reservados</span>
+      </span>
+      <h2 class="font-display font-medium text-[34px] md:text-[52px] 2xl:text-[60px] leading-[1.05] text-ink">
+        <span data-lang="en">Start here</span>
+        <span data-lang="fr" hidden>Commencez ici</span>
+        <span data-lang="es" hidden>Empieza aquí</span>
+      </h2>
+    </div>
+    <div class="featured-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {featured.map((tour) => (
+        <TourCard
+          slug={tour.id}
+          icon={tour.data.icon}
+          title={tour.data.title}
+          summary={tour.data.summary}
+          duration={tour.data.duration}
+          price={tour.data.price}
+          priceLabel={tour.data.priceLabel}
+          heroImage={tour.data.heroImage}
+          accent={tour.data.city}
+          showCity
+        />
+      ))}
+    </div>
+  </section>
+
+
+  <TourFinder tours={all} />
 
   <!-- Philosophy -->
   <section id="about" class="bg-charcoal text-linen mt-6 md:mt-14">
@@ -293,83 +376,6 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
     </div>
   </section>
 
-  <!-- Featured tours -->
-  <section class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col gap-8">
-    <div class="flex flex-col gap-2.5">
-      <span class="eyebrow">
-        <span data-lang="en">Most booked</span>
-        <span data-lang="fr" hidden>Les plus réservées</span>
-        <span data-lang="es" hidden>Los más reservados</span>
-      </span>
-      <h2 class="font-display font-medium text-[34px] md:text-[52px] 2xl:text-[60px] leading-[1.05] text-ink">
-        <span data-lang="en">Start here</span>
-        <span data-lang="fr" hidden>Commencez ici</span>
-        <span data-lang="es" hidden>Empieza aquí</span>
-      </h2>
-    </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {featured.map((tour) => (
-        <TourCard
-          slug={tour.id}
-          icon={tour.data.icon}
-          title={tour.data.title}
-          summary={tour.data.summary}
-          duration={tour.data.duration}
-          price={tour.data.price}
-          priceLabel={tour.data.priceLabel}
-          heroImage={tour.data.heroImage}
-          accent={tour.data.city}
-          showCity
-        />
-      ))}
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section class="bg-parchment">
-    <div class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto px-4 md:px-8 py-14 md:py-24 flex flex-col gap-8">
-      <div class="flex flex-col items-center text-center gap-2.5">
-        <span class="eyebrow">
-          <span data-lang="en">Guests</span>
-          <span data-lang="fr" hidden>Clients</span>
-          <span data-lang="es" hidden>Clientes</span>
-        </span>
-        <h2 class="font-display font-medium text-[34px] md:text-[52px] 2xl:text-[60px] leading-[1.05] text-ink">
-          <span data-lang="en">What guests have said</span>
-          <span data-lang="fr" hidden>Ce que les clients ont dit</span>
-          <span data-lang="es" hidden>Lo que han dicho los clientes</span>
-        </h2>
-        <p class="max-w-[56ch] text-ink-soft text-[15px] leading-relaxed">
-          <span data-lang="en">Real TripAdvisor reviews from Antoine's food tours before Savor &amp; Stories existed, kept exactly as guests wrote them.</span>
-          <span data-lang="fr" hidden>De vrais avis TripAdvisor des visites gourmandes d'Antoine avant que Savor &amp; Stories existe, conservés exactement tels que les clients les ont écrits.</span>
-          <span data-lang="es" hidden>Reseñas reales de TripAdvisor de los tours gastronómicos de Antoine antes de que existiera Savor &amp; Stories, conservadas exactamente como las escribieron los clientes.</span>
-        </p>
-      </div>
-      <div class="grid md:grid-cols-3 gap-5">
-        <figure class="bg-card rounded-[20px] p-7 flex flex-col gap-4 m-0">
-          <span class="text-terracotta tracking-[0.12em] text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-          <blockquote class="font-display text-[21px] leading-snug text-ink">“He has a laid back demeanour and you can tell he enjoys working with the public. I go on a food tour on most holidays, and this was one of the best. Definitely book with Antoine as he is FABULOUS.”</blockquote>
-          <figcaption class="text-[13px] text-ink-soft"><strong class="text-ink">Mollie &amp; Jack</strong> · TripAdvisor, July 2026</figcaption>
-        </figure>
-        <figure class="bg-card rounded-[20px] p-7 flex flex-col gap-4 m-0">
-          <span class="text-terracotta tracking-[0.12em] text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-          <blockquote class="font-display text-[21px] leading-snug text-ink">“He was such a storyteller and we fell in Love with Bordeaux and with Alienor and her story. 10/10 would recommend!”</blockquote>
-          <figcaption class="text-[13px] text-ink-soft"><strong class="text-ink">Charлène D.</strong> · TripAdvisor, July 2026</figcaption>
-        </figure>
-        <figure class="bg-card rounded-[20px] p-7 flex flex-col gap-4 m-0">
-          <span class="text-terracotta tracking-[0.12em] text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-          <blockquote class="font-display text-[21px] leading-snug text-ink">“We experienced super food from a restaurant we would never have found on our own to world class chocolate and patisserie.”</blockquote>
-          <figcaption class="text-[13px] text-ink-soft"><strong class="text-ink">Neil U.</strong> · Belfast · TripAdvisor, August 2026</figcaption>
-        </figure>
-      </div>
-      <a href="/about" class="self-center text-sm font-semibold text-wine no-underline">
-        <span data-lang="en">Read more and meet Antoine &rarr;</span>
-        <span data-lang="fr" hidden>Lire la suite et rencontrer Antoine &rarr;</span>
-        <span data-lang="es" hidden>Leer más y conocer a Antoine &rarr;</span>
-      </a>
-    </div>
-  </section>
-
-  <ContactPanel />
+  <ContactPanel tone="dark" />
   <script src="/chat.js" defer></script>
 </Layout>

@@ -7,9 +7,13 @@ interface Props {
   title: string;
   description: string;
   jsonLd?: Record<string, unknown>;
+  socialImage?: string;
+  socialImageAlt?: string;
+  pageClass?: string;
 }
 
-const { title, description, jsonLd } = Astro.props;
+const { title, description, jsonLd, socialImage, socialImageAlt, pageClass = '' } = Astro.props;
+const shareImage = socialImage ? new URL(socialImage, Astro.site).toString() : undefined;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!DOCTYPE html>
@@ -41,13 +45,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <meta property="og:url" content={canonical} />
   <meta property="og:site_name" content="Savor & Stories" />
 
+  {shareImage && <>
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:alt" content={socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={shareImage} />
+    <meta name="twitter:image:alt" content={socialImageAlt} />
+  </>}
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
   {jsonLd && (
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   )}
 </head>
-<body class="bg-linen text-ink">
+<body class:list={['bg-linen text-ink', pageClass]}>
+  <a class="skip-link" href="#main-content"><span data-lang="en">Skip to content</span><span data-lang="fr" hidden>Aller au contenu</span><span data-lang="es" hidden>Ir al contenido</span></a>
   <Header />
-  <main>
+  <main id="main-content" tabindex="-1">
     <slot />
   </main>
   <Footer />
@@ -55,22 +70,30 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <script>
     const STORAGE_KEY = 'ss-lang';
 
-    function applyLang(lang: string) {
+    function applyLang(requested: string) {
+      const lang = ['en', 'fr', 'es'].includes(requested) ? requested : 'en';
       document.querySelectorAll<HTMLElement>('[data-lang]').forEach((el) => {
         el.hidden = el.getAttribute('data-lang') !== lang;
       });
       document.querySelectorAll<HTMLElement>('.lbtn').forEach((btn) => {
-        btn.classList.toggle('active', btn.getAttribute('data-set-lang') === lang);
+        const active = btn.getAttribute('data-set-lang') === lang;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-pressed', String(active));
       });
       document.documentElement.lang = lang;
+      document.querySelectorAll<HTMLElement>('[data-label-en]').forEach((el) => {
+        const label = el.getAttribute(`data-label-${lang}`);
+        if (label) el.setAttribute('aria-label', label);
+      });
     }
 
     function setLang(lang: string) {
-      localStorage.setItem(STORAGE_KEY, lang);
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch { /* Switching works even when storage is unavailable. */ }
       applyLang(lang);
     }
 
-    const stored = localStorage.getItem(STORAGE_KEY) || 'en';
+    let stored = 'en';
+    try { stored = localStorage.getItem(STORAGE_KEY) || 'en'; } catch {}
     applyLang(stored);
 
     document.querySelectorAll<HTMLElement>('.lbtn').forEach((btn) => {

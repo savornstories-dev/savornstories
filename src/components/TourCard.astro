@@ -25,18 +25,18 @@ const tint = accent === 'bordeaux' ? 'bg-green' : 'bg-slate';
 ---
 <a
   href={`/tours/${slug}`}
-  class="lift flex flex-col h-full bg-card rounded-[20px] overflow-hidden no-underline text-inherit shadow-card"
+  class="tour-card lift flex flex-col h-full bg-card rounded-[20px] overflow-hidden no-underline text-inherit shadow-card"
 >
   {heroImage ? (
-    <div class="zoom h-48 md:h-52">
+    <div class="tour-image zoom h-48 md:h-52">
       <img src={heroImage} alt={title.en} loading="lazy" class="w-full h-full object-cover" />
     </div>
   ) : (
-    <div class={`h-48 md:h-52 flex items-end p-6 ${tint}`}>
+    <div class={`tour-image h-48 md:h-52 flex items-end p-6 ${tint}`}>
       <span class="text-5xl" aria-hidden="true">{icon}</span>
     </div>
   )}
-  <div class="p-5 md:p-6 flex flex-col gap-2.5 flex-1">
+  <div class="tour-details p-5 md:p-6 flex flex-col gap-2.5 flex-1">
     <div class={`text-[11px] tracking-[0.16em] uppercase font-bold ${labelColor}`}>
       {showCity && (
         <>
@@ -56,11 +56,11 @@ const tint = accent === 'bordeaux' ? 'bg-green' : 'bg-slate';
       <span data-lang="fr" hidden>{duration.fr}</span>
       <span data-lang="es" hidden>{duration.es}</span>
     </div>
-    <div class="font-display font-semibold text-[26px] leading-[1.1] text-ink">
+    <h3 class="tour-title font-display font-semibold text-[26px] leading-[1.1] text-ink">
       <span data-lang="en">{title.en}</span>
       <span data-lang="fr" hidden>{title.fr}</span>
       <span data-lang="es" hidden>{title.es}</span>
-    </div>
+    </h3>
     <p class="text-sm text-ink-soft leading-relaxed">
       <span data-lang="en">{summary.en}</span>
       <span data-lang="fr" hidden>{summary.fr}</span>
