@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import BordeauxPlanning from '../components/BordeauxPlanning.astro';
 import TourCard from '../components/TourCard.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 
@@ -204,4 +205,5 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
 
   <ContactPanel tone="dark" />
   <script src="/chat.js" defer></script>
+  <BordeauxPlanning />
 </Layout>

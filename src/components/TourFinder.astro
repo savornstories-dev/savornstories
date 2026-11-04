@@ -350,9 +350,9 @@ const chip =
 
     const lang = () => {
       try {
-        return localStorage.getItem('ss-lang') || 'en';
+        return document.documentElement.lang || localStorage.getItem('ss-lang') || 'en';
       } catch {
-        return 'en';
+        return document.documentElement.lang || 'en';
       }
     };
 

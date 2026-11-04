@@ -4,7 +4,7 @@
   var STORAGE_KEY = 'ss-lang';
 
   function L() {
-    return localStorage.getItem(STORAGE_KEY) || 'en';
+    return document.documentElement.lang || 'en';
   }
 
   var isBdx = /bordeaux/.test(location.pathname);

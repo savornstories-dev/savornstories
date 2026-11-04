@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { metadata, business, type Localized } from '../lib/seo';
 
 interface Props {
   title: string;
@@ -10,19 +11,22 @@ interface Props {
   socialImage?: string;
   socialImageAlt?: string;
   pageClass?: string;
+  translations?: { title: Localized; description: Localized };
 }
 
 const { title, description, jsonLd, socialImage, socialImageAlt, pageClass = '' } = Astro.props;
-const shareImage = socialImage ? new URL(socialImage, Astro.site).toString() : undefined;
+const shareImage = new URL(socialImage || '/assets/photos/antoine-portrait-explaining.jpg', Astro.site).toString();
+const meta = metadata(Astro.url.pathname, title, description, Astro.props.translations);
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-seo-page>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>{title}</title>
-  <meta name="description" content={description} />
+  <title>{meta.en.title}</title>
+  <script is:inline type="application/json" id="seo-translations" set:html={JSON.stringify(meta).replace(/</g, '\\u003c')} />
+  <meta name="description" content={meta.en.description} />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href={canonical} />
 
@@ -40,8 +44,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   />
 
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
+  <meta property="og:title" content={meta.en.title} />
+  <meta property="og:description" content={meta.en.description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:site_name" content="Savor & Stories" />
 
@@ -52,11 +56,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="twitter:image" content={shareImage} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
   </>}
-  <meta name="twitter:title" content={title} />
-  <meta name="twitter:description" content={description} />
+  <meta name="twitter:title" content={meta.en.title} />
+  <meta name="twitter:description" content={meta.en.description} />
 
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org', '@graph': [business,
+      { '@type': 'Person', '@id': 'https://savornstories.com/#antoine', name: 'Antoine', url: 'https://savornstories.com/about/', image: 'https://savornstories.com/assets/photos/antoine-portrait-explaining.jpg', worksFor: { '@id': business['@id'] }, knowsLanguage: ['en', 'fr', 'es'] },
+      { '@type': 'WebSite', '@id': 'https://savornstories.com/#website', name: 'Savor & Stories', url: 'https://savornstories.com/', inLanguage: ['en', 'fr', 'es'], publisher: { '@id': business['@id'] } },
+      { '@type': 'WebPage', '@id': canonical + '#webpage', url: canonical, name: meta.en.title, description: meta.en.description, inLanguage: 'en', isPartOf: { '@id': 'https://savornstories.com/#website' }, about: { '@id': business['@id'] } },
+    ],
+  }).replace(/</g, '\\u003c')} />
   {jsonLd && (
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
   )}
 </head>
 <body class:list={['bg-linen text-ink', pageClass]}>
@@ -78,7 +89,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       document.querySelectorAll<HTMLElement>('.lbtn').forEach((btn) => {
         const active = btn.getAttribute('data-set-lang') === lang;
         btn.classList.toggle('active', active);
-        btn.setAttribute('aria-pressed', String(active));
+        if (btn.tagName === 'BUTTON') btn.setAttribute('aria-pressed', String(active));
+        else if (active) btn.setAttribute('aria-current', 'true');
+        else btn.removeAttribute('aria-current');
       });
       document.documentElement.lang = lang;
       document.querySelectorAll<HTMLElement>('[data-label-en]').forEach((el) => {
@@ -90,11 +103,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     function setLang(lang: string) {
       try { localStorage.setItem(STORAGE_KEY, lang); } catch { /* Switching works even when storage is unavailable. */ }
       applyLang(lang);
+      const target = document.querySelector<HTMLLinkElement>(`link[hreflang="${lang}"]`);
+      if (target && new URL(target.href).pathname !== location.pathname) location.assign(new URL(target.href).pathname + location.search + location.hash);
     }
 
-    let stored = 'en';
-    try { stored = localStorage.getItem(STORAGE_KEY) || 'en'; } catch {}
-    applyLang(stored);
+    // Each crawlable URL owns its language; saved preferences never replace its content.
+    const initial = document.documentElement.lang || 'en';
+    try { localStorage.setItem(STORAGE_KEY, initial); } catch {}
+    applyLang(initial);
 
     document.querySelectorAll<HTMLElement>('.lbtn').forEach((btn) => {
       btn.addEventListener('click', () => {

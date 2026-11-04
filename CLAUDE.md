@@ -7,10 +7,10 @@ This branch (`claude/astro-rebuild`) is the real live site: Astro 7 plus Tailwin
 - Never compare against, condemn, or disparage other tour guides, competitors, or tourists. Write about our own tours only.
 
 ## Languages: EN, FR, ES
-Every visible string exists in all three languages. There is no route based i18n; all three ship in the HTML and the browser hides two.
+Every visible string exists in all three languages. All three still ship as translated spans. The international SEO build now creates English URLs at the root and French and Spanish copies at `/fr/` and `/es/`, with the correct language visible before JavaScript runs. See `docs/SEO-2026.md`.
 
 - Markup pattern: three sibling spans, `<span data-lang="en">…</span>` plus `fr` and `es` siblings carrying `hidden`.
-- The switcher lives in `src/components/Header.astro` as `.lbtn` buttons with `data-set-lang`. The logic is the inline script in `src/layouts/Layout.astro`: it toggles every `[data-lang]` element on the page and stores the choice in `localStorage`.
+- The switcher lives in `src/components/Header.astro` as `.lbtn` buttons with `data-set-lang`. The logic is the inline script in `src/layouts/Layout.astro`: it toggles every `[data-lang]` element on the page and stores the choice in `localStorage`. In production the language controls are crawlable links to the equivalent language URL. The URL owns the initial language, so stored preferences must not override it.
 - Tour content is frontmatter in `src/content/tours/*.md`, validated by `src/content.config.ts`. The localized fields (`title`, `summary`, `duration`, `schedule`, `description`, and the rest) require `en`, `fr` and `es`. A missing language fails the build, so never add one language alone.
 - Match the existing register in each language. The French and Spanish are written as native copy, not as translations of the English.
 
