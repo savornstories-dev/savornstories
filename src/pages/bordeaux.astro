@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import GameFeature from '../components/GameFeature.astro';
 import TourCard from '../components/TourCard.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 
@@ -117,22 +118,16 @@ const tag = 'bg-linen/90 text-ink text-xs font-bold tracking-[0.08em] uppercase 
       ))}
     </div>
 
-    <div class="grid md:grid-cols-2 gap-6 mt-6">
-      <a href="/bordeaux-game" class="lift flex items-center gap-4 bg-card rounded-[20px] shadow-card p-5 md:p-6 no-underline text-inherit">
-        <span class="text-3xl" aria-hidden="true">🎮</span>
-        <span>
-          <span class="block font-display font-semibold text-xl text-ink">
-            <span data-lang="en">Play Blind Taste, Bordeaux</span>
-            <span data-lang="fr" hidden>Jouer à Blind Taste, Bordeaux</span>
-            <span data-lang="es" hidden>Jugar a Blind Taste, Bordeaux</span>
-          </span>
-          <span class="block text-sm text-ink-soft">
-            <span data-lang="en">A free 7 question game before you book</span>
-            <span data-lang="fr" hidden>Un jeu gratuit de 7 questions avant de réserver</span>
-            <span data-lang="es" hidden>Un juego gratuito de 7 preguntas antes de reservar</span>
-          </span>
-        </span>
-      </a>
+    <GameFeature
+      theme="bordeaux"
+      href="/bordeaux-game"
+      questions={7}
+      title={{"en": "Blind Taste, Bordeaux", "fr": "Blind Taste, Bordeaux", "es": "Blind Taste, Bordeaux"}}
+      description={{"en": "Think you know Bordeaux? Put your wine, food and local knowledge to the test in seven playful questions.", "fr": "Vous connaissez Bordeaux ? Testez vos connaissances sur ses vins, sa cuisine et ses petits secrets en sept questions.", "es": "¿Conoces Burdeos? Pon a prueba lo que sabes de sus vinos, su cocina y sus secretos locales en siete preguntas."}}
+      cta={{"en": "Play the Free Game", "fr": "Jouer gratuitement", "es": "Jugar gratis"}}
+    />
+    <div class="max-w-xl mt-6">
+
       <div class="bg-card rounded-[20px] shadow-card p-5 md:p-6 flex flex-col gap-2">
         <p class="font-display font-semibold text-xl text-ink">
           <span data-lang="en">Want something different?</span>
