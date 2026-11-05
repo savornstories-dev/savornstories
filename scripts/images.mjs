@@ -13,7 +13,7 @@ export async function optimizeImages(pages, root, load) {
     if(!widths.length)widths.push(meta.width);
     const variants=[];
     for(const width of widths){
-      const url=`/assets/optimized/${basename(src).replace(/\.[^.]+$/,'')}-${width}.webp`;
+      const url=`/assets/optimized/${basename(src).replace(/\.[^.]+$/,'').replace(/[^a-zA-Z0-9_-]/g,'-')}-${width}.webp`;
       const info=await sharp(input).resize({width,withoutEnlargement:true}).webp({quality:86}).toFile(join(root,url));
       variants.push({url,width:info.width,height:info.height,size:info.size});
     }
