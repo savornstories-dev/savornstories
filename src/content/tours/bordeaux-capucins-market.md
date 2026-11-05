@@ -1,5 +1,6 @@
 ---
 city: bordeaux
+heroImage: "/assets/photos/ChatGPT Image Nov 5, 2026, 10_28_40 PM-1.png"
 title:
   en: "Capucins Market Morning"
   fr: "Matinée au Marché des Capucins"
