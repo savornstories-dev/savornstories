@@ -4,16 +4,19 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "build": "node scripts/clean.mjs && astro build && node scripts/localize.mjs",
+    "preview": "astro preview",
+    "test:seo": "node --test scripts/seo.test.mjs"
   },
   "dependencies": {
-    "astro": "^7.3.2",
     "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.2",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "cheerio": "^1.2.0",
+    "sharp": "^0.35.5",
     "wrangler": "^4.131.1"
   }
 }

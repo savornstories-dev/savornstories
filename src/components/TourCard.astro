@@ -29,7 +29,7 @@ const tint = accent === 'bordeaux' ? 'bg-green' : 'bg-slate';
 >
   {heroImage ? (
     <div class="tour-image zoom h-48 md:h-52">
-      <img src={heroImage} alt={title.en} loading="lazy" class="w-full h-full object-cover" />
+      <img src={heroImage} alt={title.en} data-alt-en={title.en} data-alt-fr={title.fr} data-alt-es={title.es} loading="lazy" class="w-full h-full object-cover" />
     </div>
   ) : (
     <div class={`tour-image h-48 md:h-52 flex items-end p-6 ${tint}`}>

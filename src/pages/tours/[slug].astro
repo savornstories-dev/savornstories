@@ -15,6 +15,40 @@ const { tour } = Astro.props;
 const { title, summary, duration, price, priceLabel, schedule, meetingPoint, included, goodToKnow, description, icon, city, heroImage, gallery } = tour.data;
 
 const cityLabel = city === 'bordeaux' ? 'Bordeaux' : 'Dieppe';
+
+// Hand written search titles for specific tours, used in place of the generic
+// "{title} in {City}" pattern below. Added only where the generic pattern
+// leaves out a search term travellers actually use (e.g. "tour", "guide").
+// This changes only the <title>/meta/social tags, never the on page heading
+// or any tour copy, price, schedule or image.
+const seoTitleOverrides: Partial<Record<string, { en: string; fr: string; es: string }>> = {
+  'bordeaux-wine-food-history-walk': {
+    en: 'Bordeaux Wine Walking Tour with a Local Guide',
+    fr: 'Balade Vin et Gastronomie à Bordeaux avec un Guide Local',
+    es: 'Paseo de Vino y Gastronomía en Burdeos con un Guía Local',
+  },
+  'bordeaux-saint-emilion-day-trip': {
+    en: 'Bordeaux to Saint-Émilion Wine Day Trip with a Local Guide',
+    fr: 'Excursion Viticole à Saint-Émilion depuis Bordeaux avec un Guide Local',
+    es: 'Excursión Vinícola a Saint-Émilion desde Burdeos con un Guía Local',
+  },
+  'bordeaux-treasure-hunt-1453': {
+    en: '1453 Treasure Hunt Tour in Bordeaux with a Local Guide',
+    fr: 'Chasse au Trésor 1453 à Bordeaux avec un Guide Local',
+    es: 'Búsqueda del Tesoro 1453 en Burdeos con un Guía Local',
+  },
+  'bordeaux-capucins-market': {
+    en: 'Bordeaux Capucins Market Food Tour with a Local Guide',
+    fr: 'Visite du Marché des Capucins à Bordeaux avec un Guide Local',
+    es: 'Visita al Mercado de Capucins en Burdeos con un Guía Local',
+  },
+};
+
+const seoTitle = seoTitleOverrides[tour.id] ?? {
+  en: title.en.includes(cityLabel) ? title.en : `${title.en} in ${cityLabel}`,
+  fr: title.fr.includes(cityLabel) ? title.fr : `${title.fr} à ${cityLabel}`,
+  es: title.es.includes(city === 'bordeaux' ? 'Burdeos' : 'Dieppe') ? title.es : `${title.es} en ${city === 'bordeaux' ? 'Burdeos' : 'Dieppe'}`,
+};
 const accent = city === 'bordeaux' ? 'text-wine' : 'text-teal';
 
 const jsonLd = {
@@ -50,7 +84,7 @@ const jsonLd = {
   ],
 };
 ---
-<Layout title={`${title.en} | Savor & Stories`} description={summary.en} jsonLd={jsonLd}>
+<Layout title={`${title.en} | Savor & Stories`} description={summary.en} jsonLd={jsonLd} socialImage={heroImage} socialImageAlt={title.en} translations={{ title: seoTitle, description: summary }}>
   <div class="max-w-[1240px] 2xl:max-w-[1440px] mx-auto">
     <div class="px-4 md:px-8 pt-6">
       <a href={`/${city}`} class={`text-sm font-semibold ${accent} no-underline`}>
@@ -64,7 +98,7 @@ const jsonLd = {
       <div class="px-4 md:px-8 pt-5">
         <img
           src={heroImage}
-          alt={title.en}
+          alt={title.en} data-alt-en={title.en} data-alt-fr={title.fr} data-alt-es={title.es}
           class="w-full h-64 md:h-[460px] object-cover rounded-3xl shadow-card"
         />
       </div>
