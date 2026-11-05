@@ -1,0 +1,86 @@
+---
+type Copy = Record<'en' | 'fr' | 'es', string>;
+interface Props {
+  theme: 'bordeaux' | 'dieppe';
+  title: Copy;
+  description: Copy;
+  cta: Copy;
+  href: string;
+  questions: number;
+}
+const { theme, title, description, cta, href, questions } = Astro.props;
+const langs = ['en', 'fr', 'es'] as const;
+const eyebrow = { en: 'Savor & Stories Challenges', fr: 'Les défis Savor & Stories', es: 'Los retos de Savor & Stories' };
+const status = { en: `Free · ${questions} questions`, fr: `Gratuit · ${questions} questions`, es: `Gratis · ${questions} preguntas` };
+---
+<section class:list={['challenge', theme]} aria-labelledby={`challenge-${theme}`}>
+  <div class="eyebrow-line">
+    {langs.map(lang => <span data-lang={lang} hidden={lang !== 'en'}>{eyebrow[lang]}</span>)}
+  </div>
+  <div class="panel">
+    <div class="copy">
+      <p class="status">{langs.map(lang => <span data-lang={lang} hidden={lang !== 'en'}>{status[lang]}</span>)}</p>
+      <h2 id={`challenge-${theme}`} class="font-display">{langs.map(lang => <span data-lang={lang} hidden={lang !== 'en'}>{title[lang]}</span>)}</h2>
+      <p class="intro">{langs.map(lang => <span data-lang={lang} hidden={lang !== 'en'}>{description[lang]}</span>)}</p>
+      <a class="play" href={href}>{langs.map(lang => <span data-lang={lang} hidden={lang !== 'en'}>{cta[lang]}</span>)}<span aria-hidden="true">→</span></a>
+    </div>
+    <svg class="art" viewBox="0 0 400 272" aria-hidden="true" focusable="false">
+      {theme === 'bordeaux' ? <>
+        <defs>
+          <pattern id="taste-back" width="16" height="16" patternUnits="userSpaceOnUse"><path d="m0 8 8-8 8 8-8 8Z" fill="none" stroke="#D6B477" opacity=".5"/></pattern>
+        </defs>
+        <g stroke="#D6B477" fill="none" opacity=".28"><ellipse cx="207" cy="139" rx="176" ry="88" transform="rotate(-16 207 139)"/><path d="M30 227 365 48" stroke-dasharray="2 6"/></g>
+        <g transform="rotate(-16 147 147)">
+          <rect x="72" y="43" width="147" height="202" rx="9" fill="#541729" stroke="#D6B477"/>
+          <rect x="80" y="51" width="131" height="186" rx="5" fill="url(#taste-back)" stroke="#D6B477"/>
+          <circle cx="144" cy="141" r="31" fill="#541729" stroke="#D6B477"/><text x="144" y="158" text-anchor="middle" fill="#D6B477" font-family="Georgia,serif" font-size="49">?</text>
+        </g>
+        <g transform="rotate(9 230 130)">
+          <rect x="156" y="22" width="154" height="213" rx="10" fill="#300d17" opacity=".4" transform="translate(4 6)"/>
+          <rect x="156" y="22" width="154" height="213" rx="10" fill="#FBF8F2"/><rect x="164" y="30" width="138" height="197" rx="5" fill="none" stroke="#B69A6A"/>
+          <g fill="#6B1A2E"><path d="m178 42 4 6-4 6-4-6z"/><path d="m287 202 4 6-4 6-4-6z"/></g>
+          <ellipse cx="233" cy="124" rx="45" ry="61" fill="none" stroke="#DFD1B8"/>
+          <g fill="none" stroke="#6B1A2E" stroke-width="2.5" stroke-linecap="round"><path d="M212 91h42l4 27c2 18-10 28-25 28s-27-10-25-28Z"/><path d="M233 146v25m-15 2q15-5 30 0"/></g>
+          <path d="M211 117q10-7 22 0t22-1c2 16-9 27-22 27s-24-10-22-26" fill="#6B1A2E"/>
+          <g stroke="#B29260" stroke-width="1.6" fill="none"><path d="M226 83q-8-7 0-14m11 14q7-7 1-12"/><path d="M197 193q11-2 15-12-13 1-15 12Zm0 0 12-9"/></g>
+          <path d="M223 193h42m-39 5h28" stroke="#B29260"/>
+        </g>
+      </> : <>
+        <defs><pattern id="archive-grid" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M0 15V0h15" stroke="#698080" fill="none" opacity=".28"/></pattern></defs>
+        <g transform="rotate(-8 200 136)">
+          <path d="m47 56 96-12 91 13 98-14-2 159-96 16-94-15-95 14Z" fill="#0F222E" transform="translate(5 7)"/>
+          <path d="m47 56 96-12 91 13 98-14-2 159-96 16-94-15-95 14Z" fill="#F0E9DC"/>
+          <path d="m143 44 91 13v161l-94-15Z" fill="#DBD0BA"/>
+          <path d="m49 59 95-12 87 13 98-14-1 49-50 8-25 13-26-3-14 12-32-2-22 16-34-3-18 13-24-4-36 19Z" fill="#94B1B2"/>
+          <path d="m48 165 35-19 24 4 18-13 34 3 22-16 32 2 14-12 26 3 25-13 50-8" fill="none" stroke="#355665" stroke-width="2"/>
+          <path d="m47 56 96-12 91 13 98-14-2 159-96 16-94-15-95 14Z" fill="url(#archive-grid)"/>
+          <path d="m143 44-3 159m94-146v161" stroke="#998B76" opacity=".55"/>
+          <path d="M75 180q42-42 72-22t69-12 63-17" stroke="#705537" stroke-width="2" stroke-dasharray="3 5" fill="none"/>
+          <g stroke="#705537" fill="#F0E9DC"><circle cx="75" cy="180" r="4"/><circle cx="279" cy="129" r="4"/></g>
+          <g transform="translate(95 90)" fill="#294552" stroke="#294552"><circle r="19" fill="none"/><path d="M0-27 5-5 22 0 5 4 0 25-4 5-22 0-4-4Z" fill="#F0E9DC"/><path d="M0-27v27l5-5Z M0 0v25l-4-20Z"/></g>
+        </g>
+        <g transform="rotate(10 291 208)"><rect x="244" y="168" width="96" height="64" rx="3" fill="#C4A274" stroke="#8D714F"/><path d="m244 232 41-36m55 36-41-36m-55-27 48 34 48-34" fill="none" stroke="#876947"/><circle cx="292" cy="201" r="10" fill="#2C4A5E"/><circle cx="292" cy="201" r="6" stroke="#C4A274" fill="none"/></g>
+      </>}
+      <g transform={`translate(${200 - (questions - 1) * 7} 260)`} fill="none" stroke="var(--gold)">
+        {Array.from({length: questions}, (_, i) => <circle cx={i * 14} r="2.7" fill={i === 0 ? 'var(--gold)' : 'none'} />)}
+      </g>
+    </svg>
+  </div>
+</section>
+<style>
+  .challenge{--gold:#d6b477;--dark:#431321;--mid:#6b1a2e;--paper:#fbf8f2;margin-block:2.25rem 1.5rem}
+  .dieppe{--gold:#c4a274;--dark:#172c39;--mid:#2c4a5e;--paper:#f0e9dc}
+  .eyebrow-line,.status{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:750}
+  .eyebrow-line{display:flex;align-items:center;gap:1rem;color:#343638;margin-bottom:.8rem}
+  .eyebrow-line::after{content:"";height:1px;flex:1;background:#cbbfae}
+  .panel{display:grid;align-items:center;gap:1rem;padding:30px 22px;border-radius:22px;background:radial-gradient(ellipse at 85% 40%,var(--mid),var(--dark) 82%);color:var(--paper)}
+  .status{color:var(--gold)}
+  h2{margin:.55rem 0 .75rem;font-weight:500;font-size:clamp(2.25rem,4.1vw,3.25rem);line-height:1.02;text-wrap:balance}
+  .intro{max-width:43ch;font-size:1rem;line-height:1.6}
+  .play{display:inline-flex;align-items:center;justify-content:center;gap:1.2rem;min-height:46px;margin-top:1.25rem;padding:.7rem 1.25rem;border-radius:999px;background:var(--paper);color:var(--dark);font-size:1rem;font-weight:750;text-decoration:none;cursor:pointer;transition:transform .18s,background-color .18s}
+  .play:hover{transform:translateY(-2px);background:white}.play:focus-visible{outline:3px solid var(--gold);outline-offset:5px}.play:active{transform:translateY(1px)}
+  .art{width:100%;height:auto;max-width:400px;max-height:240px;justify-self:center}
+  @media(min-width:768px){.panel{grid-template-columns:minmax(0,11fr) minmax(0,9fr);padding:32px;gap:32px}.art{max-height:none}}
+  @media(min-width:1024px){.panel{min-height:320px;padding:40px 48px;gap:40px}.intro{font-size:1.08rem}}
+  @media(prefers-reduced-motion:reduce){.play{transition:none}.play:hover,.play:active{transform:none}}
+</style>
