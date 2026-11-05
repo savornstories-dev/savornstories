@@ -15,7 +15,21 @@ const { tour } = Astro.props;
 const { title, summary, duration, price, priceLabel, schedule, meetingPoint, included, goodToKnow, description, icon, city, heroImage, gallery } = tour.data;
 
 const cityLabel = city === 'bordeaux' ? 'Bordeaux' : 'Dieppe';
-const seoTitle = {
+
+// Hand written search titles for specific tours, used in place of the generic
+// "{title} in {City}" pattern below. Added only where the generic pattern
+// leaves out a search term travellers actually use (e.g. "tour", "guide").
+// This changes only the <title>/meta/social tags, never the on page heading
+// or any tour copy, price, schedule or image.
+const seoTitleOverrides: Partial<Record<string, { en: string; fr: string; es: string }>> = {
+  'bordeaux-wine-food-history-walk': {
+    en: 'Bordeaux Wine Walking Tour with a Local Guide',
+    fr: 'Balade Vin et Gastronomie à Bordeaux avec un Guide Local',
+    es: 'Paseo de Vino y Gastronomía en Burdeos con un Guía Local',
+  },
+};
+
+const seoTitle = seoTitleOverrides[tour.id] ?? {
   en: title.en.includes(cityLabel) ? title.en : `${title.en} in ${cityLabel}`,
   fr: title.fr.includes(cityLabel) ? title.fr : `${title.fr} à ${cityLabel}`,
   es: title.es.includes(city === 'bordeaux' ? 'Burdeos' : 'Dieppe') ? title.es : `${title.es} en ${city === 'bordeaux' ? 'Burdeos' : 'Dieppe'}`,
