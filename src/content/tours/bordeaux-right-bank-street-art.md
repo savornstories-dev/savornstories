@@ -1,5 +1,6 @@
 ---
 city: bordeaux
+heroImage: "/assets/photos/ChatGPT Image Nov 5, 2026, 10_28_40 PM-2.png"
 title:
   en: "Right Bank and Street Art"
   fr: "Rive Droite et Street Art"
