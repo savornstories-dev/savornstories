@@ -311,7 +311,7 @@ var UI = {
   en:{heroTag:'Seven clues. One true story.',
     introH1:'Seven clues.<br>History, monuments<br>&amp; local flavor.',
     introP:'A mix of real Dieppe — from the 1942 Raid to the scallop boats at the market. Crack all seven and earn your Field Agent badge.',
-    ruleClues:'Clues', ruleRoughly:'Roughly', ruleCost:'Cost',
+    ruleClues:'Clues', ruleRoughly:'Roughly', ruleCost:'Cost', ruleFree:'FREE',
     startBtn:'Begin the investigation', clueLabel:'Clue', ofLabel:'of',
     declassified:'DECLASSIFIED', fieldReport:'FIELD REPORT',
     nextBtn:'Next clue', claimBadgeBtn:'Claim my badge',
@@ -325,7 +325,7 @@ var UI = {
   fr:{heroTag:'Sept indices. Une seule vraie histoire.',
     introH1:'Sept indices.<br>Histoire, monuments<br>et saveurs locales.',
     introP:'Un vrai mélange de Dieppe — du débarquement de 1942 aux bateaux de pêche à la coquille sur le marché. Résolvez les sept et gagnez votre badge d\'Agent de Terrain.',
-    ruleClues:'Indices', ruleRoughly:'Environ', ruleCost:'Coût',
+    ruleClues:'Indices', ruleRoughly:'Environ', ruleCost:'Coût', ruleFree:'GRATUIT',
     startBtn:'Commencer l\'enquête', clueLabel:'Indice', ofLabel:'sur',
     declassified:'DÉCLASSIFIÉ', fieldReport:'RAPPORT DE TERRAIN',
     nextBtn:'Indice suivant', claimBadgeBtn:'Récupérer mon badge',
@@ -339,7 +339,7 @@ var UI = {
   es:{heroTag:'Siete pistas. Una sola historia real.',
     introH1:'Siete pistas.<br>Historia, monumentos<br>y sabores locales.',
     introP:'Una mezcla real de Dieppe — desde el desembarco de 1942 hasta los barcos de vieiras del mercado. Resuelve las siete y gana tu insignia de Agente de Campo.',
-    ruleClues:'Pistas', ruleRoughly:'Aprox.', ruleCost:'Coste',
+    ruleClues:'Pistas', ruleRoughly:'Aprox.', ruleCost:'Coste', ruleFree:'GRATIS',
     startBtn:'Comenzar la investigación', clueLabel:'Pista', ofLabel:'de',
     declassified:'DESCLASIFICADO', fieldReport:'INFORME DE CAMPO',
     nextBtn:'Siguiente pista', claimBadgeBtn:'Reclamar mi insignia',
@@ -458,7 +458,7 @@ function showIntro(moveFocus){
       '<div class="rules">' +
         '<div class="rule"><div class="rule-num">' + PUZZLES.length + '</div><div class="rule-label">' + t.ruleClues + '</div></div>' +
         '<div class="rule"><div class="rule-num">90s</div><div class="rule-label">' + t.ruleRoughly + '</div></div>' +
-        '<div class="rule"><div class="rule-num">0€</div><div class="rule-label">' + t.ruleCost + '</div></div>' +
+        '<div class="rule"><div class="rule-num">' + t.ruleFree + '</div><div class="rule-label">' + t.ruleCost + '</div></div>' +
       '</div>' +
       '<button class="btn-primary" onclick="startGame()">' + t.startBtn + '</button>' +
     '</div>';

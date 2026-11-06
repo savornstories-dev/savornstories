@@ -301,7 +301,7 @@ var UI = {
   en:{heroTag:'Can your nose tell the difference?',
     introH1:'7 questions.<br>Wine, history,<br>monuments &amp; food.',
     introP:'A mix of real Bordeaux — read each clue, pick your answer. Right or wrong, you\'ll learn something you\'ll actually see or taste on the real tour.',
-    ruleQuestions:'Questions', ruleRoughly:'Roughly', ruleCost:'Cost',
+    ruleQuestions:'Questions', ruleRoughly:'Roughly', ruleCost:'Cost', ruleFree:'FREE',
     startBtn:'Start the challenge', questionLabel:'Question', ofLabel:'of',
     nextBtn:'Next round', seeScoreBtn:'See my score',
     yourResult:'Your result', bordeauxScore:'Bordeaux score',
@@ -314,7 +314,7 @@ var UI = {
   fr:{heroTag:'Votre nez fera-t-il la différence ?',
     introH1:'7 questions.<br>Vin, histoire,<br>monuments et gastronomie.',
     introP:'Un vrai mélange de Bordeaux — lisez chaque indice, choisissez votre réponse. Bonne ou mauvaise, vous apprendrez quelque chose que vous verrez ou goûterez vraiment pendant la visite.',
-    ruleQuestions:'Questions', ruleRoughly:'Environ', ruleCost:'Coût',
+    ruleQuestions:'Questions', ruleRoughly:'Environ', ruleCost:'Coût', ruleFree:'GRATUIT',
     startBtn:'Commencer le défi', questionLabel:'Question', ofLabel:'sur',
     nextBtn:'Manche suivante', seeScoreBtn:'Voir mon score',
     yourResult:'Votre résultat', bordeauxScore:'score Bordeaux',
@@ -327,7 +327,7 @@ var UI = {
   es:{heroTag:'¿Notará tu nariz la diferencia?',
     introH1:'7 preguntas.<br>Vino, historia,<br>monumentos y gastronomía.',
     introP:'Una mezcla real de Burdeos — lee cada pista y elige tu respuesta. Aciertes o no, aprenderás algo que verás o probarás de verdad en el tour.',
-    ruleQuestions:'Preguntas', ruleRoughly:'Aprox.', ruleCost:'Coste',
+    ruleQuestions:'Preguntas', ruleRoughly:'Aprox.', ruleCost:'Coste', ruleFree:'GRATIS',
     startBtn:'Empezar el reto', questionLabel:'Pregunta', ofLabel:'de',
     nextBtn:'Siguiente ronda', seeScoreBtn:'Ver mi puntuación',
     yourResult:'Tu resultado', bordeauxScore:'puntuación Burdeos',
@@ -453,7 +453,7 @@ function showIntro(moveFocus){
       '<div class="rules">' +
         '<div class="rule"><div class="rule-num">' + ROUNDS.length + '</div><div class="rule-label">' + t.ruleQuestions + '</div></div>' +
         '<div class="rule"><div class="rule-num">60s</div><div class="rule-label">' + t.ruleRoughly + '</div></div>' +
-        '<div class="rule"><div class="rule-num">0€</div><div class="rule-label">' + t.ruleCost + '</div></div>' +
+        '<div class="rule"><div class="rule-num">' + t.ruleFree + '</div><div class="rule-label">' + t.ruleCost + '</div></div>' +
       '</div>' +
       '<button class="btn-primary" onclick="startGame()">' + t.startBtn + '</button>' +
     '</div>';
