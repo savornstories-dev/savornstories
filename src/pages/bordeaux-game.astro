@@ -17,77 +17,252 @@
 <meta property="og:url" content="https://savornstories.com/bordeaux-game"/>
 <meta property="og:site_name" content="Savor & Stories"/>
 <style is:global>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f4f0e8;color:#2c2020;max-width:480px;margin:0 auto;overflow-x:hidden}
-.back-bar{background:#2c4432;padding:10px 16px}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:#e8f0e5;text-decoration:none;font-size:12px;font-weight:bold;letter-spacing:.03em}
+/* ============================================================
+   Blind Taste, Bordeaux — responsive redesign
+   Palette: deep burgundy, dark charcoal, warm ivory, restrained
+   champagne gold. Gold is used only as a thin accent (borders,
+   small text, icon strokes) — never as a dominant fill — so the
+   page does not read as brown.
+   ============================================================ */
+:root{
+  --ivory:#f8f3e8;
+  --paper:#fffcf5;
+  --charcoal:#241a17;
+  --charcoal-deep:#140e0c;
+  --wine:#6b1a2e;
+  --wine-deep:#430f1c;
+  --gold:#c9a662;
+  --gold-soft:#eadfc4;
+  --border:#e4d9c2;
+  --ink-soft:#5a4a46;
+  --focus-ring:#99702d;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--charcoal);
+  background:var(--ivory);
+  min-height:100dvh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+[hidden]{display:none !important}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px;border-radius:4px}
+.hero :focus-visible,.back-bar :focus-visible{outline-color:#fbeec7}
+
+/* Atmosphere behind the floating shell on tablet and up */
+@media (min-width:768px){
+  body{
+    background:
+      radial-gradient(ellipse 70% 55% at 50% -10%, #3a1420 0%, transparent 60%),
+      var(--charcoal-deep);
+    padding-block:clamp(1.5rem,4vw,3.5rem);
+  }
+}
+
+.game-shell{
+  width:100%;
+  max-width:480px;
+  margin:0 auto;
+}
+@media (min-width:768px){
+  .game-shell{
+    max-width:620px;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.5), 0 0 0 1px rgba(201,166,98,.18);
+  }
+}
+@media (min-width:1024px){ .game-shell{max-width:clamp(700px,64vw,850px)} }
+@media (min-width:1440px){ .game-shell{max-width:900px} }
+
+.back-bar{background:var(--charcoal-deep);padding:10px 16px}
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;color:var(--gold-soft);
+  text-decoration:none;font-size:12px;font-weight:bold;letter-spacing:.03em;
+  min-height:44px;padding:4px 2px;
+}
 .back-link:active{opacity:.7}
 
-.hero{background:#3d5c3a;padding:30px 20px 26px;text-align:center;position:relative;overflow:hidden}
-.hero-icon{font-size:34px;display:block;margin-bottom:6px;animation:float 3s ease-in-out infinite}
-.hero-loc{font-size:10px;letter-spacing:.2em;color:#c8d5c4;text-transform:uppercase;margin-bottom:5px}
-.hero-name{font-size:26px;font-weight:bold;color:#f4f0e8;letter-spacing:.02em;line-height:1.2}
-.divider{width:40px;height:2px;background:#9e2b47;margin:10px auto}
-.hero-tag{font-size:13px;color:#e8e2d4;font-style:italic}
-.lang-bar{display:flex;gap:8px;justify-content:center;margin-top:16px}
-.lbtn{padding:6px 18px;border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;font-size:11px;cursor:pointer;letter-spacing:.1em;background:transparent;color:#f4f0e8;font-family:Arial,sans-serif;transition:all .2s}
-.lbtn.active{background:#f4f0e8;color:#3d5c3a;border-color:#f4f0e8;font-weight:bold}
+.hero{
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255,255,255,.05) 0, transparent 42%),
+    radial-gradient(circle at 82% 75%, rgba(255,255,255,.04) 0, transparent 46%),
+    linear-gradient(165deg,var(--wine) 0%,var(--charcoal) 75%);
+  padding:clamp(26px,5vw,40px) 20px clamp(24px,4vw,32px);
+  text-align:center;position:relative;overflow:hidden;
+}
+.hero-icon{font-size:clamp(30px,4vw,38px);display:block;margin-bottom:6px;animation:float 3s ease-in-out infinite}
+.hero-loc{font-size:10px;letter-spacing:.2em;color:var(--gold-soft);text-transform:uppercase;margin-bottom:5px}
+.hero-name{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(24px,3vw + 14px,34px);
+  font-weight:bold;color:var(--ivory);letter-spacing:.01em;line-height:1.2;margin:0;
+}
+.divider{width:40px;height:2px;background:var(--gold);margin:12px auto}
+.hero-tag{font-size:clamp(13px,1vw + 10px,15px);color:var(--gold-soft);font-style:italic}
 
-.body{padding:20px 16px 28px;background:#f4f0e8}
+.lang-bar{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.lbtn{
+  padding:6px 18px;min-height:44px;min-width:44px;
+  border:1.5px solid rgba(255,255,255,.3);border-radius:20px;font-size:11px;
+  cursor:pointer;letter-spacing:.1em;background:transparent;color:var(--ivory);
+  font-family:Arial,sans-serif;transition:all .2s;
+}
+.lbtn.active{background:var(--ivory);color:var(--wine-deep);border-color:var(--ivory);font-weight:bold}
+
+.body{
+  padding:clamp(20px,4vw,30px) clamp(16px,5vw,28px) clamp(26px,5vw,34px);
+  background:var(--ivory);
+  container-type:inline-size;
+}
 
 .progress{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
-.dot{width:9px;height:9px;border-radius:50%;background:#dcd4c0;transition:background .3s, transform .3s}
-.dot.done{background:#3d5c3a}
-.dot.current{background:#6b1a2e;transform:scale(1.3)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--border);transition:background .3s,transform .3s}
+.dot.done{background:var(--wine)}
+.dot.current{background:var(--gold);transform:scale(1.35)}
 
-.intro-card{background:#fff;border-radius:16px;border:0.5px solid #e0d8c8;padding:26px 20px;text-align:center}
-.intro-card h1{font-size:19px;color:#3d5c3a;margin-bottom:10px;line-height:1.3}
-.intro-card p{font-size:13px;color:#5a4a4a;line-height:1.6;margin-bottom:20px}
-.rules{display:flex;justify-content:center;gap:18px;margin-bottom:22px}
+.intro-card,.round-card,.result-card{max-width:640px;margin-inline:auto;width:100%}
+
+.intro-card{
+  background:var(--paper);border-radius:16px;border:1px solid var(--border);
+  padding:clamp(24px,4vw,34px) clamp(20px,4vw,30px);text-align:center;
+}
+.intro-card h2{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(20px,1.6vw + 15px,27px);color:var(--wine);margin:0 0 12px;line-height:1.3;font-weight:600;
+}
+.intro-card p{font-size:clamp(13.5px,.3vw + 13px,15px);color:var(--ink-soft);line-height:1.65;margin:0 0 22px}
+.rules{display:flex;justify-content:center;gap:clamp(14px,3vw,26px);margin-bottom:24px;flex-wrap:wrap}
 .rule{text-align:center}
-.rule-num{font-size:20px;font-weight:bold;color:#6b1a2e}
-.rule-label{font-size:10px;color:#7a6a6a;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.rule-num{font-size:clamp(18px,1vw + 14px,22px);font-weight:bold;color:var(--wine)}
+.rule-label{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
 
-.btn-primary{display:block;width:100%;padding:15px;background:linear-gradient(135deg,#3d5c3a,#6b1a2e);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:bold;cursor:pointer;font-family:Arial,sans-serif;transition:opacity .2s, transform .1s}
+.btn-primary{
+  display:block;width:100%;min-height:48px;padding:15px;
+  background:linear-gradient(135deg,var(--wine),var(--wine-deep));
+  color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:bold;
+  cursor:pointer;font-family:Arial,sans-serif;transition:opacity .2s,transform .1s;
+}
 .btn-primary:hover{opacity:.9}
 .btn-primary:active{transform:scale(.98)}
 
-.round-card{background:#fff;border-radius:16px;border:0.5px solid #e0d8c8;padding:24px 20px;animation:slideIn .35s ease}
-.round-label{font-size:10px;letter-spacing:.15em;color:#9a8a6a;text-transform:uppercase;font-weight:bold;text-align:center;margin-bottom:8px}
-.cat-tag-wrap{text-align:center;margin-bottom:10px}
-.cat-tag{display:inline-block;background:#e8f0e5;color:#3d5c3a;font-size:10px;font-weight:bold;letter-spacing:.1em;padding:3px 12px;border-radius:20px}
-.glass{display:flex;justify-content:center;margin-bottom:10px}
-.note{font-size:16px;font-style:italic;color:#3d2c2c;text-align:center;line-height:1.5;margin-bottom:22px;min-height:48px}
+.round-card{
+  background:var(--paper);border-radius:16px;border:1px solid var(--border);
+  padding:clamp(22px,4vw,30px) clamp(18px,4vw,26px);animation:slideIn .35s ease;
+}
+.round-meta{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:16px;text-align:center}
+.round-meta-text{display:flex;flex-direction:column;align-items:center;gap:6px}
+.round-label{
+  font-size:10px;letter-spacing:.15em;color:#9a8a6a;text-transform:uppercase;
+  font-weight:bold;margin:0;
+}
+.cat-tag{
+  display:inline-block;background:var(--gold-soft);color:var(--wine-deep);
+  font-size:10px;font-weight:bold;letter-spacing:.1em;padding:3px 12px;border-radius:20px;
+}
+.glass{display:flex;justify-content:center;line-height:0}
+.glass svg{width:clamp(38px,5vw,52px);height:clamp(38px,5vw,52px)}
 
-.option{display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;background:#fdfbf7;border:1.5px solid #e0d8c8;border-radius:12px;font-size:14px;font-weight:bold;color:#3d2c2c;cursor:pointer;font-family:Arial,sans-serif;transition:border-color .2s, background .2s, transform .1s}
+.note{
+  font-size:clamp(15.5px,.6vw + 13px,18px);font-style:italic;color:var(--charcoal);
+  text-align:center;line-height:1.55;margin-bottom:22px;overflow-wrap:break-word;
+}
+
+.option{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  min-height:48px;padding:13px 16px;margin-bottom:10px;background:var(--ivory);
+  border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-weight:bold;
+  color:var(--charcoal);cursor:pointer;font-family:Arial,sans-serif;
+  transition:border-color .2s,background .2s,transform .1s;overflow-wrap:anywhere;
+}
+.option:hover:not(:disabled){border-color:var(--wine)}
 .option:active{transform:scale(.98)}
 .option:disabled{cursor:default}
-.option.correct{background:#e8f0e5;border-color:#3d5c3a;color:#2c4432;animation:pulseGreen .5s ease}
+.option.correct{background:#f1e9d7;border-color:var(--wine);color:var(--wine-deep);animation:pulseGold .5s ease}
 .option.wrong{background:#f6e6e6;border-color:#9e2b47;color:#6b1a2e;animation:shake .4s ease}
 .option.dim{opacity:.45}
+.opt-icon{flex:none;font-size:15px;line-height:1}
+.option.correct .opt-icon{color:var(--wine)}
+.option.wrong .opt-icon{color:#9e2b47}
 
-.feedback{margin-top:16px;padding:14px 16px;border-radius:12px;background:#f4f0e8;border:0.5px solid #e0d8c8;font-size:12.5px;color:#5a4a4a;line-height:1.6;opacity:0;max-height:0;overflow:hidden;transition:opacity .3s, max-height .4s}
-.feedback.show{opacity:1;max-height:200px;margin-top:16px}
-.feedback strong{color:#3d5c3a}
+.feedback{
+  display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;
+  transition:grid-template-rows .35s ease,opacity .3s ease,margin-top .35s ease;
+}
+.feedback.show{grid-template-rows:1fr;opacity:1;margin-top:16px}
+.feedback-inner{overflow:hidden;min-height:0}
+.feedback-inner-pad{
+  padding:14px 16px;border-radius:12px;background:var(--ivory);border:1px solid var(--border);
+  font-size:13px;color:var(--ink-soft);line-height:1.6;
+}
+.feedback strong{color:var(--wine)}
+.feedback-status{font-weight:bold;color:var(--charcoal);display:block;margin-bottom:4px}
 
 .next-btn{margin-top:16px}
 
-.result-card{background:#fff;border-radius:16px;border:0.5px solid #e0d8c8;padding:30px 22px;text-align:center;animation:slideIn .4s ease}
-.result-badge{font-size:52px;display:block;margin-bottom:8px;animation:badgePop .5s cubic-bezier(.34,1.56,.64,1)}
-.result-score{font-size:34px;font-weight:bold;color:#6b1a2e;letter-spacing:.02em}
-.result-title{font-size:17px;font-weight:bold;color:#3d5c3a;margin:6px 0 10px}
-.result-desc{font-size:13px;color:#5a4a4a;line-height:1.6;margin-bottom:22px}
+.result-card{
+  background:var(--paper);border-radius:16px;border:1px solid var(--border);
+  padding:clamp(26px,5vw,36px) clamp(20px,4vw,28px);text-align:center;animation:slideIn .4s ease;
+}
+.result-summary{margin-bottom:6px}
+.result-badge{font-size:clamp(42px,5vw,56px);display:block;margin-bottom:8px;animation:badgePop .5s cubic-bezier(.34,1.56,.64,1)}
+.result-score{font-size:clamp(28px,3vw + 18px,38px);font-weight:bold;color:var(--wine);letter-spacing:.02em}
+.result-title{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(18px,.8vw + 14px,21px);font-weight:600;color:var(--charcoal);margin:6px 0 10px;
+}
+.result-desc{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:22px;overflow-wrap:break-word}
 
-.share-box{background:#f4f0e8;border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:12.5px;color:#5a4a4a;text-align:left;line-height:1.6}
-.share-box .tag{display:inline-block;background:#e8f0e5;color:#3d5c3a;font-size:10px;font-weight:bold;padding:2px 8px;border-radius:20px;margin-bottom:6px}
+.share-box{
+  background:var(--ivory);border-radius:12px;padding:14px 16px;margin-bottom:18px;
+  font-size:12.5px;color:var(--ink-soft);text-align:left;line-height:1.6;
+}
+.share-box .tag{display:inline-block;background:var(--gold-soft);color:var(--wine-deep);font-size:10px;font-weight:bold;padding:2px 8px;border-radius:20px;margin-bottom:6px}
 
-.wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;background:#25d366;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:bold;cursor:pointer;font-family:Arial,sans-serif;margin-bottom:10px;text-decoration:none;transition:opacity .2s}
+.btn-primary,.wa-btn,.replay-btn{max-width:100%}
+@media (min-width:768px){
+  .btn-primary,.wa-btn,.replay-btn{max-width:420px;margin-inline:auto}
+}
+
+.wa-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  min-height:48px;padding:15px;background:#25d366;color:#fff;border:none;border-radius:14px;
+  font-size:14px;font-weight:bold;cursor:pointer;font-family:Arial,sans-serif;margin-bottom:10px;
+  text-decoration:none;transition:opacity .2s;
+}
 .wa-btn:hover{opacity:.88}
-.replay-btn{display:block;width:100%;padding:13px;background:transparent;color:#6b1a2e;border:1.5px solid #e0d8c8;border-radius:14px;font-size:13px;font-weight:bold;cursor:pointer;font-family:Arial,sans-serif}
+.replay-btn{
+  display:block;width:100%;min-height:48px;padding:13px;background:transparent;color:var(--wine);
+  border:1.5px solid var(--border);border-radius:14px;font-size:13px;font-weight:bold;cursor:pointer;
+  font-family:Arial,sans-serif;
+}
+
+/* Tablet landscape / laptop and up: let the question header read as a
+   small two-column card (icon beside label) instead of a stacked block,
+   and left-align running prose for comfortable reading line-length.
+   Driven by the shell's own rendered width (container query), so it
+   responds correctly inside split-screen or resized windows too. */
+@container (min-width:520px){
+  .round-meta{flex-direction:row;align-items:center;text-align:left;gap:16px}
+  .round-meta-text{align-items:flex-start}
+  .note{text-align:left}
+  .feedback-inner-pad{text-align:left}
+  .result-desc{text-align:left}
+}
 
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulseGreen{0%{box-shadow:0 0 0 0 rgba(61,92,58,.4)}70%{box-shadow:0 0 0 10px rgba(61,92,58,0)}}
+@keyframes pulseGold{0%{box-shadow:0 0 0 0 rgba(201,166,98,.45)}70%{box-shadow:0 0 0 10px rgba(201,166,98,0)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 @keyframes badgePop{0%{transform:scale(0) rotate(-15deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
 @media (prefers-reduced-motion: reduce){
@@ -101,22 +276,24 @@ body{font-family:Arial,sans-serif;background:#f4f0e8;color:#2c2020;max-width:480
   <a class="back-link" href="/bordeaux">&#8592; Back to Bordeaux tours</a>
 </div>
 
-<div class="hero">
-  <span class="hero-icon">🍷</span>
-  <div class="hero-loc">Savor &amp; Stories · Bordeaux</div>
-  <div class="hero-name">Blind Taste, Bordeaux</div>
-  <div class="divider"></div>
-  <div class="hero-tag" id="heroTag">Can your nose tell the difference?</div>
-  <div class="lang-bar">
-    <button class="lbtn active" id="lbtn-en" onclick="setLang('en')">EN</button>
-    <button class="lbtn" id="lbtn-fr" onclick="setLang('fr')">FR</button>
-    <button class="lbtn" id="lbtn-es" onclick="setLang('es')">ES</button>
+<div class="game-shell">
+  <div class="hero">
+    <span class="hero-icon" aria-hidden="true">🍷</span>
+    <h1 class="hero-name">Blind Taste, Bordeaux</h1>
+    <div class="hero-loc">Savor &amp; Stories · Bordeaux</div>
+    <div class="divider"></div>
+    <div class="hero-tag" id="heroTag">Can your nose tell the difference?</div>
+    <div class="lang-bar" role="group" aria-label="Language">
+      <button class="lbtn active" id="lbtn-en" aria-label="English" aria-pressed="true" onclick="setLang('en')">EN</button>
+      <button class="lbtn" id="lbtn-fr" aria-label="Français" aria-pressed="false" onclick="setLang('fr')">FR</button>
+      <button class="lbtn" id="lbtn-es" aria-label="Español" aria-pressed="false" onclick="setLang('es')">ES</button>
+    </div>
   </div>
-</div>
 
-<div class="body">
-  <div class="progress" id="progress"></div>
-  <div id="stage"></div>
+  <div class="body">
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div id="stage"></div>
+  </div>
 </div>
 
 <script is:inline>
@@ -130,6 +307,8 @@ var UI = {
     yourResult:'Your result', bordeauxScore:'Bordeaux score',
     beatIt:'Think you can beat it? Play again or find out for real on the tour.',
     bookBtn:'Book the real tour', playAgainBtn:'Play again',
+    correctLabel:'Correct.', incorrectLabel:'Not quite.',
+    srCorrectAnswer:'(correct answer)', srYourCorrect:'(your answer, correct)', srYourWrong:'(your answer, incorrect)',
     waMsg:function(score,total,title){return "Hi Antoine! I just played Blind Taste, Bordeaux and scored "+score+"/"+total+" ("+title+"). I'd like to book the real Food & Wine Tour to see if I'm actually right \u{1F377}";}
   },
   fr:{heroTag:'Votre nez fera-t-il la différence ?',
@@ -141,6 +320,8 @@ var UI = {
     yourResult:'Votre résultat', bordeauxScore:'score Bordeaux',
     beatIt:'Vous pensez pouvoir faire mieux ? Rejouez ou vérifiez pour de vrai pendant la visite.',
     bookBtn:'Réserver la vraie visite', playAgainBtn:'Rejouer',
+    correctLabel:'Correct.', incorrectLabel:'Pas tout à fait.',
+    srCorrectAnswer:'(bonne réponse)', srYourCorrect:'(votre réponse, correcte)', srYourWrong:'(votre réponse, incorrecte)',
     waMsg:function(score,total,title){return "Bonjour Antoine ! Je viens de jouer à Blind Taste, Bordeaux et j'ai obtenu "+score+"/"+total+" ("+title+"). J'aimerais réserver la vraie visite Gastronomie & Vin pour voir si j'ai vraiment raison \u{1F377}";}
   },
   es:{heroTag:'¿Notará tu nariz la diferencia?',
@@ -152,17 +333,19 @@ var UI = {
     yourResult:'Tu resultado', bordeauxScore:'puntuación Burdeos',
     beatIt:'¿Crees que puedes superarlo? Vuelve a jugar o compruébalo de verdad en el tour.',
     bookBtn:'Reservar el tour real', playAgainBtn:'Jugar de nuevo',
+    correctLabel:'Correcto.', incorrectLabel:'No exactamente.',
+    srCorrectAnswer:'(respuesta correcta)', srYourCorrect:'(tu respuesta, correcta)', srYourWrong:'(tu respuesta, incorrecta)',
     waMsg:function(score,total,title){return "¡Hola Antoine! Acabo de jugar a Blind Taste, Bordeaux y obtuve "+score+"/"+total+" ("+title+"). Me gustaría reservar el tour real de Comida y Vino para ver si realmente acerté \u{1F377}";}
   }
 };
 
-var ICON_WINE = '<svg viewBox="0 0 64 64" width="44" height="44"><path d="M22 8h20l-1.5 15c-.8 6.5-6.5 10-8.5 10s-7.7-3.5-8.5-10L22 8z" fill="#8a2740" stroke="#6b1a2e" stroke-width="2"/><line x1="32" y1="33" x2="32" y2="50" stroke="#6b1a2e" stroke-width="2.5"/><line x1="22" y1="55" x2="42" y2="55" stroke="#6b1a2e" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="50" x2="32" y2="55" stroke="#6b1a2e" stroke-width="2.5"/></svg>';
-var ICON_COLUMN = '<svg viewBox="0 0 64 64" width="44" height="44"><rect x="14" y="6" width="36" height="6" fill="#6b1a2e"/><rect x="18" y="12" width="4" height="36" fill="#6b1a2e"/><rect x="30" y="12" width="4" height="36" fill="#6b1a2e"/><rect x="42" y="12" width="4" height="36" fill="#6b1a2e"/><rect x="12" y="48" width="40" height="6" fill="#6b1a2e"/></svg>';
-var ICON_SPIRE = '<svg viewBox="0 0 64 64" width="44" height="44"><polygon points="32,4 24,22 40,22" fill="#6b1a2e"/><rect x="26" y="22" width="12" height="30" fill="#6b1a2e"/><rect x="22" y="52" width="20" height="6" fill="#6b1a2e"/><rect x="29" y="30" width="2.5" height="8" fill="#f4f0e8"/><rect x="32.5" y="30" width="2.5" height="8" fill="#f4f0e8"/></svg>';
-var ICON_CANELE = '<svg viewBox="0 0 64 64" width="44" height="44"><polygon points="18,20 46,20 40,54 24,54" fill="#3d2410"/><ellipse cx="32" cy="20" rx="14" ry="4" fill="#1f1006"/><line x1="22" y1="24" x2="26.5" y2="53" stroke="#6b4020" stroke-width="1.3"/><line x1="27.5" y1="22" x2="30" y2="53.5" stroke="#6b4020" stroke-width="1.3"/><line x1="32" y1="22" x2="32" y2="54" stroke="#6b4020" stroke-width="1.3"/><line x1="36.5" y1="22" x2="34" y2="53.5" stroke="#6b4020" stroke-width="1.3"/><line x1="42" y1="24" x2="37.5" y2="53" stroke="#6b4020" stroke-width="1.3"/></svg>';
-var ICON_BADGE = '<svg viewBox="0 0 64 64" width="44" height="44"><circle cx="32" cy="30" r="14" fill="none" stroke="#6b1a2e" stroke-width="2.5"/><path d="M32 20l2.5 6 6.5.5-5 4.5 1.5 6.5-5.5-3.5-5.5 3.5 1.5-6.5-5-4.5 6.5-.5z" fill="#6b1a2e"/><path d="M14 46c4 6 12 10 18 10s14-4 18-10" fill="none" stroke="#3d5c3a" stroke-width="2.5" stroke-linecap="round"/></svg>';
-var ICON_THEATRE = '<svg viewBox="0 0 64 64" width="44" height="44"><polygon points="32,6 12,18 52,18" fill="#6b1a2e"/><rect x="12" y="18" width="40" height="4" fill="#6b1a2e"/><rect x="16" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="24" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="32" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="40" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="12" y="48" width="40" height="6" fill="#6b1a2e"/></svg>';
-var ICON_MOONRIVER = '<svg viewBox="0 0 64 64" width="44" height="44"><path d="M40 10a18 18 0 100 34 14 14 0 010-34z" fill="#6b1a2e"/><path d="M10 48q6-6 12 0t12 0 12 0 12 0" fill="none" stroke="#3d5c3a" stroke-width="2.5" stroke-linecap="round"/></svg>';
+var ICON_WINE = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><path d="M22 8h20l-1.5 15c-.8 6.5-6.5 10-8.5 10s-7.7-3.5-8.5-10L22 8z" fill="#8a2740" stroke="#6b1a2e" stroke-width="2"/><line x1="32" y1="33" x2="32" y2="50" stroke="#6b1a2e" stroke-width="2.5"/><line x1="22" y1="55" x2="42" y2="55" stroke="#6b1a2e" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="50" x2="32" y2="55" stroke="#6b1a2e" stroke-width="2.5"/></svg>';
+var ICON_COLUMN = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><rect x="14" y="6" width="36" height="6" fill="#6b1a2e"/><rect x="18" y="12" width="4" height="36" fill="#6b1a2e"/><rect x="30" y="12" width="4" height="36" fill="#6b1a2e"/><rect x="42" y="12" width="4" height="36" fill="#6b1a2e"/><rect x="12" y="48" width="40" height="6" fill="#6b1a2e"/></svg>';
+var ICON_SPIRE = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><polygon points="32,4 24,22 40,22" fill="#6b1a2e"/><rect x="26" y="22" width="12" height="30" fill="#6b1a2e"/><rect x="22" y="52" width="20" height="6" fill="#6b1a2e"/><rect x="29" y="30" width="2.5" height="8" fill="#f4f0e8"/><rect x="32.5" y="30" width="2.5" height="8" fill="#f4f0e8"/></svg>';
+var ICON_CANELE = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><polygon points="18,20 46,20 40,54 24,54" fill="#3d2410"/><ellipse cx="32" cy="20" rx="14" ry="4" fill="#1f1006"/><line x1="22" y1="24" x2="26.5" y2="53" stroke="#6b4020" stroke-width="1.3"/><line x1="27.5" y1="22" x2="30" y2="53.5" stroke="#6b4020" stroke-width="1.3"/><line x1="32" y1="22" x2="32" y2="54" stroke="#6b4020" stroke-width="1.3"/><line x1="36.5" y1="22" x2="34" y2="53.5" stroke="#6b4020" stroke-width="1.3"/><line x1="42" y1="24" x2="37.5" y2="53" stroke="#6b4020" stroke-width="1.3"/></svg>';
+var ICON_BADGE = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><circle cx="32" cy="30" r="14" fill="none" stroke="#6b1a2e" stroke-width="2.5"/><path d="M32 20l2.5 6 6.5.5-5 4.5 1.5 6.5-5.5-3.5-5.5 3.5 1.5-6.5-5-4.5 6.5-.5z" fill="#6b1a2e"/><path d="M14 46c4 6 12 10 18 10s14-4 18-10" fill="none" stroke="#3d5c3a" stroke-width="2.5" stroke-linecap="round"/></svg>';
+var ICON_THEATRE = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><polygon points="32,6 12,18 52,18" fill="#6b1a2e"/><rect x="12" y="18" width="40" height="4" fill="#6b1a2e"/><rect x="16" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="24" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="32" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="40" y="22" width="4" height="26" fill="#6b1a2e"/><rect x="12" y="48" width="40" height="6" fill="#6b1a2e"/></svg>';
+var ICON_MOONRIVER = '<svg viewBox="0 0 64 64" width="44" height="44" aria-hidden="true" focusable="false"><path d="M40 10a18 18 0 100 34 14 14 0 010-34z" fill="#6b1a2e"/><path d="M10 48q6-6 12 0t12 0 12 0 12 0" fill="none" stroke="#3d5c3a" stroke-width="2.5" stroke-linecap="round"/></svg>';
 
 var ROUNDS = [
   { glass:ICON_WINE,
@@ -227,9 +410,22 @@ var LANG = 'en', STAGE = 'intro', current = 0, score = 0, answered = false;
 var stage = document.getElementById('stage');
 var progressEl = document.getElementById('progress');
 
+function focusHeading(sel){
+  var h = document.querySelector(sel);
+  if (!h) return;
+  h.setAttribute('tabindex','-1');
+  h.focus({preventScroll:true});
+}
+
 function setLang(l){
   LANG = l;
-  ['en','fr','es'].forEach(function(k){ document.getElementById('lbtn-'+k).classList.toggle('active', k===l); });
+  document.documentElement.lang = l;
+  ['en','fr','es'].forEach(function(k){
+    var b = document.getElementById('lbtn-'+k);
+    var active = (k===l);
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
   document.getElementById('heroTag').textContent = UI[LANG].heroTag;
   if (STAGE === 'intro') showIntro();
   else if (STAGE === 'round') showRound();
@@ -247,12 +443,12 @@ function renderProgress(){
   progressEl.innerHTML = html;
 }
 
-function showIntro(){
+function showIntro(moveFocus){
   STAGE = 'intro';
   var t = UI[LANG];
   stage.innerHTML =
     '<div class="intro-card">' +
-      '<h1>' + t.introH1 + '</h1>' +
+      '<h2 id="introHeading">' + t.introH1 + '</h2>' +
       '<p>' + t.introP + '</p>' +
       '<div class="rules">' +
         '<div class="rule"><div class="rule-num">' + ROUNDS.length + '</div><div class="rule-label">' + t.ruleQuestions + '</div></div>' +
@@ -261,15 +457,17 @@ function showIntro(){
       '</div>' +
       '<button class="btn-primary" onclick="startGame()">' + t.startBtn + '</button>' +
     '</div>';
+  renderProgress();
+  if (moveFocus) focusHeading('#introHeading');
 }
 
 function startGame(){
   current = 0; score = 0;
   renderProgress();
-  showRound();
+  showRound(true);
 }
 
-function showRound(){
+function showRound(moveFocus){
   STAGE = 'round';
   answered = false;
   renderProgress();
@@ -281,38 +479,56 @@ function showRound(){
   }
   stage.innerHTML =
     '<div class="round-card">' +
-      '<div class="round-label">' + t.questionLabel + ' ' + (current + 1) + ' ' + t.ofLabel + ' ' + ROUNDS.length + '</div>' +
-      '<div class="cat-tag-wrap"><span class="cat-tag">' + r.cat + '</span></div>' +
-      '<span class="glass">' + ROUNDS[current].glass + '</span>' +
+      '<div class="round-meta">' +
+        '<span class="glass">' + ROUNDS[current].glass + '</span>' +
+        '<div class="round-meta-text">' +
+          '<h2 class="round-label" id="roundHeading">' + t.questionLabel + ' ' + (current + 1) + ' ' + t.ofLabel + ' ' + ROUNDS.length + '</h2>' +
+          '<span class="cat-tag">' + r.cat + '</span>' +
+        '</div>' +
+      '</div>' +
       '<div class="note">' + r.note + '</div>' +
       '<div id="options">' + optsHtml + '</div>' +
-      '<div class="feedback" id="feedback">' + r.fact + '</div>' +
+      '<div class="feedback" id="feedback" aria-live="polite">' +
+        '<div class="feedback-inner"><div class="feedback-inner-pad">' +
+          '<span class="feedback-status" id="feedbackStatus"></span>' + r.fact +
+        '</div></div>' +
+      '</div>' +
       '<div class="next-btn" id="nextWrap" style="display:none">' +
         '<button class="btn-primary" onclick="nextRound()">' + (current === ROUNDS.length - 1 ? t.seeScoreBtn : t.nextBtn) + '</button>' +
       '</div>' +
     '</div>';
+  if (moveFocus) focusHeading('#roundHeading');
 }
 
 function pick(i){
   if (answered) return;
   answered = true;
+  var t = UI[LANG];
   var r = ROUNDS[current][LANG];
   var buttons = document.querySelectorAll('#options .option');
   for (var j = 0; j < buttons.length; j++){
+    var label = r.options[j];
     buttons[j].disabled = true;
-    if (j === r.correct) buttons[j].classList.add('correct');
-    else if (j === i) buttons[j].classList.add('wrong');
-    else buttons[j].classList.add('dim');
+    if (j === r.correct){
+      buttons[j].classList.add('correct');
+      buttons[j].innerHTML = '<span class="opt-icon" aria-hidden="true">&#10003;</span><span>' + label + '</span><span class="sr-only">' + (j === i ? t.srYourCorrect : t.srCorrectAnswer) + '</span>';
+    } else if (j === i){
+      buttons[j].classList.add('wrong');
+      buttons[j].innerHTML = '<span class="opt-icon" aria-hidden="true">&#10007;</span><span>' + label + '</span><span class="sr-only">' + t.srYourWrong + '</span>';
+    } else {
+      buttons[j].classList.add('dim');
+    }
   }
   if (i === r.correct) score++;
+  document.getElementById('feedbackStatus').textContent = (i === r.correct ? t.correctLabel : t.incorrectLabel) + ' ';
   document.getElementById('feedback').classList.add('show');
   document.getElementById('nextWrap').style.display = 'block';
 }
 
 function nextRound(){
   current++;
-  if (current >= ROUNDS.length) showResults();
-  else showRound();
+  if (current >= ROUNDS.length) showResults(true);
+  else showRound(true);
 }
 
 function getTier(){
@@ -323,7 +539,7 @@ function getTier(){
   return tiers[tiers.length - 1];
 }
 
-function showResults(){
+function showResults(moveFocus){
   STAGE = 'results';
   progressEl.innerHTML = '';
   var t = UI[LANG];
@@ -332,19 +548,24 @@ function showResults(){
   var waText = encodeURIComponent(t.waMsg(score, ROUNDS.length, tier.title));
   stage.innerHTML =
     '<div class="result-card">' +
-      '<span class="result-badge">' + tier.badge + '</span>' +
-      '<div class="result-score">' + score + '/' + ROUNDS.length + '</div>' +
-      '<div class="result-title">' + tier.title + '</div>' +
+      '<div class="result-summary" id="resultSummary" role="group">' +
+        '<span class="result-badge" aria-hidden="true">' + tier.badge + '</span>' +
+        '<div class="result-score">' + score + '/' + ROUNDS.length + '</div>' +
+        '<h2 class="result-title">' + tier.title + '</h2>' +
+      '</div>' +
       '<div class="result-desc">' + tier.desc + '</div>' +
       '<div class="share-box"><span class="tag">' + t.yourResult + '</span><br>' +
         pct + '% ' + t.bordeauxScore + ' — ' + tier.title + '. ' + t.beatIt +
       '</div>' +
       '<a class="wa-btn" href="https://wa.me/33626391783?text=' + waText + '" target="_blank">' +
-        '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>' +
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>' +
         t.bookBtn +
       '</a>' +
-      '<button class="replay-btn" onclick="showIntro()">' + t.playAgainBtn + '</button>' +
+      '<button class="replay-btn" onclick="showIntro(true)">' + t.playAgainBtn + '</button>' +
     '</div>';
+  var summaryEl = document.getElementById('resultSummary');
+  if (summaryEl) summaryEl.setAttribute('aria-label', score + ' ' + t.ofLabel + ' ' + ROUNDS.length + '. ' + tier.title + '.');
+  if (moveFocus) focusHeading('#resultSummary');
 }
 
 showIntro();
