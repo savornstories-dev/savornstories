@@ -9,10 +9,10 @@ summary:
   fr: "Une soirée de pétanque et d'apéritif français sur un vrai terrain local à Bordeaux."
   es: "Una noche de petanca y aperitivo francés en una pista local de verdad en Burdeos."
 duration:
-  en: "1.5 hours"
-  fr: "1h30"
-  es: "1,5 horas"
-price: "35€"
+  en: "2 hours"
+  fr: "2h00"
+  es: "2 horas"
+price: "80€"
 schedule:
   en: "Every day, departure at 18:00"
   fr: "Tous les jours, départ à 18h00"

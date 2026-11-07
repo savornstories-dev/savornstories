@@ -12,7 +12,7 @@ duration:
   en: "3 hours"
   fr: "3 heures"
   es: "3 horas"
-price: "90€"
+price: "110€"
 schedule:
   en: "Monday to Saturday, departures at 11:00 and 17:30"
   fr: "Du lundi au samedi, départs à 11h00 et 17h30"

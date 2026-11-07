@@ -12,7 +12,11 @@ duration:
   en: "2 hours 30"
   fr: "2 h 30"
   es: "2 horas y media"
-price: "49€"
+price: null
+priceLabel:
+  en: "Contact me for a price"
+  fr: "Me contacter pour le prix"
+  es: "Contáctame para el precio"
 schedule:
   en: "By arrangement, book a few days in advance"
   fr: "Sur demande, à réserver quelques jours à l'avance"

@@ -12,7 +12,11 @@ duration:
   en: "About 8 hours, including the train"
   fr: "Environ 8 heures, trajet en train compris"
   es: "Unas 8 horas, incluido el trayecto en tren"
-price: "165€"
+price: null
+priceLabel:
+  en: "Contact me for a price"
+  fr: "Me contacter pour le prix"
+  es: "Contáctame para el precio"
 schedule:
   en: "By arrangement, a few days notice helps"
   fr: "Sur demande, prévenir quelques jours à l'avance aide"

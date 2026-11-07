@@ -8,8 +8,8 @@ const origin='https://savornstories.com';
 const xml=load(await readFile(join(root,'sitemap-0.xml'),'utf8'),{xml:true});
 const urls=xml('loc').map((_,e)=>xml(e).text()).get();
 const pages=await Promise.all(urls.filter(u=>!u.includes('-game/')).map(async url=>({url,$:load(await readFile(join(root,new URL(url).pathname,'index.html'),'utf8'))})));
-test('all 20 public pages exist in three crawlable languages; games stay public',()=>{
- assert.equal(urls.length,62);assert.equal(pages.length,60);assert.equal(new Set(urls).size,62);assert(!urls.some(u=>u.includes('playbook')));
+test('all 21 public pages exist in three crawlable languages; games stay public',()=>{
+ assert.equal(urls.length,65);assert.equal(pages.length,63);assert.equal(new Set(urls).size,65);assert(!urls.some(u=>u.includes('playbook')));
 });
 test('each page has native metadata, a self canonical, one H1 and reciprocal alternates',()=>{
  for(const {url,$} of pages){
