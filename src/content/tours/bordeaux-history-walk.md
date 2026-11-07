@@ -46,4 +46,5 @@ description:
     - "Adapto el recorrido a la duración que reserves. La versión de 1 hora cubre lo esencial cerca del centro, y la versión de 2 horas llega más lejos en el casco antiguo para quien quiera más. En los dos casos, simplemente caminamos y conversamos, nada guionizado."
 icon: "🏛️"
 order: 10
+heroImage: "/assets/photos/bordeaux-hotel-intendance-group.jpg"
 ---
