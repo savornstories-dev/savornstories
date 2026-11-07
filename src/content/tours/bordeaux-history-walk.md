@@ -14,9 +14,9 @@ duration:
   es: "1 hora o 2 horas, a tu elección"
 price: null
 priceLabel:
-  en: "35€ for 1 hour, 65€ for 2 hours"
-  fr: "35€ pour 1 heure, 65€ pour 2 heures"
-  es: "35€ por 1 hora, 65€ por 2 horas"
+  en: "35€ for 1 hour · 65€ for 2 hours"
+  fr: "35€ pour 1 heure · 65€ pour 2 heures"
+  es: "35€ por 1 hora · 65€ por 2 horas"
 included:
   en:
     - "Me as your guide for the whole walk"
