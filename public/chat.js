@@ -41,8 +41,8 @@
     {
       kw: { en: ['price', 'cost', 'how much', 'rate', 'fee', 'euro', 'cheap', 'expensive'], fr: ['prix', 'coût', 'combien', 'tarif', 'euro', 'cher'], es: ['precio', 'coste', 'cuánto', 'cuanto', 'tarifa', 'euro', 'caro'] },
       ans: {
-        en: 'Tour prices (per person):\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 90€ (3h)\n• River Cruise — on request\n• Bespoke Tour — on request\n\nAll tours are private.',
-        fr: 'Tarifs (par personne) :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 90€ (3h)\n• Croisère Garonne — sur devis\n• Tour Sur Mesure — sur devis\n\nToutes les visites sont privées.',
+        en: 'Tour prices (per person):\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• River Cruise — on request\n• Bespoke Tour — on request\n\nAll tours are private.',
+        fr: 'Tarifs (par personne) :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• Croisère Garonne — sur devis\n• Tour Sur Mesure — sur devis\n\nToutes les visites sont privées.',
         es: 'Precios (por persona):\n• Tour Gastronómico — 90€ (3h30)\n• Tour en Bicicleta — 39€ (3h)\n• Tour Histórico — 60€ (2h)\n• Apéro & Petanca — 90€ (3h)\n• Crucero por el Garona — a consultar\n• Tour a Medida — a consultar\n\nTodas las visitas son privadas.'
       }
     },
@@ -145,9 +145,9 @@
     {
       kw: { en: ['petanque', 'pétanque', 'apero', 'apéro', 'aperitif', 'boules'], fr: ['pétanque', 'apéro', 'apéritif', 'boules'], es: ['petanca', 'aperitivo', 'bochas'] },
       ans: {
-        en: 'The Apéro & Pétanque tour (90€/person, 3h): local wines and snacks, then pétanque by the Garonne. Available every day.',
-        fr: 'L’Apéro & Pétanque (90€/personne, 3h) : vins locaux, snacks, puis pétanque au bord de la Garonne. Disponible tous les jours.',
-        es: 'El Apéro & Petanca (90€/persona, 3h): vinos locales, aperitivos y petanca junto al río. Disponible todos los días.'
+        en: 'The Apéro & Pétanque tour (80€/person, 2h): a local apéritif and snacks, then pétanque. Every day at 15:30, weather permitting. Beginners welcome and anyone can join.',
+        fr: 'L’Apéro & Pétanque (80€/personne, 2h) : apéritif local et snacks, puis pétanque. Tous les jours à 15h30, selon la météo. Débutants bienvenus, tout le monde peut se joindre à nous.',
+        es: 'El Apéro & Petanca (80€/persona, 2h): aperitivo local y tapas, y después petanca. Todos los días a las 15:30, según el tiempo. Principiantes bienvenidos y cualquiera puede apuntarse.'
       }
     },
     {
@@ -247,8 +247,8 @@
     {
       kw: { en: ['bordeaux', 'wine', 'garonne', 'south', 'southwest', 'gironde'], fr: ['bordeaux', 'vin', 'garonne', 'sud', 'gironde'], es: ['burdeos', 'vino', 'garona', 'sur', 'gironda'] },
       ans: {
-        en: 'In Bordeaux I offer:\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 90€ (3h)\n• River Cruise & Bespoke — on request\n\nAll private, all led personally by me.',
-        fr: 'À Bordeaux je propose :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 90€ (3h)\n• Croisère & Sur Mesure — sur devis\n\nToutes privées, toutes menées personnellement par moi.',
+        en: 'In Bordeaux I offer:\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• River Cruise & Bespoke — on request\n\nAll private, all led personally by me.',
+        fr: 'À Bordeaux je propose :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• Croisère & Sur Mesure — sur devis\n\nToutes privées, toutes menées personnellement par moi.',
         es: 'En Burdeos ofrezco:\n• Tour Gastronómico — 90€ (3h30)\n• Tour en Bicicleta — 39€ (3h)\n• Tour Histórico — 60€ (2h)\n• Apéro & Petanca — 90€ (3h)\n• Crucero & A Medida — a consultar\n\nTodas privadas, todas guiadas personalmente por mí.'
       }
     },

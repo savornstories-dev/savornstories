@@ -13,7 +13,11 @@ duration:
   en: "2 hours"
   fr: "2 heures"
   es: "2 horas"
-price: "65€"
+price: null
+priceLabel:
+  en: "Contact me for info"
+  fr: "Me contacter pour plus d'informations"
+  es: "Contáctame para más información"
 schedule:
   en: "Tuesday to Sunday, departure at 9:30"
   fr: "Du mardi au dimanche, départ à 9h30"

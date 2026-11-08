@@ -14,9 +14,9 @@ duration:
   es: "2 horas y media"
 price: null
 priceLabel:
-  en: "Contact me for a price"
-  fr: "Me contacter pour le prix"
-  es: "Contáctame para el precio"
+  en: "Contact me for info"
+  fr: "Me contacter pour plus d'informations"
+  es: "Contáctame para más información"
 schedule:
   en: "By arrangement, book a few days in advance"
   fr: "Sur demande, à réserver quelques jours à l'avance"

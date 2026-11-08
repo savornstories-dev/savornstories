@@ -14,9 +14,9 @@ duration:
   es: "Unas 8 horas, incluido el trayecto en tren"
 price: null
 priceLabel:
-  en: "Contact me for a price"
-  fr: "Me contacter pour le prix"
-  es: "Contáctame para el precio"
+  en: "Contact me for info"
+  fr: "Me contacter pour plus d'informations"
+  es: "Contáctame para más información"
 schedule:
   en: "By arrangement, a few days notice helps"
   fr: "Sur demande, prévenir quelques jours à l'avance aide"

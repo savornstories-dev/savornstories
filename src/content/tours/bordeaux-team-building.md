@@ -14,9 +14,9 @@ duration:
   es: "Media jornada o jornada completa, adaptada a tu grupo"
 price: null
 priceLabel:
-  en: "Custom quote, based on your group"
-  fr: "Devis sur mesure, selon votre groupe"
-  es: "Presupuesto a medida, según tu grupo"
+  en: "Contact me for info"
+  fr: "Me contacter pour plus d'informations"
+  es: "Contáctame para más información"
 included:
   en:
     - "A format shaped around your group size, schedule and goals"

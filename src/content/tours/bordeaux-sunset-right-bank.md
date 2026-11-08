@@ -12,7 +12,11 @@ duration:
   en: "1.5 hours"
   fr: "1h30"
   es: "1,5 horas"
-price: "35€"
+price: null
+priceLabel:
+  en: "Contact me for info"
+  fr: "Me contacter pour plus d'informations"
+  es: "Contáctame para más información"
 schedule:
   en: "Daily, departure time follows the sunset and changes through the year"
   fr: "Tous les jours, l'heure de départ suit le coucher du soleil et change selon la saison"
@@ -45,6 +49,6 @@ description:
     - "Calculamos el paseo para estar en posición cuando la luz se vuelve dorada y después rosa, esa breve ventana que hace que la piedra color miel realmente brille. Es más un paseo corto que una caminata larga, así que funciona para casi cualquiera, y termina con el tipo de foto que no necesita mucha edición."
     - "Mantengo esta visita pequeña y flexible, ya que todo el objetivo es estar en el lugar correcto en el minuto correcto, y un grupo grande hace que eso sea más difícil de gestionar."
 icon: "🌅"
-order: 5
+order: 7
 heroImage: "/assets/photos/bordeaux-sunset-bridge.jpg"
 ---
