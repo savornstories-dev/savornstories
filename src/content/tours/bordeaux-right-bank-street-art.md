@@ -13,7 +13,11 @@ duration:
   en: "2 hours"
   fr: "2 heures"
   es: "2 horas"
-price: "30€"
+price: null
+priceLabel:
+  en: "Contact me for info"
+  fr: "Me contacter pour plus d'informations"
+  es: "Contáctame para más información"
 schedule:
   en: "Every day, departure at 15:00"
   fr: "Tous les jours, départ à 15h00"
@@ -46,5 +50,5 @@ description:
     - "Caminamos despacio, ya que aquí lo importante es el ambiente más que una lista de paradas, y explico cómo el lugar pasó de ser un cuartel abandonado a lo que es ahora. Termina con una vista sobre el agua hacia el casco antiguo, que se ve muy distinto desde aquí que desde dentro."
     - "Esta visita es relajada por diseño, buena para una tarde sin itinerario fijo, y combina bien con el paseo del atardecer más tarde esa misma noche si quieres aprovechar toda la tarde y la noche junto al río."
 icon: "🎨"
-order: 5
+order: 7
 ---
