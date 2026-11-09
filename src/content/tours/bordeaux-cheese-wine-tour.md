@@ -49,7 +49,7 @@ description:
     - "Es un paseo tranquilo de dos horas y media, y funciona para parejas, amigos y viajeros solos a quienes les gusta comer y beber bien."
 icon: "🧀"
 order: 4
-heroImage: "/assets/photos/bordeaux-cheese-shop-counter.jpg"
+heroImage: "/assets/photos/bordeaux-cheese-counter-closeup.jpg"
 gallery:
   - src: "/assets/photos/bordeaux-wine-shop-tasting-guests.jpg"
     alt: "Guests tasting white wine at a Bordeaux wine shop"
