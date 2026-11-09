@@ -37,21 +37,149 @@
     }
   };
 
-  var FAQ_BDX = [
+  var DATA = null;
+  try {
+    fetch('/chat-data.json')
+      .then(function (r) { return r.json(); })
+      .then(function (d) { DATA = d; })
+      .catch(function () {});
+  } catch (e) {}
+
+  var PHONE = '+33 6 26 39 17 83';
+  var NONE = { en: 'contact Antoine for details', fr: 'contactez Antoine pour les détails', es: 'contacte a Antoine para más detalles' };
+  var NODATES = { en: 'dates on request', fr: 'dates sur demande', es: 'fechas a consultar' };
+  var CITY = { bordeaux: { en: 'Bordeaux', fr: 'Bordeaux', es: 'Burdeos' }, dieppe: { en: 'Dieppe', fr: 'Dieppe', es: 'Dieppe' } };
+
+  function K(l) { return l === 'fr' || l === 'es' ? l : 'en'; }
+  function T(o, l) { return (o && (o[K(l)] || o.en)) || ''; }
+  function plain(s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function priceOf(t, l) {
+    if (t.price) return t.price;
+    if (t.priceLabel) return T(t.priceLabel, l);
+    return T(NONE, l);
+  }
+
+  function scope(city) {
+    if (!DATA) return [];
+    return DATA.filter(function (t) {
+      if (city) return t.city === city;
+      return isBdx ? t.city === 'bordeaux' : isDpp ? t.city === 'dieppe' : true;
+    });
+  }
+
+  function listBy(l, fn, city) {
+    var out = [];
+    var last = '';
+    scope(city).forEach(function (t) {
+      var line = fn(t, l);
+      if (line === null) return;
+      if (!city && !isBdx && !isDpp && t.city !== last) {
+        last = t.city;
+        out.push((out.length ? '\n' : '') + T(CITY[last], l) + ':');
+      }
+      out.push('• ' + T(t.title, l) + ': ' + line);
+    });
+    return out.join('\n');
+  }
+
+  var HEAD = {
+    price: { en: 'Prices (per person where a price is shown):', fr: 'Tarifs (par personne quand un prix est indiqué) :', es: 'Precios (por persona cuando se indica un precio):' },
+    duration: { en: 'Durations:', fr: 'Durées :', es: 'Duraciones:' },
+    schedule: { en: 'When the tours run:', fr: 'Quand ont lieu les visites :', es: 'Cuándo se realizan los tours:' },
+    included: { en: 'What is included:', fr: 'Ce qui est inclus :', es: 'Qué incluye:' },
+    sunday: {
+      en: 'Tours with a restaurant meal do not run on Sundays, because most Bordeaux restaurants are closed that day.',
+      fr: 'Les visites avec un repas au restaurant n\'ont pas lieu le dimanche, car la plupart des restaurants de Bordeaux sont fermés ce jour-là.',
+      es: 'Los tours con comida en restaurante no se realizan los domingos, porque la mayoría de los restaurantes de Burdeos cierran ese día.'
+    }
+  };
+
+  var DYN = {
+    price: function (l) {
+      return T(HEAD.price, l) + '\n' + listBy(l, function (t) { return priceOf(t, l); });
+    },
+    duration: function (l) {
+      return T(HEAD.duration, l) + '\n' + listBy(l, function (t) { return T(t.duration, l); });
+    },
+    schedule: function (l) {
+      return T(HEAD.schedule, l) + '\n' + listBy(l, function (t) { return t.schedule ? T(t.schedule, l) : T(NODATES, l); }) + (isDpp ? '' : '\n\n' + T(HEAD.sunday, l));
+    },
+    included: function (l) {
+      var body = listBy(l, function (t) {
+        var items = (t.included && (t.included[K(l)] || t.included.en)) || [];
+        return items.length ? items.join('; ') : null;
+      });
+      return T(HEAD.included, l) + '\n' + body;
+    },
+    bordeaux: function (l) {
+      return listBy(l, function (t) { return T(t.duration, l) + ', ' + priceOf(t, l); }, 'bordeaux');
+    },
+    dieppe: function (l) {
+      return listBy(l, function (t) { return T(t.duration, l) + ', ' + priceOf(t, l); }, 'dieppe');
+    }
+  };
+
+  var FAQ = [
     {
+      dyn: 'price',
       kw: { en: ['price', 'cost', 'how much', 'rate', 'fee', 'euro', 'cheap', 'expensive'], fr: ['prix', 'coût', 'combien', 'tarif', 'euro', 'cher'], es: ['precio', 'coste', 'cuánto', 'cuanto', 'tarifa', 'euro', 'caro'] },
       ans: {
-        en: 'Tour prices (per person):\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• River Cruise — on request\n• Bespoke Tour — on request\n\nAll tours are private.',
-        fr: 'Tarifs (par personne) :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• Croisère Garonne — sur devis\n• Tour Sur Mesure — sur devis\n\nToutes les visites sont privées.',
-        es: 'Precios (por persona):\n• Tour Gastronómico — 90€ (3h30)\n• Tour en Bicicleta — 39€ (3h)\n• Tour Histórico — 60€ (2h)\n• Apéro & Petanca — 90€ (3h)\n• Crucero por el Garona — a consultar\n• Tour a Medida — a consultar\n\nTodas las visitas son privadas.'
+        en: 'Prices depend on the tour. Open any tour page to see its price, or message Antoine on WhatsApp: ' + PHONE,
+        fr: 'Les tarifs dépendent de la visite. Ouvrez une page de visite pour voir son prix, ou écrivez à Antoine sur WhatsApp : ' + PHONE,
+        es: 'Los precios dependen del tour. Abra la página de un tour para ver su precio, o escriba a Antoine por WhatsApp: ' + PHONE
+      }
+    },
+    {
+      dyn: 'duration',
+      kw: { en: ['duration', 'how long', 'hours', 'long', 'time', 'length'], fr: ['durée', 'combien de temps', 'heures', 'long', 'temps'], es: ['duración', 'cuánto tiempo', 'cuanto tiempo', 'horas', 'larga'] },
+      ans: {
+        en: 'Durations are shown on each tour page. Most tours last between 1.5 and 3 hours.',
+        fr: 'Les durées sont indiquées sur chaque page de visite. La plupart durent entre 1h30 et 3h.',
+        es: 'Las duraciones aparecen en la página de cada tour. La mayoría duran entre 1,5 y 3 horas.'
+      }
+    },
+    {
+      dyn: 'schedule',
+      kw: { en: ['sunday', 'weekend', 'days', 'schedule', 'when', 'open', 'available', 'monday', 'saturday'], fr: ['dimanche', 'week-end', 'jours', 'disponible', 'quand', 'ouvert', 'lundi', 'samedi'], es: ['domingo', 'fin de semana', 'días', 'disponible', 'cuándo', 'cuando', 'horario', 'lunes', 'sábado'] },
+      ans: {
+        en: 'Days and times are shown on each tour page. Message Antoine on WhatsApp to check a date: ' + PHONE,
+        fr: 'Les jours et horaires sont indiqués sur chaque page de visite. Écrivez à Antoine sur WhatsApp pour vérifier une date : ' + PHONE,
+        es: 'Los días y horarios aparecen en la página de cada tour. Escriba a Antoine por WhatsApp para comprobar una fecha: ' + PHONE
+      }
+    },
+    {
+      dyn: 'included',
+      kw: { en: ['include', 'included', 'inclusive', 'equipment'], fr: ['inclus', 'compris', 'comprend'], es: ['incluye', 'incluido', 'incluidos'] },
+      ans: {
+        en: 'What is included is listed on each tour page.',
+        fr: 'Ce qui est inclus est indiqué sur chaque page de visite.',
+        es: 'Lo que incluye cada tour aparece en su página.'
+      }
+    },
+    {
+      dyn: 'bordeaux',
+      kw: { en: ['bordeaux', 'garonne', 'south', 'southwest', 'gironde'], fr: ['bordeaux', 'garonne', 'sud', 'gironde'], es: ['burdeos', 'garona', 'sur', 'gironda'] },
+      ans: {
+        en: 'In Bordeaux I offer food, wine, history, bike and game tours. Open the Bordeaux page to see them all.',
+        fr: 'À Bordeaux je propose des visites gourmandes, œnologiques, historiques, à vélo et des jeux. Ouvrez la page Bordeaux pour tout voir.',
+        es: 'En Burdeos ofrezco tours de gastronomía, vino, historia, bicicleta y juegos. Abra la página de Burdeos para verlos todos.'
+      }
+    },
+    {
+      dyn: 'dieppe',
+      kw: { en: ['dieppe', 'normandy', 'north', 'channel', 'newhaven'], fr: ['dieppe', 'normandie', 'nord', 'manche', 'newhaven'], es: ['dieppe', 'normandía', 'norte'] },
+      ans: {
+        en: 'In Dieppe I offer seafood, market, castle, cliffs and apéro tours. Open the Dieppe page to see them all.',
+        fr: 'À Dieppe je propose des visites fruits de mer, marché, château, falaises et apéro. Ouvrez la page Dieppe pour tout voir.',
+        es: 'En Dieppe ofrezco tours de marisco, mercado, castillo, acantilados y aperitivo. Abra la página de Dieppe para verlos todos.'
       }
     },
     {
       kw: { en: ['book', 'booking', 'reserve', 'reservation', 'sign up', 'how to'], fr: ['réserver', 'réservation', 'comment', 'inscription'], es: ['reservar', 'reserva', 'cómo', 'inscribir'] },
       ans: {
-        en: 'Fill in the booking form on this page, or message Antoine directly on WhatsApp: +33 6 26 39 17 83\n\nHe usually replies within a few hours.',
-        fr: 'Remplissez le formulaire de réservation sur cette page, ou écrivez à Antoine sur WhatsApp : +33 6 26 39 17 83\n\nIl répond généralement en quelques heures.',
-        es: 'Complete el formulario en esta página, o escriba directamente a Antoine por WhatsApp: +33 6 26 39 17 83\n\nSuele responder en pocas horas.'
+        en: 'Choose a tour and use the booking form on its page, or message Antoine directly on WhatsApp: ' + PHONE + '\n\nHe usually replies within a few hours.',
+        fr: 'Choisissez une visite et utilisez le formulaire de sa page, ou écrivez directement à Antoine sur WhatsApp : ' + PHONE + '\n\nIl répond généralement en quelques heures.',
+        es: 'Elija un tour y use el formulario de su página, o escriba directamente a Antoine por WhatsApp: ' + PHONE + '\n\nSuele responder en pocas horas.'
       }
     },
     {
@@ -63,35 +191,11 @@
       }
     },
     {
-      kw: { en: ['duration', 'how long', 'hours', 'long', 'time', 'length'], fr: ['durée', 'combien de temps', 'heures', 'long', 'temps'], es: ['duración', 'cuánto tiempo', 'cuanto tiempo', 'horas', 'larga'] },
+      kw: { en: ['group', 'people', 'how many', 'size', 'solo', 'couple', 'private'], fr: ['groupe', 'personnes', 'seul', 'couple', 'privé'], es: ['grupo', 'personas', 'solo', 'pareja', 'privado'] },
       ans: {
-        en: 'Tour durations:\n• Food Tour — 3h30\n• Bike Tour — 3h\n• History Tour — 2h\n• Apéro & Pétanque — 3h\n• River Cruise — on request\n• Bespoke Tour — as agreed',
-        fr: 'Durées :\n• Tour Gastronomique — 3h30\n• Tour à Vélo — 3h\n• Tour Historique — 2h\n• Apéro & Pétanque — 3h\n• Croisère Garonne — sur devis\n• Tour Sur Mesure — selon accord',
-        es: 'Duraciones:\n• Tour Gastronómico — 3h30\n• Tour en Bicicleta — 3h\n• Tour Histórico — 2h\n• Apéro & Petanca — 3h\n• Crucero por el Garona — a consultar\n• Tour a Medida — según acuerdo'
-      }
-    },
-    {
-      kw: { en: ['sunday', 'weekend', 'days', 'schedule', 'when', 'open', 'available'], fr: ['dimanche', 'week-end', 'jours', 'disponible', 'quand', 'ouvert'], es: ['domingo', 'fin de semana', 'días', 'disponible', 'cuándo', 'cuando', 'horario'] },
-      ans: {
-        en: 'Most tours run every day including Sundays.\n\nThe Food Tour (restaurant meal included) does not run on Sundays, as most Bordeaux restaurants are closed that day.',
-        fr: 'La plupart des visites ont lieu tous les jours, y compris le dimanche.\n\nLe Tour Gastronomique (repas au restaurant inclus) ne se déroule pas le dimanche.',
-        es: 'La mayoría de las visitas se realizan todos los días incluidos los domingos.\n\nEl Tour Gastronómico (comida en restaurante incluida) no se realiza los domingos.'
-      }
-    },
-    {
-      kw: { en: ['group', 'people', 'how many', 'size', 'family', 'solo', 'couple', 'private'], fr: ['groupe', 'personnes', 'famille', 'seul', 'couple', 'privé'], es: ['grupo', 'personas', 'familia', 'solo', 'pareja', 'privado'] },
-      ans: {
-        en: 'All tours are private — just your group and Antoine. Whether solo, a couple or a family, the tour is tailored to you.',
-        fr: 'Toutes les visites sont privées — juste votre groupe et Antoine.',
-        es: 'Todas las visitas son privadas — solo su grupo y Antoine.'
-      }
-    },
-    {
-      kw: { en: ['include', 'included', 'what', 'food', 'drink', 'wine', 'bicycle', 'bike', 'equipment'], fr: ['inclus', 'compris', 'comprend', 'nourriture', 'boisson', 'vin', 'vélo'], es: ['incluye', 'incluido', 'qué', 'comida', 'bebida', 'vino', 'bicicleta'] },
-      ans: {
-        en: 'What’s included by tour:\n• Food Tour — wine tasting, full meal, cheese or chocolate tasting\n• Bike Tour — bicycle hire\n• History Tour — guided walk\n• Apéro & Pétanque — wines, snacks, pétanque equipment\n• River Cruise & Bespoke — details on request',
-        fr: 'Ce qui est inclus :\n• Tour Gastronomique — dégustation de vins, repas complet, chocolat ou fromage\n• Tour à Vélo — location du vélo\n• Tour Historique — visite à pied guidée\n• Apéro & Pétanque — vins, snacks, matériel de pétanque\n• Croisère & Tour Sur Mesure — détails sur devis',
-        es: 'Qué incluye:\n• Tour Gastronómico — cata de vinos, comida completa, queso o chocolate\n• Tour en Bicicleta — alquiler de bicicleta\n• Tour Histórico — paseo guiado\n• Apéro & Petanca — vinos, aperitivos, material de petanca\n• Crucero & Tour a Medida — detalles a consultar'
+        en: 'Tours are private and led by Antoine himself, for your group only. Whether you are solo, a couple or a family, the tour is shaped around you. A few tours, like the treasure hunt, need a minimum group size: it is shown on the tour page.',
+        fr: 'Les visites sont privées et menées par Antoine lui-même, pour votre groupe uniquement. Que vous soyez seul, en couple ou en famille, la visite se construit autour de vous. Quelques visites, comme la chasse au trésor, demandent un nombre minimum de participants : il est indiqué sur la page de la visite.',
+        es: 'Los tours son privados y los guía el propio Antoine, solo para su grupo. Ya sea solo, en pareja o en familia, el tour se adapta a usted. Algunos tours, como la búsqueda del tesoro, requieren un mínimo de personas: aparece en la página del tour.'
       }
     },
     {
@@ -105,211 +209,77 @@
     {
       kw: { en: ['cancel', 'cancellation', 'refund', 'change', 'modify', 'postpone'], fr: ['annuler', 'annulation', 'remboursement', 'modifier', 'changer'], es: ['cancelar', 'cancelación', 'reembolso', 'cambiar', 'modificar'] },
       ans: {
-        en: 'For cancellations or changes, message Antoine on WhatsApp as soon as possible: +33 6 26 39 17 83\n\nHe is flexible and will do his best to find an alternative date.',
-        fr: 'Pour toute annulation ou modification, écrivez à Antoine sur WhatsApp dès que possible : +33 6 26 39 17 83',
-        es: 'Para cancelaciones o cambios, escriba a Antoine por WhatsApp lo antes posible: +33 6 26 39 17 83'
-      }
-    },
-    {
-      kw: { en: ['contact', 'whatsapp', 'phone', 'email', 'call', 'antoine', 'reach', 'message'], fr: ['contacter', 'whatsapp', 'téléphone', 'email', 'appeler', 'antoine'], es: ['contactar', 'whatsapp', 'teléfono', 'email', 'llamar', 'antoine'] },
-      ans: {
-        en: 'Contact Antoine:\n• WhatsApp / phone: +33 6 26 39 17 83\n• Email: contact@savornstories.com\n\nWhatsApp is the fastest way.',
-        fr: 'Contacter Antoine :\n• WhatsApp / téléphone : +33 6 26 39 17 83\n• Email : contact@savornstories.com',
-        es: 'Contactar a Antoine:\n• WhatsApp / teléfono: +33 6 26 39 17 83\n• Email: contact@savornstories.com'
-      }
-    },
-    {
-      kw: { en: ['food tour', 'gastro', 'restaurant', 'meal', 'lunch', 'dinner', 'wine tasting', 'chocolate', 'cheese'], fr: ['gastronomique', 'vin', 'restaurant', 'repas', 'déjeuner', 'dîner', 'dégustation', 'chocolat', 'fromage'], es: ['gastronómico', 'vino', 'restaurante', 'comida', 'almuerzo', 'cena', 'degustación', 'chocolate', 'queso'] },
-      ans: {
-        en: 'The Food Tour (90€/person, 3h30) includes wine tasting, a traditional lunch or dinner at a local restaurant, plus cheese or chocolate tasting.\n\nRuns Monday to Saturday — not Sundays.',
-        fr: 'Le Tour Gastronomique (90€/personne, 3h30) comprend une dégustation de vins, un déjeuner ou dîner au restaurant local, et une dégustation de chocolat ou fromage.\n\nDu lundi au samedi — pas le dimanche.',
-        es: 'El Tour Gastronómico (90€/persona, 3h30) incluye cata de vinos, almuerzo o cena en restaurante local, y degustación de queso o chocolate.\n\nDe lunes a sábado — no los domingos.'
-      }
-    },
-    {
-      kw: { en: ['bike', 'bicycle', 'cycling', 'cycle', 'riverside', 'riverbank', 'quai'], fr: ['vélo', 'cyclisme', 'quais'], es: ['bicicleta', 'bici', 'ciclismo', 'muelles'] },
-      ans: {
-        en: 'The Bike Tour (39€/person, 3h) takes you along the Garonne riverbanks and through Bordeaux’s historic neighbourhoods. Bicycles included. Available every day.',
-        fr: 'Le Tour à Vélo (39€/personne, 3h) longe les quais de la Garonne. Les vélos sont inclus. Disponible tous les jours.',
-        es: 'El Tour en Bicicleta (39€/persona, 3h) recorre los muelles del Garona. Bicicletas incluidas. Disponible todos los días.'
-      }
-    },
-    {
-      kw: { en: ['history', 'heritage', 'walk', 'UNESCO', 'monument', 'roman', 'old town'], fr: ['histoire', 'patrimoine', 'promenade', 'UNESCO', 'monument', 'historique', 'vieille ville'], es: ['historia', 'patrimonio', 'paseo', 'UNESCO', 'monumento', 'histórico', 'casco antiguo'] },
-      ans: {
-        en: 'The History Tour (60€/person, 2h) is a walking tour through 2,000 years of Bordeaux history, from Roman origins to UNESCO monuments. Available every day.',
-        fr: 'Le Tour Historique (60€/personne, 2h) traverse 2 000 ans d’histoire bordelaise. Disponible tous les jours.',
-        es: 'El Tour Histórico (60€/persona, 2h) recorre 2.000 años de historia de Burdeos. Disponible todos los días.'
-      }
-    },
-    {
-      kw: { en: ['petanque', 'pétanque', 'apero', 'apéro', 'aperitif', 'boules'], fr: ['pétanque', 'apéro', 'apéritif', 'boules'], es: ['petanca', 'aperitivo', 'bochas'] },
-      ans: {
-        en: 'The Apéro & Pétanque tour (80€/person, 2h): a local apéritif and snacks, then pétanque. Every day at 15:30, weather permitting. Beginners welcome and anyone can join.',
-        fr: 'L’Apéro & Pétanque (80€/personne, 2h) : apéritif local et snacks, puis pétanque. Tous les jours à 15h30, selon la météo. Débutants bienvenus, tout le monde peut se joindre à nous.',
-        es: 'El Apéro & Petanca (80€/persona, 2h): aperitivo local y tapas, y después petanca. Todos los días a las 15:30, según el tiempo. Principiantes bienvenidos y cualquiera puede apuntarse.'
+        en: 'For cancellations or changes, message Antoine on WhatsApp as soon as possible: ' + PHONE + '\n\nHe is flexible and will do his best to find an alternative date.',
+        fr: 'Pour toute annulation ou modification, écrivez à Antoine sur WhatsApp dès que possible : ' + PHONE,
+        es: 'Para cancelaciones o cambios, escriba a Antoine por WhatsApp lo antes posible: ' + PHONE
       }
     },
     {
       kw: { en: ['child', 'children', 'kid', 'kids', 'baby', 'family', 'young'], fr: ['enfant', 'enfants', 'bébé', 'famille'], es: ['niño', 'niños', 'bebé', 'familia'] },
       ans: {
-        en: 'Tours are family-friendly. Antoine adapts the pace for families with children. Let him know the ages when you book.',
-        fr: 'Les visites sont adaptées aux familles. Antoine adapte le rythme volontiers. Indiquez l’âge des enfants lors de la réservation.',
-        es: 'Las visitas son aptas para familias. Antoine adapta el ritmo. Indique la edad de los niños al reservar.'
-      }
-    }
-  ];
-
-  var FAQ_DPP = [
-    {
-      kw: { en: ['price', 'cost', 'how much', 'rate', 'fee', 'euro'], fr: ['prix', 'coût', 'combien', 'tarif', 'euro'], es: ['precio', 'coste', 'cuánto', 'cuanto', 'tarifa', 'euro'] },
-      ans: {
-        en: 'Tour prices in Dieppe (per person):\n• Market Tour — 55€\n• Seafood & Harbour Tour — 75€\n• Castle & History Tour — 60€\n• Cliffs Walk — 45€\n• Norman Apéro — 65€\n• Bespoke Tour — on request\n\nAll tours are private.',
-        fr: 'Tarifs à Dieppe (par personne) :\n• Tour du Marché — 55€\n• Tour Fruits de Mer & Port — 75€\n• Tour Château & Histoire — 60€\n• Balade des Falaises — 45€\n• Apéro Normand — 65€\n• Tour Sur Mesure — sur devis\n\nToutes les visites sont privées.',
-        es: 'Precios en Dieppe (por persona):\n• Tour del Mercado — 55€\n• Tour Mariscos & Puerto — 75€\n• Tour Castillo & Historia — 60€\n• Paseo por los Acantilados — 45€\n• Aperitivo Normando — 65€\n• Tour a Medida — a consultar\n\nTodas las visitas son privadas.'
-      }
-    },
-    {
-      kw: { en: ['book', 'booking', 'reserve', 'how to'], fr: ['réserver', 'réservation', 'comment'], es: ['reservar', 'reserva', 'cómo'] },
-      ans: {
-        en: 'Fill in the booking form on this page, or message Antoine directly on WhatsApp: +33 6 26 39 17 83',
-        fr: 'Remplissez le formulaire sur cette page, ou écrivez à Antoine sur WhatsApp : +33 6 26 39 17 83',
-        es: 'Complete el formulario en esta página, o escriba a Antoine por WhatsApp: +33 6 26 39 17 83'
-      }
-    },
-    {
-      kw: { en: ['language', 'english', 'french', 'spanish', 'speak'], fr: ['langue', 'anglais', 'français', 'espagnol'], es: ['idioma', 'inglés', 'francés', 'español'] },
-      ans: {
-        en: 'Tours are available in English, French and Spanish.',
-        fr: 'Les visites sont disponibles en français, anglais et espagnol.',
-        es: 'Las visitas están disponibles en inglés, francés y español.'
-      }
-    },
-    {
-      kw: { en: ['group', 'people', 'how many', 'size', 'family', 'solo', 'couple', 'private'], fr: ['groupe', 'personnes', 'famille', 'seul', 'couple', 'privé'], es: ['grupo', 'personas', 'familia', 'solo', 'pareja', 'privado'] },
-      ans: {
-        en: 'All tours are private — just your group and Antoine.',
-        fr: 'Toutes les visites sont privées — juste votre groupe et Antoine.',
-        es: 'Todas las visitas son privadas — solo su grupo y Antoine.'
-      }
-    },
-    {
-      kw: { en: ['market', 'cheese', 'pollet', 'tuesday', 'wednesday'], fr: ['marché', 'fromage', 'pollet', 'mardi'], es: ['mercado', 'queso', 'pollet', 'martes'] },
-      ans: {
-        en: 'The Market Tour (55€/person) visits the Marché du Pollet and local artisan producers with Norman cheese tasting.\n\nThe market runs Tuesday to Sunday — not Mondays.',
-        fr: 'Le Tour du Marché (55€/personne) visite le Marché du Pollet avec dégustation de fromages normands.\n\nLe marché a lieu du mardi au dimanche — pas le lundi.',
-        es: 'El Tour del Mercado (55€/persona) visita el Mercado du Pollet con degustación de quesos normandos.\n\nEl mercado funciona de martes a domingo — no los lunes.'
-      }
-    },
-    {
-      kw: { en: ['seafood', 'scallop', 'oyster', 'harbour', 'port', 'fish', 'coquille'], fr: ['fruits de mer', 'coquille', 'saint-jacques', 'huître', 'port', 'poisson'], es: ['mariscos', 'vieira', 'ostra', 'puerto', 'pescado'] },
-      ans: {
-        en: 'The Seafood & Harbour Tour (75€/person) takes you to the fishing harbour, fish market and local seafood producers. Available daily.',
-        fr: 'Le Tour Fruits de Mer & Port (75€/personne) au port de pêche, à la criée et chez les producteurs. Disponible tous les jours.',
-        es: 'El Tour Mariscos & Puerto (75€/persona) lleva al puerto pesquero y productores locales. Disponible todos los días.'
-      }
-    },
-    {
-      kw: { en: ['castle', 'museum', 'raid', '1942', 'history', 'war', 'heritage'], fr: ['château', 'musée', 'raid', '1942', 'histoire', 'guerre'], es: ['castillo', 'museo', 'raid', '1942', 'historia', 'guerra'] },
-      ans: {
-        en: 'The Castle & History Tour (60€/person) explores the Château-Musée de Dieppe and the story of the 1942 Dieppe Raid. Available daily.',
-        fr: 'Le Tour Château & Histoire (60€/personne) explore le Château-Musée et l’histoire du Raid de 1942. Disponible tous les jours.',
-        es: 'El Tour Castillo & Historia (60€/persona) explora el Château-Musée y la historia del Raid de 1942. Disponible todos los días.'
-      }
-    },
-    {
-      kw: { en: ['cliff', 'cliffs', 'walk', 'coastal', 'white', 'pourville', 'nature', 'hike'], fr: ['falaise', 'falaises', 'balade', 'côtier', 'pourville', 'nature', 'randonnée'], es: ['acantilado', 'acantilados', 'paseo', 'costero', 'pourville', 'naturaleza', 'senderismo'] },
-      ans: {
-        en: 'The Cliffs Walk (45€/person) is a scenic coastal hike along the white cliffs towards Pourville-sur-Mer. Available daily.',
-        fr: 'La Balade des Falaises (45€/personne) le long des falaises blanches vers Pourville-sur-Mer. Disponible tous les jours.',
-        es: 'El Paseo por los Acantilados (45€/persona) por los acantilados blancos hacia Pourville-sur-Mer. Disponible todos los días.'
-      }
-    },
-    {
-      kw: { en: ['apero', 'apéro', 'cider', 'calvados', 'norman', 'aperitif', 'drink'], fr: ['apéro', 'cidre', 'calvados', 'normand', 'apéritif'], es: ['aperitivo', 'sidra', 'calvados', 'normando'] },
-      ans: {
-        en: 'The Norman Apéro (65€/person): a relaxed tasting of Norman cider, calvados and wine with snacks. Available daily.',
-        fr: 'L’Apéro Normand (65€/personne) : dégustation de cidre, calvados et vin normands avec snacks. Disponible tous les jours.',
-        es: 'El Aperitivo Normando (65€/persona): degustación de sidra, calvados y vino normando. Disponible todos los días.'
-      }
-    },
-    {
-      kw: { en: ['contact', 'whatsapp', 'phone', 'email', 'call', 'antoine'], fr: ['contacter', 'whatsapp', 'téléphone', 'email', 'appeler', 'antoine'], es: ['contactar', 'whatsapp', 'teléfono', 'email', 'llamar', 'antoine'] },
-      ans: {
-        en: 'Contact Antoine:\n• WhatsApp / phone: +33 6 26 39 17 83\n• Email: contact@savornstories.com',
-        fr: 'Contacter Antoine :\n• WhatsApp : +33 6 26 39 17 83\n• Email : contact@savornstories.com',
-        es: 'Contactar a Antoine:\n• WhatsApp: +33 6 26 39 17 83\n• Email: contact@savornstories.com'
-      }
-    }
-  ];
-
-  var FAQ_HOME = [
-    {
-      kw: { en: ['bordeaux', 'wine', 'garonne', 'south', 'southwest', 'gironde'], fr: ['bordeaux', 'vin', 'garonne', 'sud', 'gironde'], es: ['burdeos', 'vino', 'garona', 'sur', 'gironda'] },
-      ans: {
-        en: 'In Bordeaux I offer:\n• Food Tour — 90€ (3h30)\n• Bike Tour — 39€ (3h)\n• History Tour — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• River Cruise & Bespoke — on request\n\nAll private, all led personally by me.',
-        fr: 'À Bordeaux je propose :\n• Tour Gastronomique — 90€ (3h30)\n• Tour à Vélo — 39€ (3h)\n• Tour Historique — 60€ (2h)\n• Apéro & Pétanque — 80€ (2h)\n• Croisère & Sur Mesure — sur devis\n\nToutes privées, toutes menées personnellement par moi.',
-        es: 'En Burdeos ofrezco:\n• Tour Gastronómico — 90€ (3h30)\n• Tour en Bicicleta — 39€ (3h)\n• Tour Histórico — 60€ (2h)\n• Apéro & Petanca — 90€ (3h)\n• Crucero & A Medida — a consultar\n\nTodas privadas, todas guiadas personalmente por mí.'
-      }
-    },
-    {
-      kw: { en: ['dieppe', 'normandy', 'scallop', 'cliff', 'castle', '1942', 'north', 'channel', 'newhaven'], fr: ['dieppe', 'normandie', 'coquille', 'falaise', 'château', '1942', 'nord', 'manche', 'newhaven'], es: ['dieppe', 'normandía', 'vieira', 'acantilado', 'castillo', '1942', 'norte', 'canal'] },
-      ans: {
-        en: 'In Dieppe I offer:\n• Market Tour — 55€\n• Seafood & Harbour Tour — 75€\n• Castle & History Tour — 60€\n• Cliffs Walk — 45€\n• Norman Apéro — 65€\n• Bespoke — on request\n\nAll private, all led personally by me.',
-        fr: 'À Dieppe je propose :\n• Tour du Marché — 55€\n• Tour Fruits de Mer & Port — 75€\n• Tour Château & Histoire — 60€\n• Balade des Falaises — 45€\n• Apéro Normand — 65€\n• Sur Mesure — sur devis\n\nToutes privées, toutes menées personnellement par moi.',
-        es: 'En Dieppe ofrezco:\n• Tour del Mercado — 55€\n• Tour Mariscos & Puerto — 75€\n• Tour Castillo & Historia — 60€\n• Paseo por los Acantilados — 45€\n• Aperitivo Normando — 65€\n• A Medida — a consultar\n\nTodas privadas, todas guiadas personalmente por mí.'
-      }
-    },
-    {
-      kw: { en: ['price', 'cost', 'how much', 'rate', 'fee', 'euro', 'cheap', 'expensive'], fr: ['prix', 'coût', 'combien', 'tarif', 'euro', 'cher'], es: ['precio', 'coste', 'cuánto', 'cuanto', 'tarifa', 'euro', 'caro'] },
-      ans: {
-        en: 'Bordeaux tours: from 39€ (Bike Tour) to 90€ (Food Tour or Apéro & Pétanque).\nDieppe tours: from 45€ (Cliffs Walk) to 75€ (Seafood & Harbour).\n\nAll tours are private.',
-        fr: 'Visites Bordeaux : de 39€ (Tour à Vélo) à 90€ (Tour Gastronomique ou Apéro & Pétanque).\nVisites Dieppe : de 45€ (Balade des Falaises) à 75€ (Tour Fruits de Mer & Port).\n\nToutes les visites sont privées.',
-        es: 'Tours Burdeos: de 39€ (Tour en Bicicleta) a 90€ (Tour Gastronómico o Apéro & Petanca).\nTours Dieppe: de 45€ (Paseo por los Acantilados) a 75€ (Tour Mariscos & Puerto).\n\nTodas las visitas son privadas.'
-      }
-    },
-    {
-      kw: { en: ['book', 'booking', 'reserve', 'reservation', 'sign up', 'how to'], fr: ['réserver', 'réservation', 'comment', 'inscription'], es: ['reservar', 'reserva', 'cómo', 'inscribir'] },
-      ans: {
-        en: 'Choose a city, pick a tour, and fill in the booking form — or message Antoine directly on WhatsApp: +33 6 26 39 17 83\n\nHe usually replies within a few hours.',
-        fr: 'Choisissez une ville, une visite, et remplissez le formulaire — ou écrivez directement à Antoine sur WhatsApp : +33 6 26 39 17 83\n\nIl répond généralement en quelques heures.',
-        es: 'Elija una ciudad, un tour, y rellene el formulario — o escriba directamente a Antoine por WhatsApp: +33 6 26 39 17 83\n\nSuele responder en pocas horas.'
-      }
-    },
-    {
-      kw: { en: ['language', 'english', 'french', 'spanish', 'speak', 'tongue'], fr: ['langue', 'anglais', 'français', 'espagnol', 'parle'], es: ['idioma', 'inglés', 'francés', 'español', 'habla'] },
-      ans: {
-        en: 'All tours are available in English, French and Spanish.',
-        fr: 'Toutes les visites sont disponibles en français, anglais et espagnol.',
-        es: 'Todas las visitas están disponibles en inglés, francés y español.'
-      }
-    },
-    {
-      kw: { en: ['group', 'people', 'how many', 'size', 'family', 'solo', 'couple', 'private'], fr: ['groupe', 'personnes', 'famille', 'seul', 'couple', 'privé'], es: ['grupo', 'personas', 'familia', 'solo', 'pareja', 'privado'] },
-      ans: {
-        en: 'Every tour is private — just your group and Antoine. Whether solo, a couple or a family.',
-        fr: 'Chaque visite est privée — juste votre groupe et Antoine.',
-        es: 'Cada visita es privada — solo su grupo y Antoine.'
+        en: 'Families are welcome. Antoine adapts the pace for children, so let him know their ages when you book. Tours with alcohol tastings are best suited to adults.',
+        fr: 'Les familles sont les bienvenues. Antoine adapte le rythme pour les enfants, indiquez donc leur âge lors de la réservation. Les visites avec dégustation d\'alcool conviennent surtout aux adultes.',
+        es: 'Las familias son bienvenidas. Antoine adapta el ritmo para los niños, así que indique sus edades al reservar. Los tours con cata de alcohol son más adecuados para adultos.'
       }
     },
     {
       kw: { en: ['contact', 'whatsapp', 'phone', 'email', 'call', 'antoine', 'reach', 'message'], fr: ['contacter', 'whatsapp', 'téléphone', 'email', 'appeler', 'antoine'], es: ['contactar', 'whatsapp', 'teléfono', 'email', 'llamar', 'antoine'] },
       ans: {
-        en: 'Contact Antoine:\n• WhatsApp / phone: +33 6 26 39 17 83\n• Email: contact@savornstories.com\n\nWhatsApp is the fastest way.',
-        fr: 'Contacter Antoine :\n• WhatsApp / téléphone : +33 6 26 39 17 83\n• Email : contact@savornstories.com',
-        es: 'Contactar a Antoine:\n• WhatsApp / teléfono: +33 6 26 39 17 83\n• Email: contact@savornstories.com'
+        en: 'Contact Antoine:\n• WhatsApp / phone: ' + PHONE + '\n• Email: contact@savornstories.com\n\nWhatsApp is the fastest way.',
+        fr: 'Contacter Antoine :\n• WhatsApp / téléphone : ' + PHONE + '\n• Email : contact@savornstories.com',
+        es: 'Contactar a Antoine:\n• WhatsApp / teléfono: ' + PHONE + '\n• Email: contact@savornstories.com'
       }
     }
   ];
 
-  var FAQ = isBdx ? FAQ_BDX : isDpp ? FAQ_DPP : FAQ_HOME;
+  // Words too generic to identify a single tour in a visitor's question.
+  var STOP = ['tour', 'tours', 'walk', 'walking', 'visite', 'visites', 'balade', 'paseo', 'ruta', 'bordeaux', 'burdeos', 'dieppe', 'with', 'avec', 'from', 'your', 'this', 'that', 'morning', 'afternoon', 'evening', 'midi', 'tarde', 'noche', 'half', 'full', 'trip', 'group', 'what', 'which', 'tell', 'about', 'have', 'does', 'much', 'many', 'when', 'where', 'there', 'time'];
+
+  function words(s) {
+    return plain(s).split(/[^a-z0-9]+/).filter(function (w) { return w.length >= 4 && STOP.indexOf(w) === -1; });
+  }
+
+  function card(t, l) {
+    var lines = [T(t.title, l), T(t.summary, l), '• ' + T(t.duration, l), '• ' + priceOf(t, l)];
+    if (t.schedule) lines.push('• ' + T(t.schedule, l));
+    var items = (t.included && (t.included[K(l)] || t.included.en)) || [];
+    if (items.length) lines.push('• ' + items.join('; '));
+    lines.push('savornstories.com/tours/' + t.id);
+    return lines.join('\n');
+  }
+
+  function tourMatch(q, l) {
+    if (!DATA) return null;
+    var qw = words(q);
+    if (!qw.length) return null;
+    var best = [];
+    var bestScore = 0;
+    scope().forEach(function (t) {
+      var tw = words(T(t.title, l) + ' ' + t.title.en);
+      var score = 0;
+      qw.forEach(function (w) {
+        for (var i = 0; i < tw.length; i++) {
+          if (tw[i].indexOf(w) === 0 || w.indexOf(tw[i]) === 0) { score++; break; }
+        }
+      });
+      if (score > bestScore) { bestScore = score; best = [t]; }
+      else if (score > 0 && score === bestScore) best.push(t);
+    });
+    if (!best.length) return null;
+    if (best.length === 1) return card(best[0], l);
+    return best.slice(0, 4).map(function (t) {
+      return '• ' + T(t.title, l) + ': ' + T(t.duration, l) + ', ' + priceOf(t, l) + '\n  savornstories.com/tours/' + t.id;
+    }).join('\n');
+  }
 
   function match(q, l) {
+    var byTour = tourMatch(q, l);
+    if (byTour) return byTour;
     var ql = q.toLowerCase();
     var best = null, bestScore = 0;
     for (var i = 0; i < FAQ.length; i++) {
       var f = FAQ[i];
-      var kws = f.kw[l] || f.kw.en;
+      var kws = (f.kw[l] || []).concat(f.kw.en);
       var score = 0;
       for (var j = 0; j < kws.length; j++) {
         if (ql.indexOf(kws[j]) !== -1) score++;
@@ -317,6 +287,7 @@
       if (score > bestScore) { bestScore = score; best = f; }
     }
     if (bestScore === 0) return null;
+    if (best.dyn && DATA && DYN[best.dyn]) return DYN[best.dyn](l);
     return (best.ans[l] || best.ans.en);
   }
 
