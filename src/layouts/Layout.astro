@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Lightbox from '../components/Lightbox.astro';
 import '../styles/global.css';
 import { metadata, business, type Localized } from '../lib/seo';
 
@@ -77,6 +78,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <slot />
   </main>
   <Footer />
+  <Lightbox />
 
   <script>
     const STORAGE_KEY = 'ss-lang';

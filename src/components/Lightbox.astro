@@ -1,0 +1,208 @@
+---
+---
+<dialog id="lightbox" class="lb" aria-label="Photo viewer">
+  <button type="button" class="lb-btn lb-close" data-lb-close>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+  </button>
+  <button type="button" class="lb-btn lb-prev" data-lb-prev>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+  </button>
+  <button type="button" class="lb-btn lb-next" data-lb-next>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+  </button>
+  <img class="lb-img" src="" alt="" draggable="false" />
+  <span class="lb-count" aria-live="polite"></span>
+</dialog>
+
+<style is:global>
+  .zoomable { cursor: zoom-in; }
+
+  dialog.lb {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+    max-height: none;
+    width: 100vw;
+    height: 100dvh;
+    background: transparent;
+    color: #fff;
+    overflow: hidden;
+  }
+  dialog.lb:not([open]) { display: none; }
+  dialog.lb[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: lb-fade 0.2s ease both;
+  }
+  dialog.lb::backdrop {
+    background: rgba(8, 18, 26, 0.94);
+  }
+  .lb-img {
+    max-width: min(96vw, 1500px);
+    max-height: 88dvh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    user-select: none;
+    touch-action: pan-y pinch-zoom;
+  }
+  .lb-btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: rgba(16, 38, 55, 0.7);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .lb-btn:hover { background: rgba(255, 255, 255, 0.2); }
+  .lb-btn:focus-visible { outline: 3px solid #d8c49b; outline-offset: 3px; }
+  .lb-close { top: max(1rem, env(safe-area-inset-top)); right: 1rem; }
+  .lb-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+  .lb-count {
+    position: absolute;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(16, 38, 55, 0.7);
+  }
+  dialog.lb[data-single] .lb-prev,
+  dialog.lb[data-single] .lb-next,
+  dialog.lb[data-single] .lb-count { display: none; }
+  @media (max-width: 640px) {
+    .lb-prev, .lb-next { top: auto; bottom: 1rem; transform: none; }
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
+  }
+  @keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) {
+    dialog.lb[open] { animation: none; }
+  }
+</style>
+
+<script>
+  const labels: Record<string, { close: string; prev: string; next: string; viewer: string; open: string }> = {
+    en: { close: 'Close', prev: 'Previous photo', next: 'Next photo', viewer: 'Photo viewer', open: 'Enlarge photo' },
+    fr: { close: 'Fermer', prev: 'Photo précédente', next: 'Photo suivante', viewer: 'Visionneuse de photos', open: 'Agrandir la photo' },
+    es: { close: 'Cerrar', prev: 'Foto anterior', next: 'Foto siguiente', viewer: 'Visor de fotos', open: 'Ampliar la foto' },
+  };
+
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement | null;
+
+  if (dialog) {
+    const img = dialog.querySelector<HTMLImageElement>('.lb-img')!;
+    const count = dialog.querySelector<HTMLElement>('.lb-count')!;
+    const closeBtn = dialog.querySelector<HTMLButtonElement>('[data-lb-close]')!;
+    const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-lb-prev]')!;
+    const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-lb-next]')!;
+    let group: HTMLImageElement[] = [];
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const t = () => labels[document.documentElement.lang] || labels.en;
+
+    const applyLabels = () => {
+      const l = t();
+      dialog.setAttribute('aria-label', l.viewer);
+      closeBtn.setAttribute('aria-label', l.close);
+      prevBtn.setAttribute('aria-label', l.prev);
+      nextBtn.setAttribute('aria-label', l.next);
+    };
+
+    const groupFor = (el: HTMLImageElement) => {
+      const scope = el.closest('[data-lightbox-group]');
+      return scope ? Array.from(scope.querySelectorAll<HTMLImageElement>('.zoomable')) : [el];
+    };
+
+    const show = (i: number) => {
+      index = (i + group.length) % group.length;
+      const el = group[index];
+      img.src = el.currentSrc || el.src;
+      img.alt = el.alt;
+      count.textContent = `${index + 1} / ${group.length}`;
+      [group[(index + 1) % group.length], group[(index - 1 + group.length) % group.length]].forEach((n) => {
+        if (n) new Image().src = n.currentSrc || n.src;
+      });
+    };
+
+    const open = (el: HTMLImageElement) => {
+      opener = el;
+      group = groupFor(el);
+      index = Math.max(0, group.indexOf(el));
+      dialog.toggleAttribute('data-single', group.length < 2);
+      applyLabels();
+      show(index);
+      dialog.showModal();
+      document.documentElement.style.overflow = 'hidden';
+    };
+
+    const close = () => {
+      if (dialog.open) dialog.close();
+    };
+
+    dialog.addEventListener('close', () => {
+      document.documentElement.style.overflow = '';
+      img.src = '';
+      opener?.focus({ preventScroll: true });
+    });
+
+    document.querySelectorAll<HTMLImageElement>('.zoomable').forEach((el) => {
+      el.tabIndex = 0;
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', `${t().open}: ${el.alt}`);
+    });
+
+    document.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest<HTMLImageElement>('img.zoomable');
+      if (target) open(target);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const target = e.target as HTMLElement;
+      if ((e.key === 'Enter' || e.key === ' ') && target.matches?.('img.zoomable')) {
+        e.preventDefault();
+        open(target as HTMLImageElement);
+      }
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => show(index - 1));
+    nextBtn.addEventListener('click', () => show(index + 1));
+
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) close();
+    });
+
+    dialog.addEventListener('keydown', (e) => {
+      if (group.length < 2) return;
+      if (e.key === 'ArrowRight') show(index + 1);
+      if (e.key === 'ArrowLeft') show(index - 1);
+    });
+
+    let startX = 0;
+    let startY = 0;
+    img.addEventListener('pointerdown', (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+    img.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) && group.length > 1) {
+        show(index + (dx < 0 ? 1 : -1));
+      }
+    });
+  }
+</script>

@@ -92,7 +92,7 @@ import PageHero from '../components/PageHero.astro';
         <span data-lang="fr" hidden>Vraies visites, vrais clients</span>
         <span data-lang="es" hidden>Tours reales, clientes reales</span>
       </p>
-      <div class="grid grid-cols-2 gap-3 md:gap-4">
+      <div class="grid grid-cols-2 gap-3 md:gap-4" data-lightbox-group>
         <img src="/assets/photos/antoine-portrait-explaining.jpg" alt="Antoine talking with guests in Bordeaux" class="zoomable cursor-zoom-in w-full h-28 md:h-40 object-cover object-top rounded-xl border border-border" />
         <img src="/assets/photos/bordeaux-hotel-intendance-group.jpg" alt="A group tour in Bordeaux's old town" class="zoomable cursor-zoom-in w-full h-28 md:h-40 object-cover [object-position:50%_65%] rounded-xl border border-border" />
         <img src="/assets/photos/bordeaux-street-corner-group.jpg" alt="Antoine guiding a group through Bordeaux" class="zoomable cursor-zoom-in w-full h-28 md:h-40 object-cover [object-position:50%_48%] rounded-xl border border-border" />
@@ -108,37 +108,4 @@ import PageHero from '../components/PageHero.astro';
     </div>
   </div>
 
-  <div
-    id="lightbox"
-    class="hidden fixed inset-0 z-50 items-center justify-center bg-black/90 p-4 cursor-zoom-out"
-  >
-    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full rounded-lg" />
-  </div>
-
-  <script>
-    const lightbox = document.getElementById('lightbox') as HTMLDivElement;
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-
-    function openLightbox(src: string, alt: string) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt;
-      lightbox.classList.remove('hidden');
-      lightbox.classList.add('flex');
-    }
-
-    function closeLightbox() {
-      lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
-      lightboxImg.src = '';
-    }
-
-    document.querySelectorAll<HTMLImageElement>('.zoomable').forEach((img) => {
-      img.addEventListener('click', () => openLightbox(img.src, img.alt));
-    });
-
-    lightbox.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-  </script>
 </Layout>

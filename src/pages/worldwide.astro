@@ -73,7 +73,7 @@ const jsonLd = {
         <span data-lang="fr" hidden>Pas de légendes, volontairement, pas d'affirmation d'y avoir déjà un réseau. Juste la preuve que international n'est pas qu'un mot sur cette page.</span>
         <span data-lang="es" hidden>Sin pies de foto, a propósito, sin afirmar tener ya una red allí. Solo la prueba de que internacional no es solo una palabra en esta página.</span>
       </p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 max-w-sm md:max-w-3xl mx-auto py-2">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 max-w-sm md:max-w-3xl mx-auto py-2" data-lightbox-group>
         {travelPhotos.map((photo) => (
           <div
             class="bg-white p-2 pb-4 shadow-md hover:shadow-xl hover:z-10 hover:!rotate-0 hover:scale-105 transition-all duration-300"
@@ -171,37 +171,4 @@ const jsonLd = {
     </div>
   </div>
 
-  <div
-    id="lightbox"
-    class="hidden fixed inset-0 z-50 items-center justify-center bg-black/90 p-4 cursor-zoom-out"
-  >
-    <img id="lightbox-img" src="" alt="" class="max-w-full max-h-full rounded-lg" />
-  </div>
-
-  <script>
-    const lightbox = document.getElementById('lightbox') as HTMLDivElement;
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-
-    function openLightbox(src: string, alt: string) {
-      lightboxImg.src = src;
-      lightboxImg.alt = alt;
-      lightbox.classList.remove('hidden');
-      lightbox.classList.add('flex');
-    }
-
-    function closeLightbox() {
-      lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
-      lightboxImg.src = '';
-    }
-
-    document.querySelectorAll<HTMLImageElement>('.zoomable').forEach((img) => {
-      img.addEventListener('click', () => openLightbox(img.src, img.alt));
-    });
-
-    lightbox.addEventListener('click', closeLightbox);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
-    });
-  </script>
 </Layout>
