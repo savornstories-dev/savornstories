@@ -62,7 +62,7 @@ description:
     - "Empezamos en el Monument aux Girondins y recorremos siete paradas del casco antiguo, con un sobre sellado que abrir en cada una. Contaréis las estatuas del Grand Théâtre, buscaréis tres mascarones concretos en la place de la Bourse, descifraréis los oficios escondidos en los nombres de las calles de Saint-Pierre, leeréis la fecha en la porte Cailhau, encontraréis el leopardo en lo alto de la Grosse Cloche y apostaréis por el peso de su campana. Hay pistas, pero cada una cuesta una ficha, y las fichas que no gastáis cuentan al final. Entre sobre y sobre os cuento lo que pasó de verdad en cada lugar, que suele ser lo que la gente recuerda."
     - "Las cuatro cifras que reunís abren un cofre de madera que llevo en mi zurrón. Dentro están los canelés, y nos sentamos a tomar café en una terraza junto a la catedral para contar las barricas, entregar el diploma y dejar que el equipo perdedor cumpla su prenda. Creé este recorrido porque quería algo que familias, amigos y compañeros de trabajo pudieran hacer juntos sin reserva de restaurante, y ahora lo ofrezco a petición para dar mejor cabida a los grupos más grandes."
 icon: "🗝️"
-order: 11
+order: 12
 heroImage: "/assets/photos/bordeaux-street-corner-group.jpg"
 gallery:
   - src: "/assets/photos/bordeaux-canele-box.jpg"

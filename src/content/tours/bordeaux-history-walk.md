@@ -45,6 +45,6 @@ description:
     - "El casco antiguo de Burdeos está declarado Patrimonio de la Humanidad por la UNESCO, y este paseo se queda solo con sus historias: sin parada en un restaurante, sin cata de vino, solo las calles, las plazas y los edificios, y lo que realmente pasó en ellos."
     - "Adapto el recorrido a la duración que reserves. La versión de 1 hora cubre lo esencial cerca del centro, y la versión de 2 horas llega más lejos en el casco antiguo para quien quiera más. En los dos casos, simplemente caminamos y conversamos, nada guionizado."
 icon: "🏛️"
-order: 5
+order: 6
 heroImage: "/assets/photos/bordeaux-hotel-intendance-group.jpg"
 ---

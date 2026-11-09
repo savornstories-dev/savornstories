@@ -14,9 +14,9 @@ duration:
   es: "A medida, según tu grupo"
 price: null
 priceLabel:
-  en: "Contact me for info"
-  fr: "Me contacter pour plus d'informations"
-  es: "Contáctame para más información"
+  en: "From 60€"
+  fr: "À partir de 60€"
+  es: "Desde 60€"
 schedule:
   en: "On demand, built around your dates"
   fr: "Sur demande, selon vos dates"
@@ -52,7 +52,7 @@ description:
     - "Dime qué te gusta, cuánto sabes ya y cuánto tiempo quieres dedicarle, y construyo la cata en torno a eso. Podemos empezar por lo básico de los tintos y blancos de Burdeos, o ir directamente a lo que más te interese."
     - "Funciona para parejas, amigos y compañeros de trabajo, tanto si sabes mucho de vino como si no sabes nada."
 icon: "🍷"
-order: 13
+order: 5
 heroImage: "/assets/photos/bordeaux-wine-shop-tasting-guests.jpg"
 gallery:
   - src: "/assets/photos/bordeaux-wine-bottles.jpg"
