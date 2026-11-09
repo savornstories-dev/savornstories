@@ -45,6 +45,6 @@ description:
     - "Enseño las reglas de la petanca en unos diez minutos, suficiente para empezar a jugar, ya que la mayor parte de la diversión viene de jugar más que de dominar las reglas primero. Mientras jugamos, bebemos un aperitivo local y comemos las pequeñas tapas que lo acompañan, y explico la etiqueta que lo rodea, ya que aquí el aperitivo se trata como un pequeño evento en sí mismo y no solo una bebida antes de cenar."
     - "Los grupos terminan siendo competitivos, y las personas que vienen solas suelen terminar hablando con todos los demás. La tarde dura unas dos horas. Los principiantes son muy bienvenidos y cualquiera puede apuntarse, tanto si vienes en pareja, en familia, o completamente solo."
 icon: "🥂"
-order: 3
+order: 6
 heroImage: "/assets/photos/bordeaux-petanque-riverside.jpg"
 ---
