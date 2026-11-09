@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  if (window.__ssChat) return;
+  window.__ssChat = true;
+
   var STORAGE_KEY = 'ss-lang';
 
   function L() {
