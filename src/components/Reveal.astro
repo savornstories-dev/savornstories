@@ -1,0 +1,106 @@
+---
+---
+<style is:global>
+  :root [data-rv] {
+    transition-property: opacity, transform;
+    transition-duration: 0.8s;
+    transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--rv-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  :root [data-rv="out"] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  :root [data-rv="in"] {
+    opacity: 1;
+    transform: none;
+  }
+  @media print {
+    :root [data-rv] {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var main = document.querySelector('main');
+    if (!main) return;
+
+    var STEP = 90;
+    var CAP = 7;
+    var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, TEMPLATE: 1, DIALOG: 1, SVG: 1, SPAN: 1, BR: 1, NOSCRIPT: 1 };
+    var WRAP_TAGS = { DIV: 1, SECTION: 1, ARTICLE: 1, ASIDE: 1, UL: 1, OL: 1, NAV: 1 };
+    var BOX = /(^|[\s:])(bg-|rounded|shadow|border|lift|zoom|aspect-)/;
+
+    // A unit is one visual block. Plain layout wrappers are looked through,
+    // so a heading, a card and a button each reveal on their own turn.
+    function collect(el, out) {
+      for (var i = 0; i < el.children.length; i++) {
+        var c = el.children[i];
+        var tag = c.tagName.toUpperCase();
+        if (SKIP_TAGS[tag]) continue;
+        if (c.hasAttribute('hidden') || c.getAttribute('aria-hidden') === 'true') continue;
+        var cs = getComputedStyle(c);
+        if (cs.display === 'none') continue;
+        if (cs.display === 'contents') { collect(c, out); continue; }
+        if (cs.position === 'fixed' || cs.position === 'sticky' || cs.position === 'absolute') continue;
+        var cls = c.getAttribute('class') || '';
+        if (tag === 'SECTION' || (WRAP_TAGS[tag] && !BOX.test(cls) && c.children.length)) {
+          collect(c, out);
+          continue;
+        }
+        if (cs.display === 'inline') continue;
+        if (cs.transform !== 'none' || (cs.animationName && cs.animationName !== 'none')) continue;
+        if (!c.getClientRects().length) continue;
+        out.push(c);
+      }
+    }
+
+    function clean(el) {
+      el.removeAttribute('data-rv');
+      el.style.removeProperty('--rv-delay');
+    }
+
+    try {
+      var units = [];
+      collect(main, units);
+      if (!units.length) return;
+
+      units.forEach(function (u) { u.setAttribute('data-rv', 'out'); });
+      void main.offsetHeight;
+
+      var io = new IntersectionObserver(function (entries) {
+        var batch = entries
+          .filter(function (e) { return e.isIntersecting; })
+          .map(function (e) { return e.target; });
+        batch.sort(function (a, b) {
+          var r = a.getBoundingClientRect();
+          var s = b.getBoundingClientRect();
+          return (Math.round(r.top / 24) - Math.round(s.top / 24)) || (r.left - s.left);
+        });
+        batch.forEach(function (el, i) {
+          var delay = Math.min(i, CAP) * STEP;
+          io.unobserve(el);
+          el.style.setProperty('--rv-delay', delay + 'ms');
+          el.setAttribute('data-rv', 'in');
+          var done = false;
+          var finish = function () { if (!done) { done = true; clean(el); } };
+          el.addEventListener('transitionend', function (ev) {
+            if (ev.target === el && ev.propertyName === 'opacity') finish();
+          });
+          setTimeout(finish, delay + 1400);
+        });
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.01 });
+
+      units.forEach(function (u) { io.observe(u); });
+    } catch (err) {
+      document.querySelectorAll('[data-rv]').forEach(clean);
+    }
+  })();
+</script>
